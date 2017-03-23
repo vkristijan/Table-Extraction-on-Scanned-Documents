@@ -22,82 +22,6 @@ public class WienerFilter implements ImageFilter {
         this.m = m;
     }
 
-    double getLocalMean(GrayScaleImage image, int h, int w){
-        double mean = 0;
-
-        int width = image.getWidth();
-        int height = image.getHeight();
-        byte[][] data = image.getData();
-
-        int fromH = h - n / 2;
-        int toH = fromH + n;
-
-        int fromW = w - m / 2;
-        int toW = fromW + m;
-
-        if (fromH < 0) fromH = 0;
-        if (fromW < 0) fromW = 0;
-        if (toH > height) toH = height;
-        if (toW > width) toW = width;
-
-        for (int i = fromH; i < toH; ++i){
-            for (int j = fromW; j < toW; ++j){
-                mean += (int)data[i][j] & 0xFF;
-            }
-        }
-        mean /= (toH - fromH);
-        mean /= (toW - fromW);
-
-        return mean;
-    }
-
-    double getLocalVariance(GrayScaleImage image, int h, int w){
-        double variance = 0;
-
-        int width = image.getWidth();
-        int height = image.getHeight();
-        byte[][] data = image.getData();
-
-        int fromH = h - n / 2;
-        int toH = fromH + n;
-
-        int fromW = w - m / 2;
-        int toW = fromW + m;
-
-        if (fromH < 0) fromH = 0;
-        if (fromW < 0) fromW = 0;
-        if (toH > height) toH = height;
-        if (toW > width) toW = width;
-
-        double mean = getLocalMean(image, h, w);
-        for (int i = fromH; i < toH; ++i){
-            for (int j = fromW; j < toW; ++j){
-                int pixel = (int)data[i][j] & 0xFF;
-                variance += pixel * pixel;
-            }
-        }
-        variance /= (toW - fromW);
-        variance /= (toH - fromH);
-        variance -= mean * mean;
-
-        return variance;
-    }
-
-    double getNoiseVariance(GrayScaleImage image){
-        double noise = 0;
-
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        for (int i = 0; i < height; ++i){
-            for (int j = 0; j < width; ++j){
-                noise += getLocalVariance(image, i, j);
-            }
-        }
-
-        return noise / (width * height);
-    }
-
     @Override
     public GrayScaleImage filter(GrayScaleImage image) {
         GrayScaleImage filtered = new GrayScaleImage(image.getWidth(), image.getHeight());
@@ -107,11 +31,11 @@ public class WienerFilter implements ImageFilter {
         byte[][] filteredData = filtered.getData();
         byte[][] data = image.getData();
 
-        double noise = getNoiseVariance(image);
+        double noise = image.getNoiseVariance(n, m);
         for (int i = 0; i < height; ++i){
             for (int j = 0; j < width; ++j){
-                double mean = getLocalMean(image, i, j);
-                double variance = getLocalVariance(image, i, j);
+                double mean = image.getLocalMean(i, j, n, m);
+                double variance = image.getLocalVariance(i, j, n, m);
                 filteredData[i][j] = (byte)(mean + (variance/(variance + noise))*(((int)data[i][j] & 0xFF) - mean));
             }
         }

@@ -83,4 +83,69 @@ public class GrayScaleImage {
         return im;
     }
 
+    public double getLocalMean(int h, int w, int n, int m){
+        double mean = 0;
+
+        int fromH = h - n / 2;
+        int toH = fromH + n;
+
+        int fromW = w - m / 2;
+        int toW = fromW + m;
+
+        if (fromH < 0) fromH = 0;
+        if (fromW < 0) fromW = 0;
+        if (toH > height) toH = height;
+        if (toW > width) toW = width;
+
+        for (int i = fromH; i < toH; ++i){
+            for (int j = fromW; j < toW; ++j){
+                mean += (int)data[i][j] & 0xFF;
+            }
+        }
+        mean /= (toH - fromH);
+        mean /= (toW - fromW);
+
+        return mean;
+    }
+
+    public double getLocalVariance(int h, int w, int n, int m){
+        double variance = 0;
+
+        int fromH = h - n / 2;
+        int toH = fromH + n;
+
+        int fromW = w - m / 2;
+        int toW = fromW + m;
+
+        if (fromH < 0) fromH = 0;
+        if (fromW < 0) fromW = 0;
+        if (toH > height) toH = height;
+        if (toW > width) toW = width;
+
+        double mean = getLocalMean(h, w, n, m);
+        for (int i = fromH; i < toH; ++i){
+            for (int j = fromW; j < toW; ++j){
+                int pixel = (int)data[i][j] & 0xFF;
+                variance += pixel * pixel;
+            }
+        }
+        variance /= (toW - fromW);
+        variance /= (toH - fromH);
+        variance -= mean * mean;
+
+        return variance;
+    }
+
+    public double getNoiseVariance(int n, int m){
+        double noise = 0;
+
+        for (int i = 0; i < height; ++i){
+            for (int j = 0; j < width; ++j){
+                noise += getLocalVariance(i, j, n, m);
+            }
+        }
+
+        return noise / (width * height);
+    }
+
 }
