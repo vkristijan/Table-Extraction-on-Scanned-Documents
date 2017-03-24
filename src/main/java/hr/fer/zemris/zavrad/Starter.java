@@ -16,7 +16,10 @@ public class Starter {
         ImageFilter wiener = new WienerFilter(9, 9);
         GrayScaleImage result = wiener.filter(img);
 
+        ImageFilter niblack = new NiblackThreshold(25, 25, -0.2);
+        GrayScaleImage niblackResult = niblack.filter(img);
+
         Path output = Paths.get(args[1]);
-        result.save(output.toFile());
+        niblackResult.save(output.toFile());
     }
 }
