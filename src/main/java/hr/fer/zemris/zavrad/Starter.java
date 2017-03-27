@@ -13,13 +13,16 @@ public class Starter {
         Path path = Paths.get(args[0]);
         GrayScaleImage img = GrayScaleImage.load(path.toFile());
 
-        ImageFilter wiener = new WienerFilter(9, 9);
-        GrayScaleImage result = wiener.filter(img);
+        ImageFilter wiener = new WienerFilter(5, 5);
+        GrayScaleImage wienerResult = wiener.filter(img);
 
-        ImageFilter niblack = new NiblackThreshold(25, 25, -0.2);
+        ImageFilter niblack = new NiblackThreshold(20, 20, -0.2);
         GrayScaleImage niblackResult = niblack.filter(img);
 
+        Interpolator interpolator = new BackgroundEstimation(3, 3);
+        GrayScaleImage background = interpolator.interpolate(wienerResult, niblackResult);
+
         Path output = Paths.get(args[1]);
-        niblackResult.save(output.toFile());
+        background.save(output.toFile());
     }
 }
