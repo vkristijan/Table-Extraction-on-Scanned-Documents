@@ -1,5 +1,6 @@
 package hr.fer.zemris.zavrad;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +20,8 @@ public class Starter {
         ImageFilter niblack = new NiblackThreshold(20, 20, -0.2);
         GrayScaleImage niblackResult = niblack.filter(img);
 
-        Interpolator interpolator = new BackgroundEstimation(3, 3);
-        GrayScaleImage background = interpolator.interpolate(wienerResult, niblackResult);
+        ImageFilter interpolator = new BackgroundEstimation(3, 3);
+        GrayScaleImage background = interpolator.filter(wienerResult, niblackResult);
 
         Path output = Paths.get(args[1]);
         background.save(output.toFile());

@@ -4,7 +4,7 @@ package hr.fer.zemris.zavrad;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class BackgroundEstimation implements Interpolator {
+public class BackgroundEstimation implements ImageFilter {
     private int dx;
     private int dy;
 
@@ -14,7 +14,13 @@ public class BackgroundEstimation implements Interpolator {
     }
 
     @Override
-    public GrayScaleImage interpolate(GrayScaleImage img1, GrayScaleImage img2) {
+    public GrayScaleImage filter(GrayScaleImage ... images){
+        if (images.length != 2){
+            throw new ImageFilterException("Background estimation filter expects 2 arguments!");
+        }
+        GrayScaleImage img1 = images[0];
+        GrayScaleImage img2 = images[1];
+
         if (img1.getWidth() != img2.getWidth() || img1.getHeight() != img2.getHeight()){
             throw new IllegalArgumentException("The given images do not match!");
         }

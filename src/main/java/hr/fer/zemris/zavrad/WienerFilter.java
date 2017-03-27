@@ -23,11 +23,16 @@ public class WienerFilter implements ImageFilter {
     }
 
     @Override
-    public GrayScaleImage filter(GrayScaleImage image) {
-        GrayScaleImage filtered = new GrayScaleImage(image.getWidth(), image.getHeight());
+    public GrayScaleImage filter(GrayScaleImage ... images) {
+        if (images.length != 1){
+            throw new ImageFilterException("Wiener filter accepts only 1 argument!");
+        }
 
+        GrayScaleImage image = images[0];
         int width = image.getWidth();
         int height = image.getHeight();
+
+        GrayScaleImage filtered = new GrayScaleImage(width, height);
         byte[][] filteredData = filtered.getData();
         byte[][] data = image.getData();
 

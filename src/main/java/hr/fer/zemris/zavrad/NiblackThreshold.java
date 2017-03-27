@@ -25,15 +25,20 @@ public class NiblackThreshold implements ImageFilter {
     }
 
     @Override
-    public GrayScaleImage filter(GrayScaleImage image) {
-        GrayScaleImage filtered = new GrayScaleImage(image.getWidth(), image.getHeight());
+    public GrayScaleImage filter(GrayScaleImage ... images) {
+        if (images.length != 1){
+            throw new ImageFilterException("Niblack threshold accepts only 1 argument!");
+        }
 
+        GrayScaleImage image = images[0];
         int width = image.getWidth();
         int height = image.getHeight();
+
+        GrayScaleImage filtered = new GrayScaleImage(width, height);
+
         byte[][] filteredData = filtered.getData();
         byte[][] data = image.getData();
 
-        double noise = image.getNoiseVariance(n, m);
         for (int i = 0; i < height; ++i){
             for (int j = 0; j < width; ++j){
                 double mean = image.getLocalMean(i, j, n, m);

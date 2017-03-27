@@ -7,7 +7,7 @@ package hr.fer.zemris.zavrad;
  */
 public class Binarization implements ImageFilter {
     @Override
-    public GrayScaleImage filter(GrayScaleImage image) {
+    public GrayScaleImage filter(GrayScaleImage ... image) {
         return null;
     }
 }

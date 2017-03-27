@@ -5,5 +5,5 @@ package hr.fer.zemris.zavrad;
  * @version 1.0.0
  */
 public interface ImageFilter {
-    GrayScaleImage filter(GrayScaleImage image);
+    GrayScaleImage filter(GrayScaleImage ... images);
 }
