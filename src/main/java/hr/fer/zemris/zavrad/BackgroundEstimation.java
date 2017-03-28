@@ -22,7 +22,7 @@ public class BackgroundEstimation implements ImageFilter {
         GrayScaleImage img2 = images[1];
 
         if (img1.getWidth() != img2.getWidth() || img1.getHeight() != img2.getHeight()){
-            throw new IllegalArgumentException("The given images do not match!");
+            throw new ImageFilterException("The given images are not the same dimensions!");
         }
 
         int width = img1.getWidth();

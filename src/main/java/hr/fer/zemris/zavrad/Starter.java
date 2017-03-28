@@ -1,6 +1,5 @@
 package hr.fer.zemris.zavrad;
 
-import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +22,10 @@ public class Starter {
         ImageFilter interpolator = new BackgroundEstimation(3, 3);
         GrayScaleImage background = interpolator.filter(wienerResult, niblackResult);
 
+        ImageFilter finalThreshold = new AdaptiveThreshold(0.8);
+        GrayScaleImage threshold = finalThreshold.filter(background, wienerResult, niblackResult);
+
         Path output = Paths.get(args[1]);
-        background.save(output.toFile());
+        threshold.save(output.toFile());
     }
 }
