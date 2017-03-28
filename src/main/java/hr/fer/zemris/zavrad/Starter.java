@@ -25,7 +25,10 @@ public class Starter {
         ImageFilter finalThreshold = new AdaptiveThreshold(0.8);
         GrayScaleImage threshold = finalThreshold.filter(background, wienerResult, niblackResult);
 
+        ImageFilter shrink = new ShrinkFilter(3, 0.8);
+        GrayScaleImage shrinked = shrink.filter(threshold);
+
         Path output = Paths.get(args[1]);
-        threshold.save(output.toFile());
+        shrinked.save(output.toFile());
     }
 }
