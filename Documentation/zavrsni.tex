@@ -19,8 +19,19 @@
 
 \chapter{Uvod}
 U današnje vrijeme postoje izuzetno velike količine papirnatih dokumenata.
-Samo u Sjedinjenim Američkim Država nastaje više od milijarde novih papirnatih dokumenata svakog radnog dana. 
+Samo u Sjedinjenim Američkim Državama nastaje više od milijarde novih papirnatih dokumenata svakog radnog dana. 
 Mogućnost digitalizacije takvih dokumenata može biti od velike koristi prilikom pohrane, slanja ili pretraživanja istih. \cite{article:Skew-detection}
+Digitalizaciju dokumenata možemo podijeliti u dva dijela: prepoznavanje teksta te prepoznavanje grafičkih objekata. \cite{conference:DetectionOfTableStructure} 
+Za prepoznavanje teksta je dostupan velik broj alata koji omogućuju optičko prepoznavanje znakova (engl. \textit{optical character recognition}).
+Prepoznavanje grafičkih objekata dokumenta mnogo je manje zastupljeno u odnosu na prepoznavanje teksta.
+U to se svrstavaju linije, oblici, slike, simboli, tablice i razni drugi objekti koji se mogu nalaziti na skeniranim dokumentima.
+Ovaj rad se fokusira isključivo na prepoznavanje tablica, što je prethodno već opisano u radovima poput \cite{conference:DetectionOfTableStructure} i \cite{conference:AutomaticTableDetectionInDocumentImages}. 
+Taj postupak se dijeli na prepoznavanje položaja tablice u odnosu na ostatak dokumenta, prilikom čega je potrebno u dokumentu izdvojiti tablicu od ostatka teksta i ostalih grafičkih objekata, a što je opisano u radu \cite{article:Medium-IndependentTableDetection}.
+Nakon što je tablica pronađena određuje se njezin izgled, odnosno broj redaka i stupaca, odnosno koordinate pojedine ćelije, a što je detaljnije opisano u nastavku rada. \\
+
+Predstavljeno rješenje počinje od slike u sivim tonovima (engl. \textit{gray-scale}), koja se binarizira kako bi se dobila slika koja se sastoji od isključivo crne i bijele boje.
+Dobivena crno-bijela slika koristi se u daljnjoj obradi te se provjerava je li slika rotirana, odnosno kut rotacije iste, nakon čega se rotacija ispravlja.
+Ovako obrađena slika koristi se dalje za detekciju tablica, \textbf{što će biti objašnjeno jednom kada odlučim kako to radim.}
 
 
 \chapter{Binarizacija slike}
