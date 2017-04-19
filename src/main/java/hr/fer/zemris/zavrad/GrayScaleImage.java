@@ -13,6 +13,8 @@ import java.io.IOException;
  * @version 1.0.0
  */
 public class GrayScaleImage {
+    public static int BLACK = 0;
+
     private int width;
     private int height;
     private byte[][] data;

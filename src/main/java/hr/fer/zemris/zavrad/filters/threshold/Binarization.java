@@ -1,4 +1,11 @@
-package hr.fer.zemris.zavrad;
+package hr.fer.zemris.zavrad.filters.threshold;
+
+import hr.fer.zemris.zavrad.GrayScaleImage;
+import hr.fer.zemris.zavrad.filters.misc.BackgroundEstimation;
+import hr.fer.zemris.zavrad.filters.misc.ShrinkFilter;
+import hr.fer.zemris.zavrad.filters.misc.Swell;
+import hr.fer.zemris.zavrad.filters.*;
+import hr.fer.zemris.zavrad.filters.misc.WienerFilter;
 
 /**
  *

@@ -1,4 +1,8 @@
-package hr.fer.zemris.zavrad;
+package hr.fer.zemris.zavrad.filters.misc;
+
+import hr.fer.zemris.zavrad.GrayScaleImage;
+import hr.fer.zemris.zavrad.filters.ImageFilter;
+import hr.fer.zemris.zavrad.filters.ImageFilterException;
 
 /**
  * Implementation of a <a href="https://en.wikipedia.org/wiki/Wiener_filter">

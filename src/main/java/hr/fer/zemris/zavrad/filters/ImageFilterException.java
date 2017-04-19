@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad;
+package hr.fer.zemris.zavrad.filters;
 
 /**
  * Exception that can occur in an image filter.
