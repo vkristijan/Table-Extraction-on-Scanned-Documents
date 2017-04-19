@@ -23,7 +23,7 @@ public class Starter {
         start_time = end_time;
         System.out.println("Loading time: " + difference + "ms");
 
-        ImageFilter binarization = new ThresholdBinarization(200);
+        ImageFilter binarization = new ThresholdBinarization(100);
         img = binarization.filter(img);
 
         SkewDetection skew = new SkewDetection();

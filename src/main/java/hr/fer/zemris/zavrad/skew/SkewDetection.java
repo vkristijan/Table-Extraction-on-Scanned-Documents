@@ -29,24 +29,50 @@ public class SkewDetection {
         this.pointsToCheck = pointsToCheck;
     }
 
-    public double getAngle(GrayScaleImage img){
-        List<Integer> lines = lineDistribution.getLines(img.getWidth(), lineCount);
-        List<List<Integer>> points = calculatePoints(lines, img);
-        visualize(img, lines);
-        removeRedundant(points, lines);
-        visualize1(img, lines);
-
-        return getAngle(points, lines);
+    public int getMaxAngle() {
+        return maxAngle;
     }
 
-    private double getAngle(List<List<Integer>> points, List<Integer> lines) {
+    public void setMaxAngle(int maxAngle) {
+        this.maxAngle = maxAngle;
+    }
+
+    public int getMaxTry() {
+        return maxTry;
+    }
+
+    public void setMaxTry(int maxTry) {
+        this.maxTry = maxTry;
+    }
+
+    private byte[][] data1;
+    public double getAngle(GrayScaleImage img){
+        data1 = img.getData();
+        if (img.getWidth() > img.getHeight()){
+            List<Integer> lines = lineDistribution.getLines(img.getWidth(), lineCount);
+            List<List<Integer>> points = calculatePointsVertical(lines, img);
+            removeRedundant(points, lines);
+
+            return getAngle(points, lines, false);
+        } else {
+            List<Integer> lines = lineDistribution.getLines(img.getHeight(), lineCount);
+            List<List<Integer>> points = calculatePointsHorizontal(lines, img);
+            //visualize(img, lines);
+            removeRedundant(points, lines);
+            visualize1(img, lines);
+
+            return getAngle(points, lines, true);
+        }
+    }
+
+    private double getAngle(List<List<Integer>> points, List<Integer> lines, boolean horizontal) {
         double angle = 0;
 
         for (int iteration = 0; iteration < maxTry; ++iteration){
             //all the angles from +90 to -90 (including 0) with a step of 0.5
             int[] angles = new int[361];
             for (int i = 0; i < pointsToCheck; ++i){
-                calculateAngles(angles, points, lines);
+                calculateAngles(angles, points, lines, horizontal);
             }
 
             int max = 0;
@@ -73,7 +99,7 @@ public class SkewDetection {
         return angle;
     }
 
-    private void calculateAngles(int[] angles, List<List<Integer>> points, List<Integer> lines) {
+    private void calculateAngles(int[] angles, List<List<Integer>> points, List<Integer> lines, boolean horizontal) {
         int pointX = lines.get(0);
         int pointY = points.get(0).get(Rnd.nextInt(points.get(0).size()));
 
@@ -83,7 +109,13 @@ public class SkewDetection {
             int x = lines.get(i);
             for (int y : points.get(i)){
                 //the angle should be [90, -90]
-                double angle = calculateAngle(pointX, pointY, x, y);
+                double angle;
+                if (horizontal){
+                    //coordinates swapped because of horizontal lines
+                    angle = calculateAngle(pointX, pointY, x, y);
+                } else {
+                    angle = -calculateAngle(pointX, pointY, x, y);
+                }
                 int index = (int)(angle * 2);
                 index += 180;
 
@@ -129,8 +161,8 @@ public class SkewDetection {
         }
     }
 
-    private List<List<Integer>> calculatePoints(List<Integer> lines, GrayScaleImage img) {
-        List<List<Integer>> points = new ArrayList<List<Integer>>();
+    private List<List<Integer>> calculatePointsVertical(List<Integer> lines, GrayScaleImage img) {
+        List<List<Integer>> points = new ArrayList<>();
 
         int height = img.getHeight();
         byte[][] data = img.getData();
@@ -150,14 +182,34 @@ public class SkewDetection {
         return points;
     }
 
+    private List<List<Integer>> calculatePointsHorizontal(List<Integer> lines, GrayScaleImage img) {
+        List<List<Integer>> points = new ArrayList<>();
+
+        int width = img.getWidth();
+        byte[][] data = img.getData();
+        for (int i = 0; i < lineCount; ++i){
+            int y = lines.get(i);
+
+            List<Integer> linePoints = new ArrayList<>();
+            for (int x = 0; x < width; ++x){
+                if (data[y][x] == GrayScaleImage.BLACK){
+                    linePoints.add(x);
+                    x += 4;
+                }
+            }
+            points.add(linePoints);
+        }
+
+        return points;
+    }
 
     private void visualize(GrayScaleImage img, List<Integer> lines) {
         byte[][] data = img.getData();
 
         for (int i = 0; i < lines.size(); ++i){
-            int x = lines.get(i);
+            int y = lines.get(i);
 
-            for (int y = 0; y < img.getHeight(); ++y){
+            for (int x = 0; x < img.getWidth(); ++x){
                 data[y][x] = (byte) GrayScaleImage.BLACK;
             }
         }
@@ -167,11 +219,12 @@ public class SkewDetection {
         byte[][] data = img.getData();
 
         for (int i = 0; i < lines.size(); ++i){
-            int x = lines.get(i);
+            int y = lines.get(i);
 
-            for (int y = 0; y < img.getHeight(); ++y){
-                data[y][x-1] = (byte) GrayScaleImage.BLACK;
-                data[y][x+1] = (byte) GrayScaleImage.BLACK;
+            for (int x = 0; x < img.getWidth(); ++x){
+                data[y-1][x] = (byte) GrayScaleImage.BLACK;
+                data[y+1][x] = (byte) GrayScaleImage.BLACK;
+                data[y][x] = (byte) GrayScaleImage.BLACK;
             }
         }
     }

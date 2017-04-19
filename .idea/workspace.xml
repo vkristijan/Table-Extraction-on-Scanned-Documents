@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fabd35c5-fe47-4ae2-a374-7b9906cf2b35" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/lines/LineDistribution.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/lines/RandomLineDistribution.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/lines/UniformLineDistribution.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/Rnd.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/AdaptiveThreshold.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/AdaptiveThreshold.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/BackgroundEstimation.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/BackgroundEstimation.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Binarization.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/Binarization.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/ImageFilter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/ImageFilter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/ImageFilterException.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/ImageFilterException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/LimitedSwell.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/LimitedSwell.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/NiblackThreshold.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/NiblackThreshold.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/ShrinkFilter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/ShrinkFilter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Swell.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/Swell.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/ThresholdBinarization.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/ThresholdBinarization.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/WienerFilter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/WienerFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/GrayScaleImage.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/GrayScaleImage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -36,11 +20,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Starter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Starter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="30" column="32" lean-forward="false" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+            <state relative-caret-position="272">
+              <caret line="25" column="64" lean-forward="false" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -48,14 +32,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SkewDetection.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SkewDetection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-136">
-              <caret line="72" column="9" lean-forward="false" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
+            <state relative-caret-position="158">
+              <caret line="80" column="37" lean-forward="true" selection-start-line="80" selection-start-column="37" selection-end-line="80" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4101#4116#0" expanded="true" />
+                <element signature="e#826#827#0" expanded="true" />
+                <element signature="e#857#858#0" expanded="true" />
+                <element signature="e#902#903#0" expanded="true" />
+                <element signature="e#942#943#0" expanded="true" />
+                <element signature="e#972#973#0" expanded="true" />
+                <element signature="e#1001#1002#0" expanded="true" />
+                <element signature="e#1042#1043#0" expanded="true" />
+                <element signature="e#1078#1079#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -88,8 +79,8 @@
       <file leaf-file-name="Rnd.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/Rnd.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="30" column="43" lean-forward="false" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+            <state relative-caret-position="186">
+              <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
               <folding>
                 <element signature="e#226#227#0" expanded="true" />
                 <element signature="e#260#261#0" expanded="true" />
@@ -207,8 +198,8 @@
         <option value="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/GrayScaleImage.java" />
         <option value="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/Rnd.java" />
         <option value="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/lines/RandomLineDistribution.java" />
-        <option value="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java" />
         <option value="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java" />
       </list>
     </option>
   </component>
@@ -438,7 +429,7 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="hr.fer.zemris.zavrad.Starter" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="C:\GitHub\Table-Extraction-on-Scanned-Documents\src\main\resources\img.png C:\GitHub\Table-Extraction-on-Scanned-Documents\src\main\resources\skew.png" />
+      <option name="PROGRAM_PARAMETERS" value="C:\GitHub\Table-Extraction-on-Scanned-Documents\src\main\resources\img-5.png C:\GitHub\Table-Extraction-on-Scanned-Documents\src\main\resources\skew.png" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -791,12 +782,12 @@
       <workItem from="1490735079812" duration="4495000" />
       <workItem from="1491664370248" duration="54000" />
       <workItem from="1491994783176" duration="3197000" />
-      <workItem from="1492592869135" duration="25074000" />
+      <workItem from="1492592869135" duration="29221000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88808000" />
+    <option name="totallyTimeSpent" value="92955000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -809,7 +800,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39432177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24605678" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -818,7 +809,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24921136" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31388012" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -841,7 +832,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="46" />
+      <option name="time" value="48" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1222,10 +1213,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/lines/RandomLineDistribution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="17" column="61" lean-forward="false" selection-start-line="17" selection-start-column="61" selection-end-line="17" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/Rnd.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="30" column="43" lean-forward="false" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+        <state relative-caret-position="186">
+          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
           <folding>
             <element signature="e#226#227#0" expanded="true" />
             <element signature="e#260#261#0" expanded="true" />
@@ -1243,33 +1244,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/lines/RandomLineDistribution.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="61" lean-forward="false" selection-start-line="17" selection-start-column="61" selection-end-line="17" selection-end-column="61" />
+        <state relative-caret-position="158">
+          <caret line="80" column="37" lean-forward="true" selection-start-line="80" selection-start-column="37" selection-end-line="80" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#826#827#0" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
+            <element signature="e#902#903#0" expanded="true" />
+            <element signature="e#942#943#0" expanded="true" />
+            <element signature="e#972#973#0" expanded="true" />
+            <element signature="e#1001#1002#0" expanded="true" />
+            <element signature="e#1042#1043#0" expanded="true" />
+            <element signature="e#1078#1079#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="30" column="32" lean-forward="false" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+        <state relative-caret-position="272">
+          <caret line="25" column="64" lean-forward="false" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-136">
-          <caret line="72" column="9" lean-forward="false" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4101#4116#0" expanded="true" />
           </folding>
         </state>
       </provider>
