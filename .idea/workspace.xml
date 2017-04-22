@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fabd35c5-fe47-4ae2-a374-7b9906cf2b35" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/Rotation.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/GrayScaleImage.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/GrayScaleImage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/ImageFilter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/ImageFilter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/ImageFilterException.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/ImageFilterException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/BackgroundEstimation.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/misc/BackgroundEstimation.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/LimitedSwell.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/misc/LimitedSwell.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/ShrinkFilter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/misc/ShrinkFilter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/Swell.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/misc/Swell.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/misc/WienerFilter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/misc/WienerFilter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/AdaptiveThreshold.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/AdaptiveThreshold.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/Binarization.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/Binarization.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/NiblackThreshold.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/NiblackThreshold.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/filters/threshold/ThresholdBinarization.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/ThresholdBinarization.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/Starter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/skew/SkewDetection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/Rotation.java" afterPath="$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/Rotation.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -111,8 +96,8 @@
       <file leaf-file-name="Rotation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/Rotation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="38" column="51" lean-forward="false" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+            <state relative-caret-position="169">
+              <caret line="29" column="52" lean-forward="false" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,21 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AffineTransformOp.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/awt/image/AffineTransformOp.java">
+      <file leaf-file-name="ThresholdBinarization.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/ThresholdBinarization.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="62" column="41" lean-forward="true" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RenderingHints.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/awt/RenderingHints.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="838" column="7" lean-forward="true" selection-start-line="838" selection-start-column="7" selection-end-line="838" selection-end-column="7" />
+            <state relative-caret-position="242">
+              <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="21" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -410,6 +385,48 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="filters" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zavrad" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Table-Extraction-on-Scanned-Documents" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zavrad" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="filters" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="threshold" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -793,16 +810,16 @@
       <workItem from="1491994783176" duration="3197000" />
       <workItem from="1492592869135" duration="29812000" />
       <workItem from="1492680181484" duration="25000" />
-      <workItem from="1492878545637" duration="5267000" />
+      <workItem from="1492878545637" duration="5542000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98838000" />
+    <option name="totallyTimeSpent" value="99113000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -811,7 +828,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24605678" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24605678" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1064,13 +1081,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/ThresholdBinarization.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/misc/WienerFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123">
@@ -1203,10 +1213,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/threshold/ThresholdBinarization.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="21" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/hr/fer/zemris/zavrad/util/img/filters/Rotation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="38" column="51" lean-forward="false" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+        <state relative-caret-position="169">
+          <caret line="29" column="52" lean-forward="false" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

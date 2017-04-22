@@ -12,9 +12,12 @@ import java.awt.image.BufferedImage;
  * @version 1.0.0
  */
 public class Rotation implements ImageFilter {
-    double angle;
+    private double degree;
+    private double angle;
 
     public Rotation(double angle) {
+        degree = angle;
+
         angle /= 180;
         angle *= Math.PI;
 
@@ -23,6 +26,14 @@ public class Rotation implements ImageFilter {
 
     @Override
     public GrayScaleImage filter(GrayScaleImage... images) {
+        if (images.length != 1){
+            throw new ImageFilterException("Rotation filter expects 1 argument1!");
+        }
+
+        if (Math.abs(degree) < 1){
+            return images[0];
+        }
+
         BufferedImage img = images[0].toBufferedImage();
 
         AffineTransform transform = new AffineTransform();
