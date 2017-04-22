@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad;
+package hr.fer.zemris.zavrad.util.img;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -46,15 +46,8 @@ public class GrayScaleImage {
     }
 
     public void save(File file) throws IOException {
-        BufferedImage bim = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
-        int[] buf = new int[1];
-        WritableRaster r = bim.getRaster();
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
-                buf[0] = (int) data[h][w] & 0xFF;
-                r.setPixel(w, h, buf);
-            }
-        }
+        BufferedImage bim = toBufferedImage();
+
         try {
             ImageIO.write(bim, "png", file);
         } catch (IOException ex) {
@@ -69,20 +62,8 @@ public class GrayScaleImage {
         if (bim.getType() != BufferedImage.TYPE_BYTE_GRAY) {
             throw new IOException("Slika nije grayscale.");
         }
-        GrayScaleImage im = new GrayScaleImage(bim.getWidth(), bim.getHeight());
-        try {
-            int[] buf = new int[1];
-            WritableRaster r = bim.getRaster();
-            for (int h = 0; h < im.height; h++) {
-                for (int w = 0; w < im.width; w++) {
-                    r.getPixel(w, h, buf);
-                    im.data[h][w] = (byte) buf[0];
-                }
-            }
-        } catch (Exception ex) {
-            throw new IOException("Slika nije grayscale.");
-        }
-        return im;
+
+        return fromBufferedImage(bim);
     }
 
     public double getLocalMean(int h, int w, int n, int m){
@@ -150,4 +131,35 @@ public class GrayScaleImage {
         return noise / (width * height);
     }
 
+    public BufferedImage toBufferedImage() {
+        BufferedImage bim = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+        int[] buf = new int[1];
+        WritableRaster r = bim.getRaster();
+        for (int h = 0; h < height; h++) {
+            for (int w = 0; w < width; w++) {
+                buf[0] = (int) data[h][w] & 0xFF;
+                r.setPixel(w, h, buf);
+            }
+        }
+
+        return bim;
+    }
+
+    public static GrayScaleImage fromBufferedImage(BufferedImage bim) {
+        GrayScaleImage im = new GrayScaleImage(bim.getWidth(), bim.getHeight());
+        try {
+            int[] buf = new int[1];
+            WritableRaster r = bim.getRaster();
+            for (int h = 0; h < im.height; h++) {
+                for (int w = 0; w < im.width; w++) {
+                    r.getPixel(w, h, buf);
+                    im.data[h][w] = (byte) buf[0];
+                }
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Slika nije grayscale.");
+        }
+
+        return im;
+    }
 }

@@ -1,8 +1,10 @@
 package hr.fer.zemris.zavrad;
 
-import hr.fer.zemris.zavrad.filters.ImageFilter;
-import hr.fer.zemris.zavrad.filters.threshold.ThresholdBinarization;
+import hr.fer.zemris.zavrad.util.img.filters.ImageFilter;
+import hr.fer.zemris.zavrad.util.img.filters.Rotation;
+import hr.fer.zemris.zavrad.util.img.filters.threshold.ThresholdBinarization;
 import hr.fer.zemris.zavrad.skew.SkewDetection;
+import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,13 +32,16 @@ public class Starter {
         double angle = skew.getAngle(img);
         System.out.println(angle);
 
+        ImageFilter rotation = new Rotation(angle);
+        GrayScaleImage end = rotation.filter(img);
+
         end_time = System.nanoTime();
         difference = (end_time - start_time)/1e6;
         start_time = end_time;
         System.out.println("Skew time: " + difference + "ms");
 
         Path output = Paths.get(args[1]);
-        img.save(output.toFile());
+        end.save(output.toFile());
 
         end_time = System.nanoTime();
         difference = (end_time - start_time)/1e6;

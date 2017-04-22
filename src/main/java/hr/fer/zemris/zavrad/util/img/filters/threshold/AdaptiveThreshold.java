@@ -1,8 +1,8 @@
-package hr.fer.zemris.zavrad.filters.threshold;
+package hr.fer.zemris.zavrad.util.img.filters.threshold;
 
-import hr.fer.zemris.zavrad.GrayScaleImage;
-import hr.fer.zemris.zavrad.filters.ImageFilter;
-import hr.fer.zemris.zavrad.filters.ImageFilterException;
+import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
+import hr.fer.zemris.zavrad.util.img.filters.ImageFilter;
+import hr.fer.zemris.zavrad.util.img.filters.ImageFilterException;
 
 /**
  * @author Kristijan Vulinović

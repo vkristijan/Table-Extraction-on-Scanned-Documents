@@ -1,6 +1,6 @@
 package hr.fer.zemris.zavrad.skew;
 
-import hr.fer.zemris.zavrad.GrayScaleImage;
+import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 import hr.fer.zemris.zavrad.skew.lines.LineDistribution;
 import hr.fer.zemris.zavrad.skew.lines.RandomLineDistribution;
 import hr.fer.zemris.zavrad.util.Rnd;

@@ -1,6 +1,6 @@
-package hr.fer.zemris.zavrad.filters;
+package hr.fer.zemris.zavrad.util.img.filters;
 
-import hr.fer.zemris.zavrad.GrayScaleImage;
+import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 /**
  * @author Kristijan Vulinović
