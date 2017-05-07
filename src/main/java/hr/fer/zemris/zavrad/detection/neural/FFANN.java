@@ -17,6 +17,7 @@ public class FFANN {
         this.layout = layout;
         this.activationFunctions = activationFunctions;
 
+        layers = new Layer[layout.length];
         for (int i = 0; i < layout.length; ++i){
             Layer layer = new Layer(layout[i], activationFunctions[i]);
             layers[i] = layer;

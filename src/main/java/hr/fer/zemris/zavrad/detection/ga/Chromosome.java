@@ -14,6 +14,7 @@ public class Chromosome {
     private static final double UPPER_BOUND = 1;
 
     private double[] data;
+    private double fitness;
 
     public Chromosome(double[] data) {
         this.data = data;
@@ -41,5 +42,17 @@ public class Chromosome {
 
     public void set(int index, double value){
         data[index] = value;
+    }
+
+    public double get(int index){
+        return data[index];
+    }
+
+    public double getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(double fitness) {
+        this.fitness = fitness;
     }
 }
