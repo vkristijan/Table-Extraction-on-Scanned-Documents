@@ -1,5 +1,8 @@
 package hr.fer.zemris.zavrad.detection.neural;
 
+import hr.fer.zemris.zavrad.detection.CornerValues;
+import org.apache.commons.math3.linear.RealVector;
+
 /**
  * @author Kristijan Vulinović
  * @version 1.0.0
@@ -17,7 +20,21 @@ public class FFANN {
         for (int i = 0; i < layout.length; ++i){
             Layer layer = new Layer(layout[i], activationFunctions[i]);
             layers[i] = layer;
+
+            if (i > 0){
+                layer.setPrevious(layers[i - 1]);
+            }
         }
+    }
+
+    public RealVector getOutput(RealVector input){
+        layers[0].setInput(input);
+
+        for (int i = 1; i < layers.length; ++i){
+            layers[i].calculateValues();
+        }
+
+        return layers[layers.length - 1].getValues();
     }
 
     public int getWeightCount(){
@@ -48,6 +65,7 @@ public class FFANN {
         for (Layer layer : layers){
             double[] layerWeights = new double[layer.getWeightCount()];
             System.arraycopy(weights, index, layerWeights, 0, layerWeights.length);
+            layer.setWeights(layerWeights);
             index += layerWeights.length;
         }
     }

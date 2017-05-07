@@ -33,8 +33,6 @@ public class DemoSampler {
                     }
                 }
         );
-
-
     }
 
     private static List<List<Point>> getPoints() {

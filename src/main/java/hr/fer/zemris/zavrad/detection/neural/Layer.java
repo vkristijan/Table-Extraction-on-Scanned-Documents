@@ -49,6 +49,10 @@ public class Layer {
     }
 
     public void setWeights(double[] weights){
+        if (previous == null){
+            return;
+        }
+
         int rows = previous.getSize() + 1;
         int cols = getSize();
 
@@ -64,6 +68,10 @@ public class Layer {
     }
 
     public double[] getWeights(){
+        if (previous == null){
+            return new double[0];
+        }
+
         int rows = this.weights.getRowDimension();
         int cols = this.weights.getColumnDimension();
 
@@ -83,11 +91,24 @@ public class Layer {
     }
 
     public void calculateValues(){
+        if (previous == null){
+            return;
+        }
+
         RealVector input = new ArrayRealVector(BIAS, previous.getValues());
         values = weights.preMultiply(input);
+
+        double[] valueArray = values.toArray();
+        for (int i = 0; i < valueArray.length; ++i){
+            values.setEntry(i, activationFunction.valueAt(valueArray[i]));
+        }
     }
 
     public int getWeightCount() {
+        if (previous == null){
+            return 0;
+        }
+
         int rows = previous.getSize() + 1;
         int cols = getSize();
 
