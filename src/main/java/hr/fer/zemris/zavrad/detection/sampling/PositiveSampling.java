@@ -31,8 +31,9 @@ public class PositiveSampling {
 
         for (int i = 0; i < points.size(); ++i){
             Path currentPath = outputPath.resolve(String.valueOf(i));
-            Files.deleteIfExists(currentPath);
-            Files.createDirectory(currentPath);
+            if (!Files.exists(currentPath)){
+                Files.createDirectory(currentPath);
+            }
 
             for (Point p : points.get(i)){
                 GrayScaleImage sample = new GrayScaleImage(sliderSize, sliderSize);

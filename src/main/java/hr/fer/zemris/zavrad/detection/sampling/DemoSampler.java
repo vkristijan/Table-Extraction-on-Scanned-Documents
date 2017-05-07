@@ -4,6 +4,7 @@ import hr.fer.zemris.zavrad.util.Point;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -15,8 +16,29 @@ import java.util.List;
  */
 public class DemoSampler {
     public static void main(String[] args) throws IOException {
-        List<List<Point>> points = new ArrayList<>();
+        List<List<Point>> points = getPoints();
 
+        Path path = Paths.get(args[0]);
+        Path output = Paths.get(args[1]);
+        PositiveSampling sampling = new PositiveSampling(50, points, output);
+
+        Files.list(path).forEach(
+                p -> {
+                    GrayScaleImage img = null;
+                    try {
+                        img = GrayScaleImage.load(p.toFile());
+                        sampling.getSamples(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+
+
+    }
+
+    private static List<List<Point>> getPoints() {
+        List<List<Point>> points = new ArrayList<>();
         List<Point> ul = new ArrayList<>();
         ul.add(new Point(2110, 148));
         ul.add(new Point(2110, 1390));
@@ -96,13 +118,6 @@ public class DemoSampler {
         dr.add(new Point(2602, 2230));
         points.add(dr);
 
-
-        Path path = Paths.get(args[0]);
-        GrayScaleImage img = GrayScaleImage.load(path.toFile());
-
-        Path output = Paths.get(args[1]);
-
-        PositiveSampling sampling = new PositiveSampling(50, points, output);
-        sampling.getSamples(img);
+        return points;
     }
 }
