@@ -5,4 +5,5 @@ package hr.fer.zemris.zavrad.detection.ga;
  * @version 1.0.0
  */
 public class Ga {
+
 }
