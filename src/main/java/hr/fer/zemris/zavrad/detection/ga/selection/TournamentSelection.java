@@ -24,7 +24,7 @@ public class TournamentSelection implements ISelection {
             int index = Rnd.nextInt(population.size());
             Chromosome chromosome = population.get(index);
 
-            if (best == null || chromosome.getFitness() < best.getFitness()){
+            if (best == null || chromosome.getFitness() > best.getFitness()){
                 best = chromosome;
             }
         }

@@ -13,8 +13,8 @@ import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
  * @version 1.0.0
  */
 public class CornerFeatureExtractor implements IFeatureExtractor {
-    private static final int HORIZONTAL_LINES = 5;
-    private static final int VERTICAL_LINES = 5;
+    private static final int HORIZONTAL_LINES = 2;
+    private static final int VERTICAL_LINES = 2;
 
     private static final int SKIP_STEP = 5;
 
@@ -46,6 +46,7 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
             int yCor = y + (h * (i + 1)) / (HORIZONTAL_LINES + 1);
 
             for (int xCor = x; xCor < x + w; ++xCor){
+                //data[yCor][xCor] = 0;
                 if (data[yCor][xCor] == GrayScaleImage.BLACK){
                     features[index + i]++;
                     xCor += SKIP_STEP;
@@ -60,6 +61,7 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
             int xCor = x + (w * (i + 1)) / (VERTICAL_LINES + 1);
 
             for (int yCor = y; yCor < y + h; ++yCor){
+                //data[yCor][xCor] = 0;
                 if (data[yCor][xCor] == GrayScaleImage.BLACK){
                     features[i]++;
                     yCor += SKIP_STEP;
@@ -69,53 +71,14 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
     }
 
     private void calculateDiagonalLines(byte[][] data, int x, int y, int w, int h, double[] features) {
-        //main diagonal
+        int length = h * 2 / 3;
+
         int index = HORIZONTAL_LINES + VERTICAL_LINES;
         features[index] = 0;
-        for (int i = 0; i < w; ++i){
-            if (data[y + i][x + i] == GrayScaleImage.BLACK){
-                features[index]++;
-                i += SKIP_STEP;
-            }
-        }
-
-        //other diagonal
-        index++;
-        features[index] = 0;
-        for (int i = 0; i < w; ++i){
-            if (data[y + i][x + w - 1- i] == GrayScaleImage.BLACK){
-                features[index]++;
-                i += SKIP_STEP;
-            }
-        }
-
-        index++;
-        features[index] = 0;
-        int xCor = x + w / 2;
-        int yCor = y;
-        for (int i = 0; i < w / 2 - 1; ++i){
-            if (data[yCor + i][xCor + i] == GrayScaleImage.BLACK){
-                features[index]++;
-                i += SKIP_STEP;
-            }
-        }
-
-        index++;
-        features[index] = 0;
-        xCor = x;
-        yCor = y + h / 2;
-        for (int i = 0; i < h / 2 - 1; ++i){
-            if (data[yCor + i][xCor + i] == GrayScaleImage.BLACK){
-                features[index]++;
-                i += SKIP_STEP;
-            }
-        }
-
-        index++;
-        features[index] = 0;
-        xCor = x;
-        yCor = y + h / 2;
-        for (int i = 0; i < h / 2 - 1; ++i){
+        int xCor = x;
+        int yCor = y + length;
+        for (int i = 0; i < length - 1; ++i){
+            //data[yCor - i][xCor + i] = 0;
             if (data[yCor - i][xCor + i] == GrayScaleImage.BLACK){
                 features[index]++;
                 i += SKIP_STEP;
@@ -124,10 +87,35 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
 
         index++;
         features[index] = 0;
-        xCor = x + w / 2;
+        xCor = x + w - length;
         yCor = y + h - 1;
-        for (int i = 0; i < h / 2 - 1; ++i){
+        for (int i = 0; i < length - 1; ++i){
+            //data[yCor - i][xCor + i] = 0;
             if (data[yCor - i][xCor + i] == GrayScaleImage.BLACK){
+                features[index]++;
+                i += SKIP_STEP;
+            }
+        }
+
+        index++;
+        features[index] = 0;
+        xCor = x;
+        yCor = y + h - length;
+        for (int i = 0; i < length - 1; ++i){
+            //data[yCor + i][xCor + i] = 0;
+            if (data[yCor + i][xCor + i] == GrayScaleImage.BLACK){
+                features[index]++;
+                i += SKIP_STEP;
+            }
+        }
+
+        index++;
+        features[index] = 0;
+        xCor = x + w - length;
+        yCor = y;
+        for (int i = 0; i < length - 1; ++i){
+            //data[yCor + i][xCor + i] = 0;
+            if (data[yCor + i][xCor + i] == GrayScaleImage.BLACK){
                 features[index]++;
                 i += SKIP_STEP;
             }
@@ -135,7 +123,7 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
     }
 
     private int numberOfFeatures() {
-        //2 diagonals + 4 other diagonals
-        return HORIZONTAL_LINES + VERTICAL_LINES + 6;
+        //4 diagonals
+        return HORIZONTAL_LINES + VERTICAL_LINES + 4;
     }
 }

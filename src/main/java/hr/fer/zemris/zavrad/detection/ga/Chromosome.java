@@ -9,7 +9,7 @@ import hr.fer.zemris.zavrad.util.Rnd;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class Chromosome {
+public class Chromosome implements Comparable<Chromosome>{
     private static final double LOWER_BOUND = -1;
     private static final double UPPER_BOUND = 1;
 
@@ -54,5 +54,10 @@ public class Chromosome {
 
     public void setFitness(double fitness) {
         this.fitness = fitness;
+    }
+
+    @Override
+    public int compareTo(Chromosome o) {
+        return Double.compare(this.fitness, o.fitness);
     }
 }

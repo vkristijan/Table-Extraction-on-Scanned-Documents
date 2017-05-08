@@ -9,17 +9,21 @@ import hr.fer.zemris.zavrad.util.Rnd;
  */
 public class RandomMutation implements IMutation {
     private double mutationRate;
+    private double mutationChance;
 
-    public RandomMutation(double mutationRate) {
+    public RandomMutation(double mutationRate, double mutationChance) {
         this.mutationRate = mutationRate;
+        this.mutationChance = mutationChance;
     }
 
     @Override
     public void mutate(Chromosome chromosome) {
-        int index = Rnd.nextInt(chromosome.size());
-        double delta = Rnd.nextDouble(-mutationRate, mutationRate);
+        for (int i = 0; i < chromosome.size(); ++i){
+            if (Rnd.nextDouble() >= mutationChance) continue;
 
-        double value = chromosome.get(index);
-        chromosome.set(index, value + delta);
+            double delta = Rnd.nextGaussian() * mutationRate;
+            double value = chromosome.get(i);
+            chromosome.set(i, value + delta);
+        }
     }
 }

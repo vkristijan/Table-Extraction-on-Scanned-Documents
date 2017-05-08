@@ -23,6 +23,10 @@ public class Rnd {
         return from + instance.rnd.nextDouble() * (to - from);
     }
 
+    public static double nextGaussian(){
+        return instance.rnd.nextGaussian();
+    }
+
     public static int nextInt(){
         return instance.rnd.nextInt();
     }

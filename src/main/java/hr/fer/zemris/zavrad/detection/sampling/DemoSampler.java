@@ -2,6 +2,8 @@ package hr.fer.zemris.zavrad.detection.sampling;
 
 import hr.fer.zemris.zavrad.util.Point;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
+import hr.fer.zemris.zavrad.util.img.filters.ImageFilter;
+import hr.fer.zemris.zavrad.util.img.filters.threshold.ThresholdBinarization;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +17,9 @@ import java.util.List;
  * @version 1.0.0
  */
 public class DemoSampler {
+    private static int threshold = 127;
+    private static ImageFilter binarization = new ThresholdBinarization(threshold);
+
     public static void main(String[] args) throws IOException {
         List<List<Point>> points = getPoints();
 
@@ -27,6 +32,7 @@ public class DemoSampler {
                     GrayScaleImage img = null;
                     try {
                         img = GrayScaleImage.load(p.toFile());
+                        img = binarization.filter(img);
                         sampling.getSamples(img);
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -41,7 +41,8 @@ public class CornerEvaluator implements IEvaluator {
         for (File file : files){
             try {
                 GrayScaleImage img = GrayScaleImage.load(file);
-                Sample sample = new Sample(img, value);
+                double[] input = extractor.getFeatures(img);
+                Sample sample = new Sample(value, input);
                 samples.add(sample);
             } catch (IOException e) {
                 System.err.println("Unable to load the image!");
@@ -51,12 +52,12 @@ public class CornerEvaluator implements IEvaluator {
 
     @Override
     public void evaluate(Chromosome chromosome) {
-        double fitness = 0;
+        double fitness;
         double detected = 0;
 
+        detection.setWeights(chromosome.getData());
         for (Sample sample : samples){
-            double[] input = extractor.getFeatures(sample.img);
-            CornerValues detectedValue = detection.detect(input);
+            CornerValues detectedValue = detection.detect(sample.input);
 
             if (detectedValue.equals(sample.value)){
                 detected++;
@@ -68,12 +69,12 @@ public class CornerEvaluator implements IEvaluator {
     }
 
     private class Sample {
-        private GrayScaleImage img;
         private CornerValues value;
+        private double[] input;
 
-        Sample(GrayScaleImage img, CornerValues value) {
-            this.img = img;
+        Sample(CornerValues value, double[] input) {
             this.value = value;
+            this.input = input;
         }
     }
 }

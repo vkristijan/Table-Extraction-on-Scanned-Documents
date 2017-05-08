@@ -16,8 +16,8 @@ import java.util.List;
  * @version 1.0.0
  */
 public class CornerDetection {
-    private static final int INPUT_LAYER = 16;
-    private static final int HIDDEN_LAYER = 13;
+    private static final int INPUT_LAYER = 8;
+    private static final int HIDDEN_LAYER = 9;
     private static final int OUTPUT_LAYER = 10;
     private FFANN ffann;
 
