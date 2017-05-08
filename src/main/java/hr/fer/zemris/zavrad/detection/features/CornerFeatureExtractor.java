@@ -15,6 +15,7 @@ import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 public class CornerFeatureExtractor implements IFeatureExtractor {
     private static final int HORIZONTAL_LINES = 2;
     private static final int VERTICAL_LINES = 2;
+    private static final double DISTANCE = 0.2;
 
     private static final int SKIP_STEP = 5;
 
@@ -41,31 +42,52 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
 
     private void calculateHorizontalLines(byte[][] data, int x, int y, int w, int h, double[] features) {
         int index = VERTICAL_LINES;
-        for (int i = 0; i < HORIZONTAL_LINES; ++i){
-            features[index + i] = 0;
-            int yCor = y + (h * (i + 1)) / (HORIZONTAL_LINES + 1);
+        features[index] = 0;
+        int yCor = y + (int)(h * DISTANCE);
 
-            for (int xCor = x; xCor < x + w; ++xCor){
-                //data[yCor][xCor] = 0;
-                if (data[yCor][xCor] == GrayScaleImage.BLACK){
-                    features[index + i]++;
-                    xCor += SKIP_STEP;
-                }
+        for (int xCor = x; xCor < x + w; ++xCor){
+            //data[yCor][xCor] = 0;
+            if (data[yCor][xCor] == GrayScaleImage.BLACK){
+                features[index]++;
+                xCor += SKIP_STEP;
+            }
+        }
+
+        index++;
+        features[index] = 0;
+        yCor = y + h - (int)(h * DISTANCE);
+
+        for (int xCor = x; xCor < x + w; ++xCor){
+            //data[yCor][xCor] = 0;
+            if (data[yCor][xCor] == GrayScaleImage.BLACK){
+                features[index]++;
+                xCor += SKIP_STEP;
             }
         }
     }
 
     private void calculateVerticalLines(byte[][] data, int x, int y, int w, int h, double[] features) {
-        for (int i = 0; i < VERTICAL_LINES; ++i){
-            features[i] = 0;
-            int xCor = x + (w * (i + 1)) / (VERTICAL_LINES + 1);
+        int index = 0;
+        features[index] = 0;
+        int xCor = x + (int)(w * DISTANCE);
 
-            for (int yCor = y; yCor < y + h; ++yCor){
-                //data[yCor][xCor] = 0;
-                if (data[yCor][xCor] == GrayScaleImage.BLACK){
-                    features[i]++;
-                    yCor += SKIP_STEP;
-                }
+        for (int yCor = y; yCor < y + h; ++yCor){
+            //data[yCor][xCor] = 0;
+            if (data[yCor][xCor] == GrayScaleImage.BLACK){
+                features[index]++;
+                yCor += SKIP_STEP;
+            }
+        }
+
+        index++;
+        features[index] = 0;
+        xCor = x + w - (int)(w * DISTANCE);
+
+        for (int yCor = y; yCor < y + h; ++yCor){
+            //data[yCor][xCor] = 0;
+            if (data[yCor][xCor] == GrayScaleImage.BLACK){
+                features[index]++;
+                yCor += SKIP_STEP;
             }
         }
     }

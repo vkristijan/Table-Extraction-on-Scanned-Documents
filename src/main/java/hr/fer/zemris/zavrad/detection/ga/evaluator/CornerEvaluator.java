@@ -52,20 +52,42 @@ public class CornerEvaluator implements IEvaluator {
 
     @Override
     public void evaluate(Chromosome chromosome) {
-        double fitness;
-        double detected = 0;
+        double fitness = 0;
+        int n = CornerValues.values().length;
+        double[] detected = new double[n];
+        double[] total = new double[n];
 
         detection.setWeights(chromosome.getData());
         for (Sample sample : samples){
             CornerValues detectedValue = detection.detect(sample.input);
 
+            total[sample.value.getValue()]++;
             if (detectedValue.equals(sample.value)){
-                detected++;
+                detected[detectedValue.getValue()]++;
             }
         }
 
-        fitness = detected / samples.size();
+        int count = 0;
+        for (int i = 0; i < n; ++i){
+            if (total[i] > 0){
+                fitness += (detected[i] / total[i]);
+                count++;
+            }
+        }
+        fitness /= count;
         chromosome.setFitness(fitness);
+    }
+
+    @Override
+    public void showError(Chromosome chromosome) {
+        detection.setWeights(chromosome.getData());
+        for (Sample sample : samples){
+            CornerValues detectedValue = detection.detect(sample.input);
+
+            if (!detectedValue.equals(sample.value)){
+                System.out.println("Got " + detectedValue + ", expected " + sample.value);
+            }
+        }
     }
 
     private class Sample {

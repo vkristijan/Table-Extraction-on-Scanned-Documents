@@ -8,4 +8,6 @@ import hr.fer.zemris.zavrad.detection.ga.Chromosome;
  */
 public interface IEvaluator {
     void evaluate(Chromosome chromosome);
+
+    void showError(Chromosome chromosome);
 }

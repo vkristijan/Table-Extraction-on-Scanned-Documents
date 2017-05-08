@@ -13,8 +13,9 @@ import java.util.List;
  * @version 1.0.0
  */
 public class Ga {
-    private static final int POPULATION_SIZE = 50;
-    private static final int MAX_GENERATIONS = 1000;
+    private static final int POPULATION_SIZE = 60;
+    private static final int MAX_GENERATIONS = 100000;
+    private static final double STOP_CONDITION = 0.999;
 
     private ISelection firstSelection;
     private ISelection secondSelection;
@@ -40,7 +41,7 @@ public class Ga {
         Chromosome best = bestOfPopulation(population);
 
         int generation = 0;
-        while (generation < MAX_GENERATIONS){
+        while (generation < MAX_GENERATIONS && best.getFitness() < STOP_CONDITION){
             generation++;
             List<Chromosome> newPopulation = new ArrayList<>();
             newPopulation.add(best);

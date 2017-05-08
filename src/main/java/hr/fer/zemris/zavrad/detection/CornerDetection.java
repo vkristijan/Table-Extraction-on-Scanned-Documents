@@ -22,10 +22,10 @@ public class CornerDetection {
     private FFANN ffann;
 
     public CornerDetection() {
-        int[] layout = new int[]{INPUT_LAYER, HIDDEN_LAYER, OUTPUT_LAYER};
+        int[] layout = new int[]{INPUT_LAYER, /*HIDDEN_LAYER, */OUTPUT_LAYER};
         ActivationFunction[] activationFunctions = new ActivationFunction[]{
                 ActivationFunction.LINEAR,
-                ActivationFunction.SIGMOID,
+                //ActivationFunction.SIGMOID,
                 ActivationFunction.SIGMOID
         };
 
