@@ -25,7 +25,7 @@ public class DemoSampler {
 
         Path path = Paths.get(args[0]);
         Path output = Paths.get(args[1]);
-        PositiveSampling sampling = new PositiveSampling(50, points, output);
+        PositiveSampling sampling = new PositiveSampling(75, points, output);
 
         Files.list(path).forEach(
                 p -> {
@@ -121,6 +121,27 @@ public class DemoSampler {
         dr.add(new Point(2602, 1158));
         dr.add(new Point(2602, 2230));
         points.add(dr);
+
+        List<Point> none = new ArrayList<>();
+        none.add(new Point(2194, 149));
+        none.add(new Point(2116, 226));
+        none.add(new Point(2198, 229));
+        none.add(new Point(2362, 227));
+        none.add(new Point(2535, 234));
+        none.add(new Point(2198, 396));
+        none.add(new Point(2354, 399));
+        none.add(new Point(2519, 410));
+        none.add(new Point(2195, 565));
+        none.add(new Point(2359, 561));
+        none.add(new Point(2522, 564));
+        none.add(new Point(2195, 737));
+        none.add(new Point(2362, 740));
+        none.add(new Point(2520, 739));
+        none.add(new Point(2191, 907));
+        none.add(new Point(2358, 906));
+        none.add(new Point(2335, 742));
+        none.add(new Point(2494, 719));
+        points.add(none);
 
         return points;
     }
