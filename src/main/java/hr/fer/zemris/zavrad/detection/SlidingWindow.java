@@ -20,12 +20,11 @@ public class SlidingWindow {
     private CornerDetection detection;
     private IFeatureExtractor extractor;
 
-    public SlidingWindow(int windowSize, int step, IFeatureExtractor extractor) {
+    public SlidingWindow(int windowSize, int step, CornerDetection detection, IFeatureExtractor extractor) {
         this.windowSize = windowSize;
         this.step = step;
+        this.detection = detection;
         this.extractor = extractor;
-
-        this.detection = new CornerDetection();
     }
 
     public List<Corner> detectCorners(GrayScaleImage img){

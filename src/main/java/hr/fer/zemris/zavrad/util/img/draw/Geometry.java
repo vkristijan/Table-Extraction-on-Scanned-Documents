@@ -22,18 +22,14 @@ public class Geometry {
     public static void drawRectangle(GrayScaleImage img, int x, int y, int width, int height, byte color){
         byte[][] data = img.getData();
 
-        int fromX = Math.max(x, 0);
-        int toX = Math.min(x + width, img.getWidth());
+        for (int i = x; i < x + width; ++i){
+            data[y][i] = color;
+            data[y + height - 1][i] = color;
+        }
 
-        int fromY = Math.max(y, 0);
-        int toY = Math.min(y + height, img.getHeight());
-
-        if (fromX >= toX || fromY >= toY) return;
-
-        for (int i = fromY; i < toY; ++i){
-            for (int j = fromX; j < toX; ++j){
-                data[i][j] = color;
-            }
+        for (int i = y; i < y + height; ++i){
+            data[i][x] = color;
+            data[i][x + width - 1] = color;
         }
     }
 }
