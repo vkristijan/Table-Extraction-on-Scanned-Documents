@@ -17,7 +17,11 @@ public class CornerExtractorDemo {
 
         GrayScaleImage img = GrayScaleImage.load(input.toFile());
         CornerFeatureExtractor extractor = new CornerFeatureExtractor();
-        extractor.getFeatures(img);
+        double[] features = extractor.getFeatures(img);
+
+        for (double feature : features){
+            System.out.println(feature);
+        }
 
         img.save(output.toFile());
     }

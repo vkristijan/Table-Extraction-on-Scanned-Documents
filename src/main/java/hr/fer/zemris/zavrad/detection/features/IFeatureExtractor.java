@@ -16,7 +16,9 @@ public interface IFeatureExtractor {
      * @param img The source image.
      * @return An array containing all the features.
      */
-    double[] getFeatures(GrayScaleImage img);
+    default double[] getFeatures(GrayScaleImage img){
+        return getFeatures(img, 0, 0, img.getWidth(), img.getHeight());
+    }
 
     /**
      * Generates the feature array using only a subset of the image, that is defined
