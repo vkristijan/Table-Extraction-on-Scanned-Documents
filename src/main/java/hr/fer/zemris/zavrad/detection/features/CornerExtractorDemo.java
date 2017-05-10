@@ -1,5 +1,6 @@
 package hr.fer.zemris.zavrad.detection.features;
 
+import hr.fer.zemris.zavrad.detection.features.feature.IFeature;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class CornerExtractorDemo {
         Path output = Paths.get(args[1]);
 
         GrayScaleImage img = GrayScaleImage.load(input.toFile());
-        CornerFeatureExtractor extractor = new CornerFeatureExtractor();
+        IFeatureExtractor extractor = new DistanceFeatureExtractor();
         double[] features = extractor.getFeatures(img);
 
         for (double feature : features){
