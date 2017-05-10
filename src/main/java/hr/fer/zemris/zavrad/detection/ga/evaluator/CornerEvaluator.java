@@ -18,11 +18,14 @@ import java.util.List;
  * @version 1.0.0
  */
 public class CornerEvaluator implements IEvaluator {
+    private Path dataPath;
+
     private List<Sample> samples;
     private CornerDetection detection;
     private IFeatureExtractor extractor;
 
     public CornerEvaluator(Path dataPath, CornerDetection detection, IFeatureExtractor extractor) {
+        this.dataPath = dataPath;
         this.detection = detection;
         this.extractor = extractor;
         this.samples = new ArrayList<>();
@@ -48,6 +51,11 @@ public class CornerEvaluator implements IEvaluator {
                 System.err.println("Unable to load the image!");
             }
         }
+    }
+
+    @Override
+    public IEvaluator copy() {
+        return new CornerEvaluator(dataPath, detection.copy(), extractor);
     }
 
     @Override

@@ -7,6 +7,7 @@ import hr.fer.zemris.zavrad.detection.ga.selection.ISelection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * @author Kristijan Vulinović
@@ -14,14 +15,14 @@ import java.util.List;
  */
 public class Ga {
     private static final int POPULATION_SIZE = 60;
-    private static final int MAX_GENERATIONS = 100000;
+    private static final int MAX_GENERATIONS = 250000;
     private static final double STOP_CONDITION = 0.999;
 
     private ISelection firstSelection;
     private ISelection secondSelection;
     private ICrossover crossover;
     private IMutation mutation;
-    private IEvaluator evaluator;
+    private ThreadLocal<IEvaluator> evaluator;
 
     private int chromosomeSize;
 
@@ -32,37 +33,81 @@ public class Ga {
         this.secondSelection = secondSelection;
         this.crossover = crossover;
         this.mutation = mutation;
-        this.evaluator = evaluator;
         this.chromosomeSize = chromosomeSize;
+
+        this.evaluator = ThreadLocal.withInitial(evaluator::copy);
     }
 
     public Chromosome run(){
-        List<Chromosome> population = initPopulation();
-        Chromosome best = bestOfPopulation(population);
+        ExecutorService pool = null;
+        List<Chromosome> population = null;
 
-        int generation = 0;
-        while (generation < MAX_GENERATIONS && best.getFitness() < STOP_CONDITION){
-            generation++;
-            List<Chromosome> newPopulation = new ArrayList<>();
-            newPopulation.add(best);
+        try {
+            pool = Executors.newFixedThreadPool(
+                    Runtime.getRuntime().availableProcessors(),
+                    r -> {
+                        Thread t = new Thread(r);
+                        t.setDaemon(true);
+                        return t;
+                    });
 
-            for (int i = 0; i < POPULATION_SIZE; ++i){
-                Chromosome parrent1 = firstSelection.select(population);
-                Chromosome parrent2 = secondSelection.select(population);
+            population = initPopulation();
+            evaluate(population, pool);
+            Chromosome best = bestOfPopulation(population);
 
-                Chromosome child = crossover.crossover(parrent1, parrent2);
-                mutation.mutate(child);
-                evaluator.evaluate(child);
-                newPopulation.add(child);
+            int generation = 0;
+            while (generation < MAX_GENERATIONS && best.getFitness() < STOP_CONDITION){
+                generation++;
+                List<Chromosome> newPopulation = new ArrayList<>();
+                newPopulation.add(best);
+
+                for (int i = 0; i < POPULATION_SIZE; ++i){
+                    Chromosome parent1 = firstSelection.select(population);
+                    Chromosome parent2 = secondSelection.select(population);
+
+                    Chromosome child = crossover.crossover(parent1, parent2);
+                    mutation.mutate(child);
+                    newPopulation.add(child);
+                }
+                evaluate(newPopulation, pool);
+
+                population = newPopulation;
+                best = bestOfPopulation(population);
+                System.out.println("Iteration #" + generation + "  - Best fitness: " + best.getFitness());
+                populationStats(population);
             }
 
-            population = newPopulation;
-            best = bestOfPopulation(population);
-            System.out.println("Iteration #" + generation + "  - Best fitness: " + best.getFitness());
-            populationStats(population);
+        } finally {
+            if (pool != null){
+                pool.shutdown();
+            }
         }
 
-        return best;
+        return bestOfPopulation(population);
+    }
+
+    private void evaluate(List<Chromosome> population, ExecutorService pool) {
+        IEvaluator evaluator = this.evaluator.get();
+
+        List<Callable<Void>> callables = new ArrayList<>();
+        population.forEach(c -> callables.add(() -> evaluateSolution(c, evaluator)));
+
+        try {
+            List<Future<Void>> results = pool.invokeAll(callables);
+
+            for (Future<Void> result : results) {
+                result.get();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Void evaluateSolution(Chromosome c, IEvaluator evaluator) {
+        evaluator.evaluate(c);
+        return null;
     }
 
     private void populationStats(List<Chromosome> population) {
@@ -98,8 +143,6 @@ public class Ga {
 
         for (int i = 0; i < POPULATION_SIZE; ++i){
             Chromosome chromosome = new Chromosome(chromosomeSize);
-            evaluator.evaluate(chromosome);
-
             population.add(chromosome);
         }
         return population;

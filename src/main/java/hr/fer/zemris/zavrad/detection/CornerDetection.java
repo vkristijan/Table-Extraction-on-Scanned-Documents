@@ -93,4 +93,8 @@ public class CornerDetection {
             e.printStackTrace();
         }
     }
+
+    public CornerDetection copy() {
+        return new CornerDetection();
+    }
 }

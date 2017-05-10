@@ -7,6 +7,8 @@ import hr.fer.zemris.zavrad.detection.ga.Chromosome;
  * @version 1.0.0
  */
 public interface IEvaluator {
+    IEvaluator copy();
+
     void evaluate(Chromosome chromosome);
 
     void showError(Chromosome chromosome);
