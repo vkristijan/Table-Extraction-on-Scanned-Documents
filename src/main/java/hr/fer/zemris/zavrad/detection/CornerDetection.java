@@ -3,6 +3,7 @@ package hr.fer.zemris.zavrad.detection;
 import hr.fer.zemris.zavrad.detection.neural.ActivationFunction;
 import hr.fer.zemris.zavrad.detection.neural.FFANN;
 import hr.fer.zemris.zavrad.detection.neural.NeuralException;
+import hr.fer.zemris.zavrad.table.CornerValue;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -40,7 +41,7 @@ public class CornerDetection {
         return ffann.getWeightCount();
     }
 
-    public CornerValues detect(double[] input){
+    public CornerValue detect(double[] input){
         if (input.length != INPUT_LAYER){
             throw new NeuralException("Wrong number of features in input vector.");
         }
@@ -58,7 +59,7 @@ public class CornerDetection {
             }
         }
 
-        return CornerValues.getCornerValue(index);
+        return CornerValue.getCornerValue(index);
     }
 
     public void readWeightsFromFile(Path filePath){

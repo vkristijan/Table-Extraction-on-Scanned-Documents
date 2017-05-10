@@ -1,6 +1,5 @@
 package hr.fer.zemris.zavrad.detection.neural;
 
-import hr.fer.zemris.zavrad.detection.CornerValues;
 import org.apache.commons.math3.linear.RealVector;
 
 /**

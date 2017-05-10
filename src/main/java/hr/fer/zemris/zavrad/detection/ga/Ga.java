@@ -15,7 +15,7 @@ import java.util.concurrent.*;
  */
 public class Ga {
     private static final int POPULATION_SIZE = 60;
-    private static final int MAX_GENERATIONS = 250000;
+    private static final int MAX_GENERATIONS = 25000;
     private static final double STOP_CONDITION = 0.999;
 
     private ISelection firstSelection;

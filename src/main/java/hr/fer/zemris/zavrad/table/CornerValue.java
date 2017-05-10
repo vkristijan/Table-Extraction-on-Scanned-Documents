@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad.detection;
+package hr.fer.zemris.zavrad.table;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import java.util.Map;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public enum CornerValues {
+public enum CornerValue {
     UL_CORNER(0),
     TOP(1),
     UR_CORNER(2),
@@ -20,15 +20,15 @@ public enum CornerValues {
     NONE(9);
 
     private int value;
-    private static Map<Integer, CornerValues> map;
+    private static Map<Integer, CornerValue> map;
 
-    CornerValues(int value) {
+    CornerValue(int value) {
         this.value = value;
     }
 
     static {
         map = new HashMap<>();
-        for (CornerValues corner : CornerValues.values()){
+        for (CornerValue corner : CornerValue.values()){
             map.put(corner.value, corner);
         }
     }
@@ -37,7 +37,7 @@ public enum CornerValues {
         return value;
     }
 
-    public static CornerValues getCornerValue(int value){
+    public static CornerValue getCornerValue(int value){
         return map.get(value);
     }
 }

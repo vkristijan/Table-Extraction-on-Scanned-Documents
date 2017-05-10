@@ -1,7 +1,7 @@
 package hr.fer.zemris.zavrad.detection.ga.evaluator;
 
 import hr.fer.zemris.zavrad.detection.CornerDetection;
-import hr.fer.zemris.zavrad.detection.CornerValues;
+import hr.fer.zemris.zavrad.table.CornerValue;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.ga.Chromosome;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
@@ -30,13 +30,13 @@ public class CornerEvaluator implements IEvaluator {
         this.extractor = extractor;
         this.samples = new ArrayList<>();
 
-        for (CornerValues value : CornerValues.values()){
+        for (CornerValue value : CornerValue.values()){
             Path path = dataPath.resolve(String.valueOf(value.getValue()));
             loadSamples(path, value);
         }
     }
 
-    private void loadSamples(Path path, CornerValues value) {
+    private void loadSamples(Path path, CornerValue value) {
         if (!Files.exists(path)) return;
 
         File[] files = path.toFile().listFiles();
@@ -61,13 +61,13 @@ public class CornerEvaluator implements IEvaluator {
     @Override
     public void evaluate(Chromosome chromosome) {
         double fitness = 0;
-        int n = CornerValues.values().length;
+        int n = CornerValue.values().length;
         double[] detected = new double[n];
         double[] total = new double[n];
 
         detection.setWeights(chromosome.getData());
         for (Sample sample : samples){
-            CornerValues detectedValue = detection.detect(sample.input);
+            CornerValue detectedValue = detection.detect(sample.input);
 
             total[sample.value.getValue()]++;
             if (detectedValue.equals(sample.value)){
@@ -90,7 +90,7 @@ public class CornerEvaluator implements IEvaluator {
     public void showError(Chromosome chromosome) {
         detection.setWeights(chromosome.getData());
         for (Sample sample : samples){
-            CornerValues detectedValue = detection.detect(sample.input);
+            CornerValue detectedValue = detection.detect(sample.input);
 
             if (!detectedValue.equals(sample.value)){
                 System.out.println("Got " + detectedValue + ", expected " + sample.value);
@@ -99,10 +99,10 @@ public class CornerEvaluator implements IEvaluator {
     }
 
     private class Sample {
-        private CornerValues value;
+        private CornerValue value;
         private double[] input;
 
-        Sample(CornerValues value, double[] input) {
+        Sample(CornerValue value, double[] input) {
             this.value = value;
             this.input = input;
         }
