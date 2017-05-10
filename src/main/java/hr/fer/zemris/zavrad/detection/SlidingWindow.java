@@ -42,7 +42,7 @@ public class SlidingWindow {
                 Point position = new Point(x + windowSize / 2, y + windowSize / 2);
                 boolean shouldConsider = true;
                 for (int i = corners.size() - 1; i >= 0; --i){
-                    if (corners.get(i).getPosition().getY() + windowSize/2 > position.getY()){
+                    if (corners.get(i).getPosition().getY() + windowSize/2 < position.getY()){
                         break;
                     }
 
@@ -51,6 +51,8 @@ public class SlidingWindow {
                         break;
                     }
                 }
+
+                if (!shouldConsider) continue;
                 Corner corner = new Corner(value, position);
                 corners.add(corner);
 

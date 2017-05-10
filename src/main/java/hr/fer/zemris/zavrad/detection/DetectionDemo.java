@@ -38,6 +38,7 @@ public class DetectionDemo {
 
         List<Corner> corners = slider.detectCorners(img);
 
+        System.out.println(corners.size());
         for (Corner corner : corners){
             int x = corner.getPosition().getX() - windowSize / 2;
             int y = corner.getPosition().getY() - windowSize / 2;
