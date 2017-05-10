@@ -2,6 +2,7 @@ package hr.fer.zemris.zavrad.detection.training;
 
 import hr.fer.zemris.zavrad.detection.CornerDetection;
 import hr.fer.zemris.zavrad.detection.features.CornerFeatureExtractor;
+import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.ga.Chromosome;
 import hr.fer.zemris.zavrad.detection.ga.Ga;
@@ -32,7 +33,7 @@ public class CornerDetectionTraining {
     public static void main(String[] args) {
         Path dataPath = Paths.get(args[0]);
         CornerDetection detection = new CornerDetection();
-        IFeatureExtractor extractor = new CornerFeatureExtractor();
+        IFeatureExtractor extractor = new DistanceFeatureExtractor();
 
         int chromosomeSize = detection.getWeightCount();
 
