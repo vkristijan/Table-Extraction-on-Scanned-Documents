@@ -87,10 +87,8 @@ public class Ga {
     }
 
     private void evaluate(List<Chromosome> population, ExecutorService pool) {
-        IEvaluator evaluator = this.evaluator.get();
-
         List<Callable<Void>> callables = new ArrayList<>();
-        population.forEach(c -> callables.add(() -> evaluateSolution(c, evaluator)));
+        population.forEach(c -> callables.add(() -> evaluateSolution(c)));
 
         try {
             List<Future<Void>> results = pool.invokeAll(callables);
@@ -98,15 +96,13 @@ public class Ga {
             for (Future<Void> result : results) {
                 result.get();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
 
-    private Void evaluateSolution(Chromosome c, IEvaluator evaluator) {
-        evaluator.evaluate(c);
+    private Void evaluateSolution(Chromosome c) {
+        evaluator.get().evaluate(c);
         return null;
     }
 
