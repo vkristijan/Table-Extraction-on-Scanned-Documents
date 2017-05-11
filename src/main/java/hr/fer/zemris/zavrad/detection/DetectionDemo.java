@@ -1,6 +1,7 @@
 package hr.fer.zemris.zavrad.detection;
 
 import hr.fer.zemris.zavrad.detection.features.CornerFeatureExtractor;
+import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.table.Corner;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
@@ -29,7 +30,7 @@ public class DetectionDemo {
         CornerDetection detection = new CornerDetection();
         detection.readWeightsFromFile(weights);
 
-        IFeatureExtractor extractor = new CornerFeatureExtractor();
+        IFeatureExtractor extractor = new DistanceFeatureExtractor();
         SlidingWindow slider = new SlidingWindow(windowSize, step, detection, extractor);
 
         GrayScaleImage img = GrayScaleImage.load(input.toFile());

@@ -16,7 +16,7 @@ import java.util.List;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class DemoSampler {
+public class PositiveSampler {
     private static int threshold = 127;
     private static ImageFilter binarization = new ThresholdBinarization(threshold);
 

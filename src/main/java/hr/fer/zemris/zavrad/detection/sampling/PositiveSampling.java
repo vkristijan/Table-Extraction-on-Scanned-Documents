@@ -12,7 +12,7 @@ import java.util.List;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class PositiveSampling {
+public class PositiveSampling implements ISampling {
     private static int COUNTER = 0;
 
     private int sliderSize;
