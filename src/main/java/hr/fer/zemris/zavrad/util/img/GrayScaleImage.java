@@ -162,4 +162,26 @@ public class GrayScaleImage {
 
         return im;
     }
+
+    public GrayScaleImage getSubset(int fromX, int fromY, int w, int h){
+        GrayScaleImage sample = new GrayScaleImage(w, h);
+        byte[][] sampleData = sample.getData();
+
+        int toX = fromX + w;
+        int toY = fromY + h;
+
+        if (fromX < 0 || fromY < 0
+                || toX >= getWidth()
+                || toY >= getHeight()){
+            throw new IndexOutOfBoundsException("The given coordinates are outside the image!");
+        }
+
+        for (int x = 0; x < w; ++x){
+            for (int y = 0; y < h; ++y){
+                sampleData[y][x] = data[y + fromY][x + fromX];
+            }
+        }
+
+        return sample;
+    }
 }
