@@ -1,14 +1,12 @@
 package hr.fer.zemris.zavrad.detection.training;
 
 import hr.fer.zemris.zavrad.detection.CornerDetection;
-import hr.fer.zemris.zavrad.detection.features.CornerFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.ga.Chromosome;
 import hr.fer.zemris.zavrad.detection.ga.Ga;
 import hr.fer.zemris.zavrad.detection.ga.crossover.BLXAlphaCrossover;
 import hr.fer.zemris.zavrad.detection.ga.crossover.ICrossover;
-import hr.fer.zemris.zavrad.detection.ga.crossover.SinglePointCrossover;
 import hr.fer.zemris.zavrad.detection.ga.evaluator.CornerEvaluator;
 import hr.fer.zemris.zavrad.detection.ga.evaluator.IEvaluator;
 import hr.fer.zemris.zavrad.detection.ga.mutation.IMutation;

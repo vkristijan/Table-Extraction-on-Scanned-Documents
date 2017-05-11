@@ -13,7 +13,7 @@ import java.util.List;
  * @version 1.0.0
  */
 public class NegativeSampling implements ISampling {
-    private static int COUNTER = 2500;
+    private static int COUNTER = 7200;
 
     private int sliderSize;
     private List<Point> points;
@@ -27,8 +27,6 @@ public class NegativeSampling implements ISampling {
     }
 
     public void getSamples(GrayScaleImage image) throws IOException {
-        byte[][] data = image.getData();
-
         for (int i = 0; i < points.size(); ++i){
             Path currentPath = outputPath;
             if (!Files.exists(currentPath)){
@@ -41,8 +39,8 @@ public class NegativeSampling implements ISampling {
                 int fromX = p.getX() - sliderSize / 2;
                 int fromY = p.getY() - sliderSize / 2;
 
-                for (int x = -50; x <= 50; x += 10){
-                    for (int y = -50; y <= 50; y += 10){
+                for (int x = -50; x <= 50; x += 25){
+                    for (int y = -50; y <= 50; y += 25){
                         extractImage(image, sample, fromX + x, fromY + y, currentPath);
                     }
                 }

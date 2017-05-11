@@ -1,6 +1,5 @@
 package hr.fer.zemris.zavrad.detection;
 
-import hr.fer.zemris.zavrad.detection.features.CornerFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.table.Corner;

@@ -1,6 +1,5 @@
 package hr.fer.zemris.zavrad.detection.features;
 
-import hr.fer.zemris.zavrad.detection.features.feature.IFeature;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 import java.io.IOException;

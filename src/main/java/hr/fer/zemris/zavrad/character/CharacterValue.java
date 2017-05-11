@@ -1,7 +1,5 @@
 package hr.fer.zemris.zavrad.character;
 
-import hr.fer.zemris.zavrad.table.CornerValue;
-
 import java.util.HashMap;
 import java.util.Map;
 
