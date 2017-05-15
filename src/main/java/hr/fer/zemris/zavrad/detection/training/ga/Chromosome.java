@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad.detection.ga;
+package hr.fer.zemris.zavrad.detection.training.ga;
 
 import hr.fer.zemris.zavrad.util.Rnd;
 

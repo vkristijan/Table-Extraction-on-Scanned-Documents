@@ -1,6 +1,6 @@
-package hr.fer.zemris.zavrad.detection.ga.mutation;
+package hr.fer.zemris.zavrad.detection.training.ga.mutation;
 
-import hr.fer.zemris.zavrad.detection.ga.Chromosome;
+import hr.fer.zemris.zavrad.detection.training.ga.Chromosome;
 
 /**
  * @author Kristijan Vulinović

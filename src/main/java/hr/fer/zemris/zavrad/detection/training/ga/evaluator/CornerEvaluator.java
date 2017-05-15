@@ -1,9 +1,9 @@
-package hr.fer.zemris.zavrad.detection.ga.evaluator;
+package hr.fer.zemris.zavrad.detection.training.ga.evaluator;
 
 import hr.fer.zemris.zavrad.detection.CornerDetection;
+import hr.fer.zemris.zavrad.detection.training.ga.Chromosome;
 import hr.fer.zemris.zavrad.table.CornerValue;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
-import hr.fer.zemris.zavrad.detection.ga.Chromosome;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 import java.io.File;

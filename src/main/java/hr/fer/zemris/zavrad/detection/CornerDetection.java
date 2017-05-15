@@ -1,8 +1,8 @@
 package hr.fer.zemris.zavrad.detection;
 
-import hr.fer.zemris.zavrad.detection.training.neural.ActivationFunction;
-import hr.fer.zemris.zavrad.detection.training.neural.FFANN;
-import hr.fer.zemris.zavrad.detection.training.neural.NeuralException;
+import hr.fer.zemris.zavrad.detection.neural.ActivationFunction;
+import hr.fer.zemris.zavrad.detection.neural.FFANN;
+import hr.fer.zemris.zavrad.detection.neural.NeuralException;
 import hr.fer.zemris.zavrad.table.CornerValue;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;

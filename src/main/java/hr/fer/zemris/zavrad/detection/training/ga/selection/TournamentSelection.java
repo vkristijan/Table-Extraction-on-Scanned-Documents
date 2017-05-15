@@ -1,6 +1,6 @@
-package hr.fer.zemris.zavrad.detection.ga.selection;
+package hr.fer.zemris.zavrad.detection.training.ga.selection;
 
-import hr.fer.zemris.zavrad.detection.ga.Chromosome;
+import hr.fer.zemris.zavrad.detection.training.ga.Chromosome;
 import hr.fer.zemris.zavrad.util.Rnd;
 
 import java.util.List;

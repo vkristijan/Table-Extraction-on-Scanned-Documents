@@ -1,9 +1,9 @@
-package hr.fer.zemris.zavrad.detection.ga;
+package hr.fer.zemris.zavrad.detection.training.ga;
 
-import hr.fer.zemris.zavrad.detection.ga.crossover.ICrossover;
-import hr.fer.zemris.zavrad.detection.ga.evaluator.IEvaluator;
-import hr.fer.zemris.zavrad.detection.ga.mutation.IMutation;
-import hr.fer.zemris.zavrad.detection.ga.selection.ISelection;
+import hr.fer.zemris.zavrad.detection.training.ga.crossover.ICrossover;
+import hr.fer.zemris.zavrad.detection.training.ga.evaluator.IEvaluator;
+import hr.fer.zemris.zavrad.detection.training.ga.mutation.IMutation;
+import hr.fer.zemris.zavrad.detection.training.ga.selection.ISelection;
 
 import java.util.ArrayList;
 import java.util.List;

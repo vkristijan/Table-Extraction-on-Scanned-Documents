@@ -1,6 +1,6 @@
-package hr.fer.zemris.zavrad.detection.ga.evaluator;
+package hr.fer.zemris.zavrad.detection.training.ga.evaluator;
 
-import hr.fer.zemris.zavrad.detection.ga.Chromosome;
+import hr.fer.zemris.zavrad.detection.training.ga.Chromosome;
 
 /**
  * @author Kristijan Vulinović

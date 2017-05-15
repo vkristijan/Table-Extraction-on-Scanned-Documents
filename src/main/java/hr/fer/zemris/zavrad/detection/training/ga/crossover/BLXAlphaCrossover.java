@@ -1,6 +1,6 @@
-package hr.fer.zemris.zavrad.detection.ga.crossover;
+package hr.fer.zemris.zavrad.detection.training.ga.crossover;
 
-import hr.fer.zemris.zavrad.detection.ga.Chromosome;
+import hr.fer.zemris.zavrad.detection.training.ga.Chromosome;
 import hr.fer.zemris.zavrad.util.Rnd;
 
 /**

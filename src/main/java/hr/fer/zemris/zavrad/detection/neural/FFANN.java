@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad.detection.training.neural;
+package hr.fer.zemris.zavrad.detection.neural;
 
 import org.apache.commons.math3.linear.RealVector;
 
