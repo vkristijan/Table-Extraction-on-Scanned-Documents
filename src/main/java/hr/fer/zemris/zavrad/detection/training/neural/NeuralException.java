@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad.detection.neural;
+package hr.fer.zemris.zavrad.detection.training.neural;
 
 /**
  * @author Kristijan Vulinović

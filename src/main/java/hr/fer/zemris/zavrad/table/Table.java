@@ -33,7 +33,7 @@ public class Table {
     public GrayScaleImage getCellContent(int row, int column){
         Corner from = corners.get(column).get(row);
         Corner to = corners.get(column + 1).get(row + 1);
-        
+
         int x = from.getPosition().getX();
         int y = from.getPosition().getY();
         int width = to.getPosition().getX() - x;
