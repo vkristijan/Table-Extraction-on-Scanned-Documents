@@ -22,7 +22,7 @@ import java.util.List;
  * @version 1.0.0
  */
 public class CornerDetectionBackprop {
-    private static final double LEARNING_RATE = 0.10;
+    private static final double LEARNING_RATE = 0.0010;
     private static final int MAX_ITERATION = 100;
 
     public static void main(String[] args) {
@@ -52,6 +52,8 @@ public class CornerDetectionBackprop {
             }
             System.out.println("Epoch #" + i + ":  " + correct / samples.size());
         }
+        Path outputPath = Paths.get(args[1]);
+        detection.writeWeightsToFile(outputPath);
     }
 
 

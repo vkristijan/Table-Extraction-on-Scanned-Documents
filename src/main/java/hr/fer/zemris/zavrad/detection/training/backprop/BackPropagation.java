@@ -26,6 +26,7 @@ public class BackPropagation {
 
         int n = layers.length;
         Layer outputLayer = layers[n - 1];
+
         double[] error = new double[outputLayer.getSize()];
 
         for (int i = 0; i < error.length; ++i){
@@ -42,7 +43,7 @@ public class BackPropagation {
 
             RealVector neuronWeights = weights.getColumnVector(i);
 
-            RealVector inputs = layers[n - 2].getValues();
+            RealVector inputs = layers[layers.length - 2].getValues();
             for (int j = 0; j < neuronWeights.getDimension(); ++j){
                 double weight = neuronWeights.getEntry(j);
                 double inputValue = (j == 0 ? 1 : inputs.getEntry(j - 1));
@@ -51,6 +52,43 @@ public class BackPropagation {
             }
 
             weights.setColumnVector(i, neuronWeights);
+        }
+
+        double[] oldError;
+        for (int i = n - 2; i > 0; --i){
+            oldError = new double[error.length];
+            System.arraycopy(error, 0, oldError, 0, error.length);
+
+            Layer layer = layers[i];
+
+            error = new double[layer.getSize()];
+
+            for (int j = 0; j < error.length; ++j){
+                error[j] = 0;
+                Layer nextLayer = layers[i + 1];
+                for (int k = 0; k < nextLayer.getSize(); ++k){
+                    error[j] += oldError[k] * nextLayer.getWeightMatrix().getColumnVector(k).getEntry(1 + j);
+                }
+            }
+
+            weights = layer.getWeightMatrix();
+            output = layer.getValues();
+            for (int k = 0; k < layer.getSize(); ++k){
+                double delta = output.getEntry(k) * (1 - output.getEntry(k)) * error[k];
+
+                RealVector neuronWeights = weights.getColumnVector(k);
+
+                RealVector inputs = layers[i - 1].getValues();
+                for (int j = 0; j < neuronWeights.getDimension(); ++j){
+                    double weight = neuronWeights.getEntry(j);
+                    double inputValue = (j == 0 ? 1 : inputs.getEntry(j - 1));
+                    weight -= learningRate * delta * inputValue;
+                    neuronWeights.setEntry(j, weight);
+                }
+
+                weights.setColumnVector(k, neuronWeights);
+            }
+
         }
     }
 }

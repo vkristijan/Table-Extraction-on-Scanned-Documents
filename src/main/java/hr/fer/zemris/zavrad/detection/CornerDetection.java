@@ -19,15 +19,15 @@ import java.util.List;
  */
 public class CornerDetection {
     private static final int INPUT_LAYER = 16;
-    private static final int HIDDEN_LAYER = 9;
+    private static final int HIDDEN_LAYER = 13;
     private static final int OUTPUT_LAYER = 10;
     private FFANN ffann;
 
     public CornerDetection() {
-        int[] layout = new int[]{INPUT_LAYER, /*HIDDEN_LAYER, */OUTPUT_LAYER};
+        int[] layout = new int[]{INPUT_LAYER, HIDDEN_LAYER, OUTPUT_LAYER};
         ActivationFunction[] activationFunctions = new ActivationFunction[]{
                 ActivationFunction.LINEAR,
-                //ActivationFunction.SIGMOID,
+                ActivationFunction.SIGMOID,
                 ActivationFunction.SIGMOID
         };
 
