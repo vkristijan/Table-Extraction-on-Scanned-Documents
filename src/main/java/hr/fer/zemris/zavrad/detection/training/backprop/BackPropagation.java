@@ -37,7 +37,7 @@ public class BackPropagation {
         }
 
         RealMatrix weights = outputLayer.getWeightMatrix();
-        for (int i = 1; i < n; ++i){
+        for (int i = 0; i < outputLayer.getSize(); ++i){
             double delta = output.getEntry(i) * (1 - output.getEntry(i)) * error[i];
 
             RealVector neuronWeights = weights.getColumnVector(i);
