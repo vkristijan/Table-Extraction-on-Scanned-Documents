@@ -22,7 +22,7 @@ import java.nio.file.Paths;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class CornerDetectionTraining {
+public class CornerDetectionGATraining {
     private static final int TOURNAMENT_SIZE = 3;
     private static final double MUTATION_RATE = 0.5;
     private static final double MUTATION_CHANCE = 0.05;

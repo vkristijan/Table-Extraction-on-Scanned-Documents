@@ -67,6 +67,10 @@ public class Layer {
         }
     }
 
+    public void setWeights(RealMatrix weights){
+        this.weights = weights;
+    }
+
     public double[] getWeights(){
         if (previous == null){
             return new double[0];
@@ -83,6 +87,10 @@ public class Layer {
             index += cols;
         }
 
+        return weights;
+    }
+
+    public RealMatrix getWeightMatrix(){
         return weights;
     }
 

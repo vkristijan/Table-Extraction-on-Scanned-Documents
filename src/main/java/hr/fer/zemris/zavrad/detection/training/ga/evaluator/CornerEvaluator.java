@@ -1,6 +1,7 @@
 package hr.fer.zemris.zavrad.detection.training.ga.evaluator;
 
 import hr.fer.zemris.zavrad.detection.CornerDetection;
+import hr.fer.zemris.zavrad.detection.training.Sample;
 import hr.fer.zemris.zavrad.detection.training.ga.Chromosome;
 import hr.fer.zemris.zavrad.table.CornerValue;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
@@ -95,16 +96,6 @@ public class CornerEvaluator implements IEvaluator {
             if (!detectedValue.equals(sample.value)){
                 System.out.println("Got " + detectedValue + ", expected " + sample.value);
             }
-        }
-    }
-
-    private class Sample {
-        private CornerValue value;
-        private double[] input;
-
-        Sample(CornerValue value, double[] input) {
-            this.value = value;
-            this.input = input;
         }
     }
 }

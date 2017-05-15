@@ -7,15 +7,9 @@ import org.apache.commons.math3.linear.RealVector;
  * @version 1.0.0
  */
 public class FFANN {
-    private int[] layout;
-    private ActivationFunction[] activationFunctions;
-
     private Layer[] layers;
 
     public FFANN(int[] layout, ActivationFunction[] activationFunctions) {
-        this.layout = layout;
-        this.activationFunctions = activationFunctions;
-
         layers = new Layer[layout.length];
         for (int i = 0; i < layout.length; ++i){
             Layer layer = new Layer(layout[i], activationFunctions[i]);
@@ -68,5 +62,9 @@ public class FFANN {
             layer.setWeights(layerWeights);
             index += layerWeights.length;
         }
+    }
+
+    public Layer[] getLayers(){
+        return layers;
     }
 }

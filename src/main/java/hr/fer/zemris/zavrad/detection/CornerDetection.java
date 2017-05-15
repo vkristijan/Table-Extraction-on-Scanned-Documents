@@ -4,6 +4,7 @@ import hr.fer.zemris.zavrad.detection.neural.ActivationFunction;
 import hr.fer.zemris.zavrad.detection.neural.FFANN;
 import hr.fer.zemris.zavrad.detection.neural.NeuralException;
 import hr.fer.zemris.zavrad.table.CornerValue;
+import hr.fer.zemris.zavrad.util.Rnd;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -95,7 +96,22 @@ public class CornerDetection {
         }
     }
 
+    public FFANN getFfann(){
+        return ffann;
+    }
+
     public CornerDetection copy() {
         return new CornerDetection();
+    }
+
+    public void setRandomWeights() {
+        int weightCount = ffann.getWeightCount();
+        double[] weights = new double[weightCount];
+
+        for (int i = 0; i < weightCount; ++i){
+            weights[i] = Rnd.nextDouble(-1, 1);
+        }
+
+        ffann.setWeights(weights);
     }
 }
