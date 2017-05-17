@@ -1,5 +1,7 @@
 \documentclass[times, utf8, zavrsni, numeric]{fer}
 \usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
 
 \begin{document}
 
@@ -46,8 +48,30 @@ Najjednostavniji oblik binarizacije je korištenje fiksno definiranog praga.
 U tom se slučaju gleda svaki pojedini slikovnog elementa te ukoliko je njegova vrijednost manja od zadanog praga, element se postavlja na crnu boju, dok se u protivnom postavlja na bijelu.
 Prednosti ove metode su izrazito jednostavna implementacija, ali i velika brzina izvođenja. 
 Nedostatci se primjećuju u slučajevima lošeg ili nejednoličnog osvjetljenja gdje se događa da se neki dijelovi dokumenta u potpunosti prepoznaju kao crni, unatoč činjenici da je prethodno bilo moguće razlikovati i prepoznati pozadinu od sadržaja dokumenta.
-Slika XXXXX prikazuje opisani problem \\
+Slika \ref{fig:threshold} prikazuje opisani problem te se na istoj može primjetiti kako je u doljnjem lijevom kutu slike tamno područje, koje nakon binarizacije postaje u potpunosti crno. 
+Također se primjećuje i kako je gornji desni kut slike slabije osvjetljen, zbog čega u binariziranoj slici slova postaju tanja i slabije vidljiva.\\
 
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.7\linewidth]{Images/Grayscale.png}
+        \caption{Početna crno-bijela slika}
+        \label{fig:sub1}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.7\linewidth]{Images/Threshold.png}
+        \caption{Slika dobivena binarizacijom fiksnim pragom}
+        \label{fig:sub2}
+    \end{subfigure}
+    \caption{}
+    \label{fig:threshold}
+\end{figure}
+
+\section{Adaptivna binarizacija}
+Problemi prikazani u prethodnom postupku rješavaju se primjenom adaptivne binarizacije koja vrijednost sakog pojedinog slikovnog elementa ne određuje samo na osnovu njegove boje, već u obzir uzima i boju okoline.
+Korištenjem postupka
 Knjiga \cite{book:Two-Dimensional-Signal-Image-Processing} opisuje kako koristiti adaptivni wiener filter prema nekim tamo formulama koje su krive u drugim mjestima. 
 
 \chapter{Zaključak}
