@@ -65,14 +65,54 @@ Također se primjećuje i kako je gornji desni kut slike slabije osvjetljen, zbo
         \caption{Slika dobivena binarizacijom fiksnim pragom}
         \label{fig:sub2}
     \end{subfigure}
-    \caption{}
+    \caption{Primjer binarizacije fiksnim pragom}
     \label{fig:threshold}
 \end{figure}
 
 \section{Adaptivna binarizacija}
 Problemi prikazani u prethodnom postupku rješavaju se primjenom adaptivne binarizacije koja vrijednost sakog pojedinog slikovnog elementa ne određuje samo na osnovu njegove boje, već u obzir uzima i boju okoline.
-Korištenjem postupka
-Knjiga \cite{book:Two-Dimensional-Signal-Image-Processing} opisuje kako koristiti adaptivni wiener filter prema nekim tamo formulama koje su krive u drugim mjestima. 
+U nastavku je opisan postupak koji je predložen u \cite{AdaptiveBinarization}.
+Prikazani primjeri koriste sliku \ref{fig:sub1} kao početnu.
+
+\subsection{Filtriranje šuma}
+Ovisno o stanju dokumenta i načinu digitalizacije istoga moguće je da se na dobivenoj slici pojavljuje šum, kojega je potrebno otkloniti.
+Za potrebe opisanoga koristi se niskopropusni Wiener filter \cite{book:Two-Dimensional-Signal-Image-Processing}, koji se temelji na statističkoj procjeni temeljenoj na okruženju svakog pojedinog slikovnog elementa. \cite{AdaptiveBinarization}
+Označimo sa $I_s(x, y)$ vrijednost slikovnog elementa početne slike, a sa $I(x, y)$ vrijednost slikovnog elementa filtrirane slike.
+Tada se filtrirana slika $I$ može izračunati pomoću formule:
+\[I(x, y) = \mu(x, y) + \frac{\sigma(x, y)^2}{(\sigma(x, y)^2 - v^2)}(I_s(x, y) - \mu(x, y))\]
+Sa $\mu(x, y)$ označena je aritmetička sredina vrijednosti slikovnih elemenata u okruženju veličine $NxM$, prema formuli:
+\[\mu(x, y) = \frac{1}{NM} 
+    \displaystyle \sum_{i = x-\frac{N}{2}}^{x+\frac{N}{2}}
+    \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
+I_s(i, j)\]
+Sa $\sigma^2$ označena je varijanca vrijednosti slikovnih elemenata u okruženju veličine $NxM$, prema formuli:
+\[\sigma(x, y)^2 = \frac{1}{NM} 
+    \displaystyle \sum_{i = x-\frac{N}{2}}^{x+\frac{N}{2}}
+    \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
+(I_s(i, j)^2 - \mu^2)\]
+Sa $v^2$ je označena srednja vrijednost svih lokalnih varijanci.
+Konačan rezultat filtriranja prikazan je na slici \ref{fig:wiener}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.35\textwidth]{Images/Wiener.png}
+    \caption{Slika dobivena binarizacijom fiksnim pragom}
+    \label{fig:wiener}
+\end{figure}
+
+\subsection{Procjena sadržaja}
+\subsection{Procjena pozadine}
+\subsection{Binarizacija}
+\subsection{Dodatna obrada slike}
+
+
+\chapter{Prepoznavanje zakrivljenosti slike}
+
+\chapter{Detekcija tablice}
+\section{Detekcija vrhova ćelija}
+\section{Rekonstrukcija tablice}
+
+\chapter{Primjena na automatskom prepoznavanju rukom pisanih simbola}
 
 \chapter{Zaključak}
 Zaključak.
