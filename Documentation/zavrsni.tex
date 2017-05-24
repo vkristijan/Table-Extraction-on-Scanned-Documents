@@ -2,6 +2,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{gensymb}
 
 \begin{document}
 
@@ -248,6 +249,69 @@ Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6$.
 
 
 \chapter{Prepoznavanje zakrivljenosti slike}
+Jedan od problema koji nastaje prilikom digitalizacije dokumenata je mogućnost da dokument bude nakošen. 
+Do toga može doći ili prilikom nepažnje tokom ubacivanja papira u optički čitač, ili zbog nesvjesnog zakrivljenja prilikom korištenja kamere mobilnog uređaja.
+Nakošenost digitalizirane slike može uzrokovati teže ili lošije prepoznavanje elemenata na slici, zbog čega je korisno i poželjno otkriti stupanj rotacije dokumenta i ispraviti ga.
+
+\section{Računanje kuta rotacije}
+Počevši od dokumenta kakav je prikazan na slici \ref{fig:skew_original}, može se uočiti kako se na njemu jasno prepoznaju vodoravne linije dokumenta.
+Unatoč činjenici da to nije opći slučaj koji uvijek vrijedi, u ovom radu nije razrađeno kako općeniti dokument svesti na ovakav oblik, već se kreće od pretpostavke da će dokument uvijek imati jasno izražene linije, bilo vodoravne, bilo okomite.
+Ova pretpostavka vrijedi isključivo iz razloga da se rad fokusira na prepoznavanje tablica na skeniranim dokumentima.\\
+
+\begin{figure}[ht!] 
+    \centering
+    \includegraphics[width=.4\textwidth]{Images/Skew_original.png}
+    \captionsetup{justification=centering}
+    \caption{Početni nakošeni dokument\cite{article:Skew-detection}}
+    \label{fig:skew_original}
+\end{figure}
+
+Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presječe okomitim linijama, što je predloženo u radu \cite{article:Skew-detection}.
+Za svaku okomitu liniju se računaju točke u kojima ona sječe linije osnovnog dokumenta.
+Jednom kada su određene točke sjecišta, moguće je odabrati jednu takvu točku najljevije okomite linije ($T_1$) te usporediti tu točku sa svim točkama koje se nalaze desno od nje ($T_2$).
+Dvije tako odabrane točke analiziraju se na način da se kroz njih povuče pravac, čija jednadžba glasi: 
+\[
+    y - y_1 = k(x - x_1),
+\]
+gdje je $k$ koeficjent smjera:
+\[
+    k = \frac{y_2 - y_1}{x_2 - x_1}.
+\]
+Pomoću koeficjenta smjera $k$ moguće je izračunati kut pod kojim je nagnut dobiveni pravac, kao $\alpha = tan^{-1}(k)$.
+Uz pretpostavku da dokument nije rotiran te da se točke $T_1$ i $T_2$ nalaze na istim vodoravnim linijama dokumenta, kut $\alpha$ trebao bi iznositi $0\degree$.
+U slučaju da je dokument rotiran, ovako određen kut $\alpha$ biti će jednak stupnju rotacije dokumenta.\\
+
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.85\linewidth]{Images/Skew_equidistant.png}
+        \captionsetup{justification=centering}
+        \caption{Dokument podijeljen ekvidistantnim linijama\cite{article:Skew-detection}}
+        \label{fig:skew_equidistant}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.85\linewidth]{Images/Skew_random.png}
+        \captionsetup{justification=centering}
+        \caption{Dokument podijeljen linijama sa nasumičnim udaljenostima\cite{article:Skew-detection}}
+        \label{fig:skwe_random}
+    \end{subfigure}
+    \caption{Primjer podjele dokumenta okomitim linijama}
+    \label{fig:skew_verticalLines}
+\end{figure}
+
+Jedan od problema koji preostaje je početna pretpostavka da se točke $T_1$ i $T_2$ nalaze na istoj vodoravnoj liniji dokumenta, što neće biti istinito u većini slučajeva.
+To se rješava na način da se izračunaju kutevi koje zatvaraju svi pravci koji počinju u točki $T_1$, a pritom se bilježi koliko puta se pojavio koji kut.
+Uz ovaj pristup rotaciju dokumenta više ne određuje kut $\alpha$ koji je dobiven za jedan pravac, već onaj kut koji je najviše puta zabilježen.
+Ovaj pristup prikazan je na slici \ref{fig:skew_verticalLines}, gdje je za određenu podjelu okomitim linijama i odabranu početnu točku prikazan izračun triju kuteva: \textbf{A}, \textbf{B}, \textbf{C}.
+Slika \ref{fig:skew_equidistant} također prikazuje i važnost načina odabira okomitih linija.
+Na navedenoj slici odabrane su ekvidistantne linije, zbog čega dolazi do toga da se sva tri kuta javljaju jednak broj puta, što ometa rad algoritma.
+Za razliku od toga, na slici \ref{fig:skwe_random} koriste se linije sa nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj kut \textbf{B} javlja prilikom svakog presjeka okomite linije sa vodoravnom linijom na kojoj se nalazi početna točka $T_1$, dok se ostali kutevi javljaju samo jednom, čime se prepoznaje da oni dolaze radi krivo odaranih točaka.
+
+
+\section{Rezultati}
+
 
 \chapter{Detekcija tablice}
 \section{Detekcija vrhova ćelija}
