@@ -78,7 +78,7 @@ Prikazani primjeri koriste sliku \ref{fig:sub1} kao početnu.
 Ovisno o stanju dokumenta i načinu digitalizacije istoga moguće je da se na dobivenoj slici pojavljuje šum, kojega je potrebno otkloniti.
 Za potrebe opisanoga koristi se niskopropusni Wiener filter \cite{book:Two-Dimensional-Signal-Image-Processing}, koji se temelji na statističkoj procjeni temeljenoj na okruženju svakog pojedinog slikovnog elementa. \cite{AdaptiveBinarization}
 Označimo sa $I_s(x, y)$ vrijednost slikovnog elementa početne slike, a sa $I(x, y)$ vrijednost slikovnog elementa filtrirane slike.
-Tada se filtrirana slika $I$ može izračunati pomoću formule:
+Tada se filtrirana slika $I$ može izračunati pomoću formule opisane u knjizi \cite{book:Two-Dimensional-Signal-Image-Processing}:
 \[I(x, y) = \mu(x, y) + \frac{\sigma(x, y)^2}{(\sigma(x, y)^2 - v^2)}(I_s(x, y) - \mu(x, y))\]
 Sa $\mu(x, y)$ označena je aritmetička sredina vrijednosti slikovnih elemenata u okruženju veličine $NxM$, prema formuli:
 \[\mu(x, y) = \frac{1}{NM} 
@@ -91,17 +91,51 @@ Sa $\sigma^2$ označena je varijanca vrijednosti slikovnih elemenata u okruženj
     \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
 (I_s(i, j)^2 - \mu^2)\]
 Sa $v^2$ je označena srednja vrijednost svih lokalnih varijanci.
-Konačan rezultat filtriranja prikazan je na slici \ref{fig:wiener}.
+Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5$x$5$ prikazan je na slici \ref{fig:wiener}.
 
-\begin{figure}[ht!]
+\begin{figure}[!ht]
+\centering
+\begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=.35\textwidth]{Images/Wiener.png}
-    \caption{Slika dobivena binarizacijom fiksnim pragom}
+    \includegraphics[width=.7\linewidth]{Images/Wiener.png}
+    \caption{Slika dobivena filtriranjem šuma}
     \label{fig:wiener}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=.7\linewidth]{Images/Niblack.png}
+    \captionsetup{justification=centering}
+    \caption{Slika dobivena korištenjem Niblackovog algoritma adaptivne binarizacije}
+    \label{fig:niblack}
+\end{minipage}
 \end{figure}
 
 \subsection{Procjena sadržaja}
+Sljedeći korak binarizacije temelji se na procjenjivanju sadržaja dokumenta. 
+Cilj ovog koraka je procijeniti koji elementi slike pripadaju pozadini, a koji pripadaju saržaju dokumenta. 
+Pritom je procijenjeni sadržaj zapravo nadskup stvarnog sadržaja, odnosno na dobivenoj slici biti će prisutan šum. 
+Za potrebe ovoga koristi se Niblackov algoritam adaptivne binarizacije. \cite{AdaptiveBinarization}\\
+
+Algoritam se temelji na ideji kliznog prozora određenih dimenzija, pomoću kojega se računa lokalni median vrijednosti $m$ te varijanca $s$. 
+Kako bi se ubrzao izračun, umjesto mediana se računa aritmetička sredina $\mu$.
+Konačan prag binarizacije, $T$, određuje se kao:
+\[ T = m + ks \]
+gdje je $k$ proizvoljna konstanta koja određuje koliko će okolina trenutnog slikovnog elementa utjecati na prag binarizacije.
+Korištena vrijednost je $k = -0.2$.
+Konačna slika $N$, dobivena je od početne slike $I$ na sljedeći način:
+\[
+    N(x, y) =
+    \begin{cases}
+        1,   & \quad I(, y) > T\\
+        0,  & \quad \text{inače}\\
+    \end{cases}
+\]
+Rezultati ovog postupka, korištenjem kliznog prozora dimenzija $20$x$20$, uz $k=-0.2$, prikazan je na slici \ref{fig:niblack}.
+Na slici se primjećuje kako je sav tekst prepoznat i prikazan crnom bojom, ali je također prisutan i jako izražen šum.
+
 \subsection{Procjena pozadine}
+
+
 \subsection{Binarizacija}
 \subsection{Dodatna obrada slike}
 
