@@ -55,13 +55,13 @@ Također se primjećuje i kako je gornji desni kut slike slabije osvjetljen, zbo
     \centering
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.7\linewidth]{Images/Grayscale.png}
+        \includegraphics[width=.85\linewidth]{Images/Grayscale.png}
         \caption{Početna crno-bijela slika}
         \label{fig:sub1}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.7\linewidth]{Images/Threshold.png}
+        \includegraphics[width=.85\linewidth]{Images/Threshold.png}
         \caption{Slika dobivena binarizacijom fiksnim pragom}
         \label{fig:sub2}
     \end{subfigure}
@@ -97,13 +97,13 @@ Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5$x$5$ prikaza
 \centering
 \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=.7\linewidth]{Images/Wiener.png}
+    \includegraphics[width=.85\linewidth]{Images/Wiener.png}
     \caption{Slika dobivena filtriranjem šuma}
     \label{fig:wiener}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=.7\linewidth]{Images/Niblack.png}
+    \includegraphics[width=.85\linewidth]{Images/Niblack.png}
     \captionsetup{justification=centering}
     \caption{Slika dobivena korištenjem Niblackovog algoritma adaptivne binarizacije}
     \label{fig:niblack}
@@ -163,13 +163,13 @@ Postupak je u cijelosti objašnjen u radu \cite{AdaptiveBinarization}.\\
 \centering
 \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=.7\linewidth]{Images/Background.png}
+    \includegraphics[width=.85\linewidth]{Images/Background.png}
     \caption{Slika dobivena procjenom pozadine}
     \label{fig:background}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
     \centering
-    \includegraphics[width=.7\linewidth]{Images/FinalThreshold.png}
+    \includegraphics[width=.85\linewidth]{Images/FinalThreshold.png}
     \captionsetup{justification=centering}
     \caption{Slika dobivena binarizacijom}
     \label{fig:finalThreshold}
@@ -213,6 +213,38 @@ Za razliku od rezultata korištenjem binarizacije sa fiksnim pragom, prikazanim 
 Također je potrebno primjetiti i šumove koji su ostali prisutni nakon trenutno opisanog postupka, a koji su riješeni u nastavku.
 
 \subsection{Dodatna obrada slike}
+Završni korak obrade slike koristi se kako bi se popravila kvaliteta konačne binarizirane slike.
+Problemi koji se mogu uočiti na danim primjerima uključuju prisutnost šuma, kao i potencijalne prekide slova, gdje je moguće da neko slovo nije u potpunosti zacrnjeno.\\
+
+\begin{figure}[!ht]
+\centering
+\begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=.85\linewidth]{Images/Shrinked.png}
+    \captionsetup{justification=centering}
+    \caption{Slika dobivena uklanjanjem crnih slikovnih elemenata}
+    \label{fig:shrink}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=.85\linewidth]{Images/Swell.png}
+    \captionsetup{justification=centering}
+    \caption{Slika dobivena uklanjanjem bijelih slikovnih elemenata}
+    \label{fig:swell}
+\end{minipage}
+\end{figure}
+
+Prisutnost šuma se nastoji ukloniti tako što se pregledava cijela slika te se za svaki crni slikovni element provjerava je li on rezultat šuma.
+Za potrebe toga koristi se klizni prozor dimenzija $n$x$n$.
+U slučaju kada je središnji element kliznog prozora crne boje, prebrojavaju se svi pozadinski (bijeli) slikovni elementi unutar kliznog prozora, što je označeno sa $P_{sh}$.
+Ako je $P_{sh} > k_{sh}$, gdje je $k_{sh}$ proizvoljno zadana konstanta, središnji slikovni element se postavlja u bijelu boju.
+Na slici \ref{fig:shrink} prikazan je rezultat obrade binarizirane slike navedenim postupkom uz $n = 5$ i $k_{sh} = 0.8$.
+Primjećuje se kako i dalje postoje smetnje na slici, no problem nastaje kod toga što bi niža vrijednost parametra $k_{sh}$ osigurala bolje uklanjanje šumova, ali bi istovremeno povećala vjerojatnost da se uklone elementi teksta, što nije poželjno.\\
+
+Drugi korak spomenut u ovom postupku provodi se slično kao i prethodni.
+Potrebno je prebrojati broj crnih slikovnih elemenata, $P_{sw}$, koji se nalaze unutar kliznog prozora dimenzija $n$x$n$.
+Ako je srednji element bijel i vrijedi $P_{sw} > k_{sw}$, središnji se element pretvara u crni.
+Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6$.
 
 
 \chapter{Prepoznavanje zakrivljenosti slike}
