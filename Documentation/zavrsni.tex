@@ -311,7 +311,41 @@ Za razliku od toga, na slici \ref{fig:skwe_random} koriste se linije sa nasumič
 
 
 \section{Rezultati}
+Kako bi se uštedjelo na vremenu izvođenja, navedeni algoritam je implementiran na način da nakon što odredi nasumične okomite linije odabire samo $4$ početne točke, prethodno označene sa $T_1$.
+Za te točke se računaju kutevi sa svim ostalim točkama, a na kraju se provjerava postoji li kut koji prevladava.
+Primjer jednog takvog izvođenja prikazan je na slici \ref{fig:skew1}.\\
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.8\textwidth]{Images/Skew1.pdf}
+    \captionsetup{justification=centering}
+    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva}
+    \label{fig:skew1}
+\end{figure}
+
+Iz slike se može lako primjetiti kako je najčešće izmjeren kut od $5\degree$ stupnjeva, iz čega se zaključuje da je slika rotirana za točno taj iznos.
+Isti postupak ponovljen je za sliku koja je bila rotirana za kut od $10\degree$ stupnjeva, a rezultati toga prikazani su histogramom na slici \ref{fig:skew2}.
+Na ovoj slici se primjećuje kako se za veće iznose kuteva javlja veći šum u izračunatim kutevima, no i dalje je moguće razaznati dominantnu vrijednost kuta rotacije.\\
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.8\textwidth]{Images/Skew2.pdf}
+    \captionsetup{justification=centering}
+    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva}
+    \label{fig:skew2}
+\end{figure}
+
+Problem se javlja kod izračuna koji je prikazan histogramom na slici \ref{fig:skew3}, gdje nije moguće sa sigurnošću odrediti kako je slika rotirana.
+Do ovog problema je moglo doći iz više razloga, poput loše odabranih okomitih linija, ili problema zbog točaka dobivenih kao sjecišta okomitih linija i teksta koji se nalazi u tablicama.
+Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okomitih linija te ponovan izračun kuteva sa nove proizvoljne $4$ točke.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.8\textwidth]{Images/Skew3.pdf}
+    \captionsetup{justification=centering}
+    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva}
+    \label{fig:skew3}
+\end{figure}
 
 \chapter{Detekcija tablice}
 \section{Detekcija vrhova ćelija}
