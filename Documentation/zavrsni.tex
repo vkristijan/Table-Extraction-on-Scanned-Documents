@@ -180,7 +180,37 @@ Rezultati ovog postupka, primjenjenog na slici \ref{fig:sub1} prikazani su na sl
 Moguće je uočiti kako se na slici i dalje primjećuju obrisi slova, premda sama slova nisu prisutna.
 
 \subsection{Binarizacija}
+Kao što je opisano u radu \cite{AdaptiveBinarization}, u ovom koraku se provodi konačna binarizacija, uspoređivanjem izračunate pozadine $B$ i izvorne slike $I$.
+Postupak se temelji na tome da je razlika u boji teksta i pozadine veća nego li razlika u boji šuma dobivenog procjenom sadržaja dokumenta i pozadine.
+Ovisno o intenzitetu sive boje okruženja, računa se prag binarizacije $d$, kako bi se sačuvao tekst u tamnim područjima.
+Kako bi se to postiglo, vrijednost praga $d$ mora biti manja u područjima sa tamnom pozadinom.
+Konačna slika $T$ određena je formulom:
+\[
+    T(x, y) = 
+    \begin{cases}
+    1,  & \quad \text{ako je } B(x, y) - I(x, y) > d(B(x, y)) \\
+    0,  & \quad \text{inače}\\
+    \end{cases}
+\]
+Vrijednost praga, $d(B(x, y))$, moguće je procijeniti kao 
+\[d = q * \delta\]
+, gdje je $q$ konstanta koja je fiksno postavljena na $0.8$, a $\delta$ se računa kao razlika intenziteta sive boje na početnoj slici za mjesta koja predstavljaju pozadinu i za mjesta koja predstavljaju tekst.
+Vrijednost $\delta$ možemo izračunati kao
+\[
+    \delta = \frac{
+        \displaystyle \sum_x
+        \displaystyle \sum_y
+        (B(x, y) - I(x, y))
+    }{
+        \displaystyle \sum_x
+        \displaystyle \sum_y
+        N(x, y)
+    }
+\]
 
+Konačan rezultat nakon primjene opisanog postupka binarizacije prikazan je na slici \ref{fig:finalThreshold}.
+Za razliku od rezultata korištenjem binarizacije sa fiksnim pragom, prikazanim na slici \ref{fig:sub2}, primjećjuje se kako zatamnjeno područje u donjem lijevom kutu slike ne predstavlja problem prilikom raspoznavanja teksta od pozadine.
+Također je potrebno primjetiti i šumove koji su ostali prisutni nakon trenutno opisanog postupka, a koji su riješeni u nastavku.
 
 \subsection{Dodatna obrada slike}
 
