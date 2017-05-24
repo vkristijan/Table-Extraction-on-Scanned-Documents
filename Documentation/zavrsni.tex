@@ -126,7 +126,7 @@ Konačna slika $N$, dobivena je od početne slike $I$ na sljedeći način:
 \[
     N(x, y) =
     \begin{cases}
-        1,   & \quad I(, y) > T\\
+        1,   & \quad \text{ako je } I(x, y) > T\\
         0,  & \quad \text{inače}\\
     \end{cases}
 \]
@@ -134,9 +134,54 @@ Rezultati ovog postupka, korištenjem kliznog prozora dimenzija $20$x$20$, uz $k
 Na slici se primjećuje kako je sav tekst prepoznat i prikazan crnom bojom, ali je također prisutan i jako izražen šum.
 
 \subsection{Procjena pozadine}
+U ovom koraku pokušava se procijeniti izgled pozadine dokumenta, što je označeno sa $B$. 
+Za potrebe toga koristi se obrađena početna slika $I$ te prethodno dobivena slika $N$.
+Ako je neki slikovni element na slici $N$ označen nulom, taj element predstavlja pozadinu slike i njegova vrijednost na slici $B$ biti će jednaka onoj sa slike $I$.
+U protivnome će vrijednost tog slikovnog elementa biti određena interpolacijom vrijednosti susjednih slikovnih elemenata.
+Konačna formula za elemente slike $B$ glasi:
+\[
+    B(x, y) =
+    \begin{cases}
+        \hfil
+        I(x, y),    & \quad \text{ako je } N(x, y) = 0\\[1em]
+        \frac{
+            \displaystyle \sum_{i = x-dx}^{x+dx}
+            \displaystyle \sum_{j = y-dy}^{y+dy}
+            (I(i, j)(1 - N(i, j)))
+        } {
+            \displaystyle \sum_{i = x-dx}^{x+dx}
+            \displaystyle \sum_{j = y-dy}^{y+dy}
+            (1 - N(i, j))
+        }, & \quad \text{ako je} N(x, y) = 1\\
 
+    \end{cases}
+\]
+Pri čemu $dx$ i $dy$ određuju dimenzije okruženja koje se gleda prilikom interpolacije.
+Postupak je u cijelosti objašnjen u radu \cite{AdaptiveBinarization}.\\
+
+\begin{figure}[!ht]
+\centering
+\begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=.7\linewidth]{Images/Background.png}
+    \caption{Slika dobivena procjenom pozadine}
+    \label{fig:background}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+    \centering
+    \includegraphics[width=.7\linewidth]{Images/FinalThreshold.png}
+    \captionsetup{justification=centering}
+    \caption{Slika dobivena binarizacijom}
+    \label{fig:finalThreshold}
+\end{minipage}
+\end{figure}
+
+Rezultati ovog postupka, primjenjenog na slici \ref{fig:sub1} prikazani su na slici \ref{fig:background}, uz $dx=3$ i $dy=3$.
+Moguće je uočiti kako se na slici i dalje primjećuju obrisi slova, premda sama slova nisu prisutna.
 
 \subsection{Binarizacija}
+
+
 \subsection{Dodatna obrada slike}
 
 
