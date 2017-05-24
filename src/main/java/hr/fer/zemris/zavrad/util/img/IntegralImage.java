@@ -4,14 +4,28 @@ package hr.fer.zemris.zavrad.util.img;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class IntegralImage {
+public class IntegralImage extends GrayScaleImage{
     private int[][] integral;
 
-    public IntegralImage(GrayScaleImage image) {
-        int width = image.getWidth();
-        int height = image.getHeight();
+    public IntegralImage(int width, int height) {
+        super(width, height);
 
-        byte[][] data = image.getData();
+        calculateIntegral();
+    }
+
+    public static IntegralImage fromGrayscaleImage(GrayScaleImage image){
+        IntegralImage integralImage = new IntegralImage(image.width, image.height);
+        integralImage.data = image.data;
+
+        integralImage.calculateIntegral();
+        return integralImage;
+    }
+
+    private void calculateIntegral() {
+        int width = getWidth();
+        int height = getHeight();
+
+        byte[][] data = getData();
 
         integral = new int[height][width];
 
@@ -64,7 +78,7 @@ public class IntegralImage {
         if (wFrom != 0 && hFrom != 0){
             sum += integral[hFrom - 1][wFrom - 1];
         }
-        
+
         return sum;
     }
 }

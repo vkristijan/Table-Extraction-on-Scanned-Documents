@@ -14,7 +14,8 @@ public class DiagonalLineFeature implements IFeature {
     }
 
     @Override
-    public int getFeature(byte[][] data, int x, int y, int w, int h, double[] features, int index) {
+    public int getFeature(GrayScaleImage img, int x, int y, int w, int h, double[] features, int index) {
+        byte[][] data = img.getData();
         int length = h * 2 / 3;
 
         features[index] = 0;

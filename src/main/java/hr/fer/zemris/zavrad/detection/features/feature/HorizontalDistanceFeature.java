@@ -14,7 +14,8 @@ public class HorizontalDistanceFeature implements IFeature {
     }
 
     @Override
-    public int getFeature(byte[][] data, int x, int y, int w, int h, double[] features, int index) {
+    public int getFeature(GrayScaleImage img, int x, int y, int w, int h, double[] features, int index) {
+        byte[][] data = img.getData();
         features[index] = 1;
         int yCor = (int)(h * lineStart) + y;
 

@@ -52,11 +52,11 @@ public class SlidingWindow {
                     }
                 }
 
-                if (!shouldConsider) continue;
+                //if (!shouldConsider) continue;
                 Corner corner = new Corner(value, position);
                 corners.add(corner);
 
-                x += windowSize / 2;
+                //x += windowSize / 2;
             }
         }
 

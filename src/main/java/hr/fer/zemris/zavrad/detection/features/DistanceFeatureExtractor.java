@@ -21,13 +21,12 @@ public class DistanceFeatureExtractor implements IFeatureExtractor {
         compositeFeature.addFeature(new VerticalDistanceFeature(0.1));
         compositeFeature.addFeature(new VerticalDistanceFeature(0.9));
 
-        compositeFeature.addFeature(new HorizontalLineFeature(0.2, 5));
-        compositeFeature.addFeature(new VerticalLineFeature(0.2, 5));
+        compositeFeature.addFeature(new HorizontalLineFeature(0.35, 5));
+        compositeFeature.addFeature(new VerticalLineFeature(0.35, 5));
         compositeFeature.addFeature(new DiagonalLineFeature(5));
 
         double[] features = new double[16];
-        byte[][] data = img.getData();
-        compositeFeature.getFeature(data, x, y, w, h, features, 0);
+        compositeFeature.getFeature(img, x, y, w, h, features, 0);
 
         return features;
     }

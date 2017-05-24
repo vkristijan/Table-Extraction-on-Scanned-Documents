@@ -15,9 +15,9 @@ import java.io.IOException;
 public class GrayScaleImage {
     public static int BLACK = 0;
 
-    private int width;
-    private int height;
-    private byte[][] data;
+    protected int width;
+    protected int height;
+    protected byte[][] data;
 
     public GrayScaleImage(int width, int height) {
         this.width = width;

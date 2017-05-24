@@ -22,8 +22,8 @@ import java.util.List;
  * @version 1.0.0
  */
 public class CornerDetectionBackprop {
-    private static final double LEARNING_RATE = 0.005;
-    private static final int MAX_ITERATION = 100_000;
+    private static final double LEARNING_RATE = 0.05;
+    private static final int MAX_ITERATION = 150_000;
 
     public static void main(String[] args) {
         Path dataPath = Paths.get(args[0]);

@@ -32,8 +32,7 @@ public class CornerFeatureExtractor implements IFeatureExtractor {
         compositeFeature.addFeature(new DiagonalLineFeature(SKIP_STEP));
 
         double[] features = new double[8];
-        byte[][] data = img.getData();
-        compositeFeature.getFeature(data, x, y, w, h, features, 0);
+        compositeFeature.getFeature(img, x, y, w, h, features, 0);
 
         return features;
     }

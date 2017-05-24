@@ -1,5 +1,7 @@
 package hr.fer.zemris.zavrad.detection.features.feature;
 
+import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +21,11 @@ public class CompositeFeature implements IFeature {
     }
 
     @Override
-    public int getFeature(byte[][] data, int x, int y, int w, int h, double[] features, int index) {
+    public int getFeature(GrayScaleImage img, int x, int y, int w, int h, double[] features, int index) {
         int count = 0;
 
         for (IFeature feature : this.features) {
-            int tmpCount = feature.getFeature(data, x, y, w, h, features, index);
+            int tmpCount = feature.getFeature(img, x, y, w, h, features, index);
             count += tmpCount;
             index += tmpCount;
         }
