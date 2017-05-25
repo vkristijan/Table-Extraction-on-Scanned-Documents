@@ -39,6 +39,8 @@ Dobivena crno-bijela slika koristi se u daljnjoj obradi te se provjerava je li s
 Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija, te kasnijoj rekonstrukciji istih a koji je detaljnije opisan u nastavku rada.
 
 
+\chapter{Pregled područja}
+
 \chapter{Binarizacija slike}
 Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena sa vrijednošću $0$, a bijela sa $255$.
 Prije nego li se započne bilo kakva analiza slike, potrebno je istu binarizirati, odnosno pretvoriti u oblik koji će sadržavati isključivo crne ili bijele elemente, bez ostalih nijansi sive.
@@ -349,9 +351,25 @@ Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okom
 
 \chapter{Detekcija tablice}
 \section{Detekcija vrhova ćelija}
+\subsection{Određivanje značajki}
+\subsection{Detekcija korištenjem umjetne neuronske mreže}
+\subsection{Detekcija AdaBoost algoritmom}
+
 \section{Rekonstrukcija tablice}
 
+\section{Korištenje prethodno stečenog znanja}
+
+\chapter{Implementacija i rezultati}
+\section{Umjetna neuronska mreža}
+\subsection{Treniranje genetskim algoritmom}
+\subsection{Treniranje korištenjem backpropagation algoritma}
+
+\section{AdaBoost algoritam}
+
+
 \chapter{Primjena na automatskom prepoznavanju rukom pisanih simbola}
+\subsection{Određivanje značajki}
+\subsection{Rezultati}
 
 \chapter{Zaključak}
 Zaključak.
