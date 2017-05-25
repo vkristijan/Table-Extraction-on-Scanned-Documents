@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad.detection.features.feature.viola;
+package hr.fer.zemris.zavrad.detection.features.feature.haar;
 
 import hr.fer.zemris.zavrad.util.img.IntegralImage;
 
@@ -6,7 +6,7 @@ import hr.fer.zemris.zavrad.util.img.IntegralImage;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class VerticalDouble extends ViolaFeature {
+public class VerticalDouble extends HaarFeature {
     private double center;
 
     public VerticalDouble(double startWidth, double startHeight, double endWidth, double endHeight, double center) {

@@ -1,4 +1,4 @@
-package hr.fer.zemris.zavrad.detection.features.feature.viola;
+package hr.fer.zemris.zavrad.detection.features.feature.haar;
 
 import hr.fer.zemris.zavrad.detection.features.feature.IFeature;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
@@ -8,13 +8,13 @@ import hr.fer.zemris.zavrad.util.img.IntegralImage;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public abstract class ViolaFeature implements IFeature {
+public abstract class HaarFeature implements IFeature {
     private double startWidth;
     private double startHeight;
     private double endWidth;
     private double endHeight;
 
-    public ViolaFeature(double startWidth, double startHeight, double endWidth, double endHeight) {
+    public HaarFeature(double startWidth, double startHeight, double endWidth, double endHeight) {
         this.startWidth = startWidth;
         this.startHeight = startHeight;
         this.endWidth = endWidth;
