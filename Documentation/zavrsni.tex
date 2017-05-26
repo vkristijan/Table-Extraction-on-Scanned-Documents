@@ -350,6 +350,28 @@ Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okom
 \end{figure}
 
 \chapter{Detekcija tablice}
+Kao što je predloženo u \cite{conference:AutomaticTableDetectionInDocumentImages}, detekcija tablice temelji se na detekciji vrhova ćelija. 
+Analiziranjem općenitih tablica, moguće je uočiti kako postoji $9$ različitih mogućnosti koje se mogu pojaviti kao vrh ćelije, što je prikazano na slici \ref{fig:corners}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Images/Corners.pdf}
+    \captionsetup{justification=centering}
+    \caption{Prikaz mogućih vrsta vrhova ćelija}
+    \label{fig:corners}
+\end{figure}
+
+Prve $4$ mogućnosti sa slike predstavljaju vrhove ćelija koje su ujedno i vrhovi cijele tablice. 
+Sljedeće $4$ mogućnosti izgleda vrha ćelija predstavljaju rubove tablice, odnosno početak ili kraj linija tablice.
+Zadnja prikazana mogućnost predstavlja sjecišta linija koja se nalaze unutar tablice.
+Detektiranjem točnih pozicija ovih $9$ elemenata te točnom klasifikacijom istih, moguće je jednoznačno rekonstruirati tablicu.\\
+
+Pretragu je moguće ubrzati korištenjem znanja o općem izgledu tablice.
+U skladu s time je moguće pronaći isključivo pozicije prve $4$ vrste vrhova, na temelju čega se određuju rubovi tablice.
+Koristeći te informacije moguće je odrediti vanjski obrub tablice, na kojemu se moraju nalaziti svi oblici označeni sa $5-8$ na slici \ref{fig:corners}, te nije potrebno pretraživati ostatak slike i vršiti klasifikaciju pronađenih kandidata.
+Nakon što se pronađu tako opisani rubovi, vrh označen brojem $9$ na slici može se locirati kao sjecište linija između prethodno definiranih rubova tablice.
+Ovaj pristup nije detaljnije razrađen u ovom radu te nije korišten u implementaciji, a navodi se isključivo kao prijedlog potencijalne optimizacije korištenog algoritma.
+
 \section{Detekcija vrhova ćelija}
 \subsection{Određivanje značajki}
 \subsection{Detekcija korištenjem umjetne neuronske mreže}
