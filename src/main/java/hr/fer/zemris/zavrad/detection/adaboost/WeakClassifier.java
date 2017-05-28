@@ -4,10 +4,7 @@ import hr.fer.zemris.zavrad.detection.features.feature.haar.HaarFeature;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 import hr.fer.zemris.zavrad.util.img.IntegralImage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Kristijan Vulinović
@@ -121,5 +118,24 @@ public class WeakClassifier {
         for (int i = 0; i < weights.length; ++i){
             weights[i] /= sum;
         }
+    }
+
+    @Override
+    public String toString() {
+        return feature + ";" + threshold + ";" + polarity + ";" + alpha;
+    }
+
+    public static WeakClassifier fromString(String string){
+        String[] strings = string.split(";");
+
+        HaarFeature feature = HaarFeature.fromString(strings[0]);
+        double threshold = Double.parseDouble(strings[1]);
+        double polarity = Double.parseDouble(strings[2]);
+        double alpha = Double.parseDouble(strings[3]);
+
+        WeakClassifier classifier = new WeakClassifier(feature, threshold, polarity);
+        classifier.alpha = alpha;
+
+        return classifier;
     }
 }

@@ -29,4 +29,19 @@ public class VerticalTriple extends HaarFeature {
 
         return  black - white;
     }
+
+    public static HaarFeature fromString(
+            double startWidth, double startHeight, double endWidth, double endHeight, String[] strings) {
+
+        double center1 = Double.parseDouble(strings[5]);
+        double center2 = Double.parseDouble(strings[6]);
+
+        return new VerticalTriple(startWidth, startHeight, endWidth, endHeight, center1, center2);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " "
+                + "VT " + center1 + " " + center2;
+    }
 }

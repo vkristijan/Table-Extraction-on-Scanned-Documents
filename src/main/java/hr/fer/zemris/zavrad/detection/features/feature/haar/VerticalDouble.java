@@ -23,4 +23,17 @@ public class VerticalDouble extends HaarFeature {
 
         return  black - white;
     }
+
+    public static HaarFeature fromString(
+            double startWidth, double startHeight, double endWidth, double endHeight, String[] strings) {
+
+        double center = Double.parseDouble(strings[5]);
+        return new VerticalDouble(startWidth, startHeight, endWidth, endHeight, center);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " "
+                + "VD " + center;
+    }
 }

@@ -1,7 +1,5 @@
 package hr.fer.zemris.zavrad.detection.adaboost;
 
-import hr.fer.zemris.zavrad.detection.features.feature.haar.HaarFeature;
-import hr.fer.zemris.zavrad.detection.training.Sample;
 import hr.fer.zemris.zavrad.table.CornerValue;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 import hr.fer.zemris.zavrad.util.img.IntegralImage;
@@ -21,7 +19,7 @@ import java.util.List;
 public class AdaBoost {
     private List<WeakClassifier> classifiers;
     private int classifierCount = 10;
-    private static int iterations = 10_000;
+    private static int iterations = 10_0;
 
     public AdaBoost() {
         classifiers = new ArrayList<>();
@@ -46,8 +44,39 @@ public class AdaBoost {
         return 0;
     }
 
+    public void saveToFile(Path path){
+        StringBuilder sb = new StringBuilder();
+        for (WeakClassifier classifier : classifiers){
+            sb.append(classifier);
+            sb.append(String.format("%n"));
+        }
+
+        try {
+            Files.write(path, sb.toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static AdaBoost readFromFile(Path path){
+        List<String> lines = null;
+        try {
+            lines = Files.readAllLines(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        AdaBoost adaBoost = new AdaBoost();
+        for (String line : lines){
+            adaBoost.addClassifier(WeakClassifier.fromString(line));
+        }
+
+        return adaBoost;
+    }
+
     public static void main(String[] args) {
         Path dataPath = Paths.get(args[0]);
+        Path outputPath = Paths.get(args[1]);
         List<IntegralImage> positive = new ArrayList<>();
         List<IntegralImage> negative = new ArrayList<>();
 
@@ -73,6 +102,7 @@ public class AdaBoost {
             System.out.println("Alpha: - " + classifier.getAlpha());
             System.out.println("---------------------------------");
         }
+        adaBoost.saveToFile(outputPath);
     }
 
     private static void loadData(Path dataPath, List<IntegralImage> positive, List<IntegralImage> negative) {

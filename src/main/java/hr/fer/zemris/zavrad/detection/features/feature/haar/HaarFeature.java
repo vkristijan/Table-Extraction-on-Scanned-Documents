@@ -44,4 +44,31 @@ public abstract class HaarFeature implements IFeature {
     }
 
     protected abstract int calculateFeature(IntegralImage img, int startW, int startH, int endW, int endH);
+
+    @Override
+    public String toString() {
+        return startWidth + " " + startHeight + " "
+                + endWidth + " " + endHeight;
+    }
+
+    public static HaarFeature fromString(String string) {
+        String[] strings = string.split(" ");
+
+        double startWidth = Double.parseDouble(strings[0]);
+        double startHeight = Double.parseDouble(strings[1]);
+        double endWidth = Double.parseDouble(strings[2]);
+        double endHeight = Double.parseDouble(strings[3]);
+
+        if (strings[4].trim().equals("HD")){
+            return HorizontalDouble.fromString(startWidth, startHeight, endWidth, endHeight, strings);
+        } else if (strings[4].trim().equals("HT")){
+            return HorizontalTriple.fromString(startWidth, startHeight, endWidth, endHeight, strings);
+        } else if (strings[4].trim().equals("VD")){
+            return VerticalDouble.fromString(startWidth, startHeight, endWidth, endHeight, strings);
+        } else if (strings[4].trim().equals("VT")){
+            return VerticalTriple.fromString(startWidth, startHeight, endWidth, endHeight, strings);
+        }
+
+        return null;
+    }
 }

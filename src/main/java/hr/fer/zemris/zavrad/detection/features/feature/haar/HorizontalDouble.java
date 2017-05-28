@@ -23,4 +23,17 @@ public class HorizontalDouble extends HaarFeature {
 
         return  black - white;
     }
+
+    public static HaarFeature fromString(
+            double startWidth, double startHeight, double endWidth, double endHeight, String[] strings) {
+
+        double center = Double.parseDouble(strings[5]);
+        return new HorizontalDouble(startWidth, startHeight, endWidth, endHeight, center);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " "
+                + "HD " + center;
+    }
 }
