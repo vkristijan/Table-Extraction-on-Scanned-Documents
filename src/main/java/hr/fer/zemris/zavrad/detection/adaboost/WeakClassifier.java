@@ -20,6 +20,12 @@ public class WeakClassifier {
 
     private double[] weights;
 
+    public WeakClassifier(HaarFeature feature, double threshold, double polarity) {
+        this.feature = feature;
+        this.threshold = threshold;
+        this.polarity = polarity;
+    }
+
     public HaarFeature getFeature() {
         return feature;
     }
