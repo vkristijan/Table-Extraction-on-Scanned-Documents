@@ -19,6 +19,33 @@ import java.util.List;
  * @version 1.0.0
  */
 public class AdaBoost {
+    private List<WeakClassifier> classifiers;
+    private int classifierCount = 10;
+    private static int iterations = 10_000;
+
+    public AdaBoost() {
+        classifiers = new ArrayList<>();
+    }
+
+    private void addClassifier(WeakClassifier classifier){
+        classifiers.add(classifier);
+    }
+
+    public int classify(IntegralImage img, int x, int y, int w, int h){
+        double alphaSum = 0;
+        double value = 0;
+
+        for (WeakClassifier classifier : classifiers){
+            value += classifier.getAlpha() * classifier.classify(img, x, y, w, h);
+            alphaSum += classifier.getAlpha();
+        }
+
+        if (value >= alphaSum / 2){
+            return 1;
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         Path dataPath = Paths.get(args[0]);
         List<IntegralImage> positive = new ArrayList<>();
@@ -26,13 +53,26 @@ public class AdaBoost {
 
         loadData(dataPath, positive, negative);
 
-        ClassifierCreator creator = new ClassifierCreator(1000);
+        ClassifierCreator creator = new ClassifierCreator(iterations);
         double[] weights = new double[positive.size() + negative.size()];
         for (int i = 0; i < weights.length; ++i){
             weights[i] = 1;
+
+            if (i < positive.size()){
+                weights[i] = 10;
+            }
         }
 
-        WeakClassifier feature = creator.getClassifier(weights, positive, negative);
+        AdaBoost adaBoost = new AdaBoost();
+        for (int i = 0; i < adaBoost.classifierCount; ++i){
+            WeakClassifier classifier = creator.getClassifier(weights, positive, negative);
+            adaBoost.addClassifier(classifier);
+
+            weights = classifier.getWeights();
+            System.out.println("---------------------------------");
+            System.out.println("Alpha: - " + classifier.getAlpha());
+            System.out.println("---------------------------------");
+        }
     }
 
     private static void loadData(Path dataPath, List<IntegralImage> positive, List<IntegralImage> negative) {

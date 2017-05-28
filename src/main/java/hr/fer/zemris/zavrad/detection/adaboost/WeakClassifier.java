@@ -17,6 +17,11 @@ public class WeakClassifier {
     private HaarFeature feature;
     private double threshold;
     private double polarity;
+    private double alpha;
+
+    public double getAlpha() {
+        return alpha;
+    }
 
     private double[] weights;
 
@@ -103,6 +108,8 @@ public class WeakClassifier {
                 weights[i] *= beta;
             }
         }
+
+        alpha = Math.log(1.0 / beta);
     }
 
     private void normalizeWeights(){
