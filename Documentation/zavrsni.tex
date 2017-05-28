@@ -350,7 +350,7 @@ Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okom
 \end{figure}
 
 \chapter{Detekcija tablice}
-Kao što je predloženo u \cite{conference:AutomaticTableDetectionInDocumentImages}, detekcija tablice temelji se na detekciji vrhova ćelija. 
+Kao što je predloženo u radu \cite{conference:AutomaticTableDetectionInDocumentImages}, detekcija tablice temelji se na detekciji vrhova ćelija. 
 Analiziranjem općenitih tablica, moguće je uočiti kako postoji $9$ različitih mogućnosti koje se mogu pojaviti kao vrh ćelije, što je prikazano na slici \ref{fig:corners}.
 
 \begin{figure}[ht!]
@@ -373,7 +373,54 @@ Nakon što se pronađu tako opisani rubovi, vrh označen brojem $9$ na slici mo�
 Ovaj pristup nije detaljnije razrađen u ovom radu te nije korišten u implementaciji, a navodi se isključivo kao prijedlog potencijalne optimizacije korištenog algoritma.
 
 \section{Detekcija vrhova ćelija}
+Detekcija vrhova ćelija obavlja se na način da se svaki dio slike provjerava te se za njega utvrđuje prikazuje li on vrh ćelije ili ne. 
+Kako bi se to izvelo, potrebno je odrediti točno koji dio slike se provjerava u nekom određenom trenutku, a što se čini korištenjem pomičnog prozora. 
+Definiran je prozor određenih dimenzija $X$x$Y$, te se promatra samo dio slike unutar njega. 
+Tako dobiven isječak slike potom se analizira i ispituje sadrči li on vrh ćelije ili ne.
+Jednom kad je detekcija završena za trenutni prozor, prozor se pomiče po $x$ osi za udaljenost $dx$, te se detekcija vrši na tako dobivenom novom isječku slike.
+Jedno od mogućih poboljšanja ove metode predloženo je u radu \cite{ViolaJones}, gdje se ne koristi fiksna veličina pomičnog prozora, već se pretraga započinje s jednom veličinom prozora te se ona iterativno smanjuje tokom pretrage.
+
+
 \subsection{Određivanje značajki}
+Prije nego li se može napraviti detekcija vrhova, potrebno je definirati značajke prema kojima se isti pretražuju.
+Osnovna funkcija značajki je pojednostavljenje slike koja se pokušava prepoznati kako bi se smanjio ukupan prostor stanja pretrage.
+Potrebno je odrediti značajke koje vrijede neovisno o manjim pomacima slike, ili manjim šumovima koji mogu biti prisutni iz različitih razloga.
+Za potrebe toga odabrana su dva različita pristupa odabira značajki.\\
+
+Prvi korišteni način zasniva se na činjenici da se detektiraju djelovi tablica koji se sastoje isključivo od linija.
+Imajući to na umu moguće je uočiti da će u idealnom slučaju okomite i vodoravne zrake (prikazano crvenom bojom) sjeći vrh ćelije uvijek u samo jednoj točki, kao što je prikazano u primjeru na slici \ref{fig:lineFeatures}.
+
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.3\linewidth]{Images/LineFeature.pdf}
+        \captionsetup{justification=centering}
+        \caption{Primjer zrake bez sjecišta}
+        \label{fig:feature1}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.3\linewidth]{Images/LineFeature1.pdf}
+        \captionsetup{justification=centering}
+        \caption{Primjer zrake sa sjecištem}
+        \label{fig:feature2}
+    \end{subfigure}
+    \caption{Primjer ekstrakcije značajki korištenjem okomite zrake}
+    \label{fig:lineFeatures}
+\end{figure}
+
+Ovisno o koordinati zrake moguće je odrediti koja je to vrsta vrha, točnije na danom primjeru na slici \ref{fig:feature1} nema sjecišta zrake i linije, iz čega se zaključuje kako se na slici ne nalaze određeni vrhovi ćelija, poput na primjer vrha označenog brojem $2$ na slici \ref{fig:corners}, koji ima vodoravnu liniju na lijevoj strani.
+Ista ta zraka na primjeru na slici \ref{fig:feature2} presjeca sliku na jednom mjestu, iz čega se zaključuje da je na slici potencijalno vrh koji na tom mjestu ima liniju.\\
+
+Ovaj pristup se nadopunjuje na način da se umjesto broja presjecišta određuje udaljenost od prvog presjecišta.
+Na taj se način razlikuje linija koja se očekivano pojavljuje na sredini slike od šuma koji se može pojaviti na svim mjestima slike.
+Osim navedenoga, koriste se i dijagonalne zrake s kojima se određuje broj presjecišta kako bi se dodatno povećala raznolikost značajki, a samim time i robusnost algoritma.\\
+
+Drugi pristup određivanja značajki slike temelji se na pristupu koji je korišten u radu \cite{ViolaJones}.
+Osnovna ideja je 
+
+
 \subsection{Detekcija korištenjem umjetne neuronske mreže}
 \subsection{Detekcija AdaBoost algoritmom}
 
