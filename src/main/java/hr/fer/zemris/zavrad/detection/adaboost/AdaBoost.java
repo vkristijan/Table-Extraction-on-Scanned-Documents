@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class AdaBoost {
     private List<WeakClassifier> classifiers;
-    private int classifierCount = 10;
-    private static int iterations = 10_0;
+    private int classifierCount = 25;
+    private static int iterations = 10_000;
 
     public AdaBoost() {
         classifiers = new ArrayList<>();
@@ -84,11 +84,16 @@ public class AdaBoost {
 
         ClassifierCreator creator = new ClassifierCreator(iterations);
         double[] weights = new double[positive.size() + negative.size()];
-        for (int i = 0; i < weights.length; ++i){
-            weights[i] = 1;
 
+        int positiveCount = positive.size();
+        int negativeCount = negative.size();
+        for (int i = 0; i < weights.length; ++i){
             if (i < positive.size()){
-                weights[i] = 10;
+                //weight for positive samples
+                weights[i] = 10 * negativeCount;
+            } else {
+                //weight for negative samples
+                weights[i] = positiveCount;
             }
         }
 
