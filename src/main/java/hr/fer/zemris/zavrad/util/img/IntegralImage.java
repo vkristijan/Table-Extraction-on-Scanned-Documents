@@ -1,5 +1,12 @@
 package hr.fer.zemris.zavrad.util.img;
 
+import hr.fer.zemris.zavrad.util.img.draw.Geometry;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * @author Kristijan Vulinović
  * @version 1.0.0
@@ -68,7 +75,7 @@ public class IntegralImage extends GrayScaleImage{
         int sum = integral[hTo][wTo];
 
         if (wFrom != 0){
-            sum -= integral[hFrom][wTo - 1];
+            sum -= integral[hTo][wFrom - 1];
         }
 
         if (hFrom != 0){
@@ -80,5 +87,49 @@ public class IntegralImage extends GrayScaleImage{
         }
 
         return sum;
+    }
+
+    @Override
+    public void save(File file) throws IOException {
+        int min = 10000;
+        int max = 0;
+
+        byte[][] data = getData();
+        int w = getWidth();
+        int h = getHeight();
+
+        for (int i = 0; i < h; ++i){
+            for (int j = 0; j < w; ++j){
+                int val = integral[i][j];
+                if (val < min) min = val;
+                if (val > max) max = val;
+            }
+        }
+
+        System.out.println(min);
+        System.out.println(max);
+
+
+        for (int i = 0; i < h; ++i){
+            for (int j = 0; j < w; ++j){
+                int val = integral[i][j] * 255 / max;
+                data[i][j] = (byte)val;
+            }
+        }
+
+
+        System.out.println("SUMAAA");
+        System.out.println(getSum(1499, 715, 1910, 1226));
+        Geometry.drawRectangle(this, 1499, 715, 411, 511);
+
+        BufferedImage bim = toBufferedImage();
+
+        try {
+            ImageIO.write(bim, "png", file);
+        } catch (IOException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new IOException(ex);
+        }
     }
 }
