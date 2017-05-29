@@ -29,18 +29,22 @@ public abstract class HaarFeature implements IFeature {
 
         IntegralImage iImg = (IntegralImage)img;
         features[index] = getFeature(iImg, x, y, w, h);
-        features[index] /= (w * h);
 
         return 1;
     }
 
-    public int getFeature(IntegralImage img, int x, int y, int w, int h) {
+    public double getFeature(IntegralImage img, int x, int y, int w, int h) {
         int startW = x + (int) (startWidth * w);
         int startH = y + (int) (startHeight * h);
         int endW = x + (int) (endWidth * w);
         int endH = y + (int) (endHeight * h);
 
-        return  calculateFeature(img, startW, startH, endW, endH);
+        int dW = endW - startW;
+        int dH = endH - startH;
+        int size = dW * dH;
+
+        if (size == 0) return 0;
+        return  ((double)calculateFeature(img, startW, startH, endW, endH)) / size;
     }
 
     protected abstract int calculateFeature(IntegralImage img, int startW, int startH, int endW, int endH);
