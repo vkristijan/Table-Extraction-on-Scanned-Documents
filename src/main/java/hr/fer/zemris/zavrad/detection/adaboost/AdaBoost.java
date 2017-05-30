@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class AdaBoost {
     private List<WeakClassifier> classifiers;
-    private int classifierCount = 25;
-    private static int iterations = 10_000;
+    private int classifierCount = 20;
+    private static int iterations = 100_000;
 
     public AdaBoost() {
         classifiers = new ArrayList<>();
@@ -104,7 +104,7 @@ public class AdaBoost {
 
             weights = classifier.getWeights();
             System.out.println("---------------------------------");
-            System.out.println("Alpha: - " + classifier.getAlpha());
+            System.out.println("Alpha #" + i + ": - " + classifier.getAlpha());
             System.out.println("---------------------------------");
         }
         adaBoost.saveToFile(outputPath);
