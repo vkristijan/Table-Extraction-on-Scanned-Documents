@@ -51,9 +51,16 @@ public class AdaDetection {
 
         System.out.println(corners.size());
         for (Corner corner : corners){
-            int x = corner.getPosition().getX() - windowSize / 2;
-            int y = corner.getPosition().getY() - windowSize / 2;
-            Geometry.drawSquare(integralImage, x, y, windowSize);
+            int x = corner.getPosition().getX();
+            int y = corner.getPosition().getY();
+
+            for (int ii = 0; ii < 8; ++ii){
+                try {
+                    Geometry.drawSquare(integralImage, x - ii, y - ii, 2 * ii);
+                } catch (Exception e){
+                    continue;
+                }
+            }
         }
 
         integralImage.save(output.toFile());
@@ -65,8 +72,8 @@ public class AdaDetection {
         int width = img.getWidth();
         int height = img.getHeight();
 
-        for (int y = 0; y < height - windowSize; y += step){
-            for (int x = 0; x < width - windowSize; x += step){
+        for (int y = 1; y < height - windowSize; y += step){
+            for (int x = 1; x < width - windowSize; x += step){
 
                 if (adaBoost.classify(img, x, y, windowSize, windowSize) == 0) continue;
 

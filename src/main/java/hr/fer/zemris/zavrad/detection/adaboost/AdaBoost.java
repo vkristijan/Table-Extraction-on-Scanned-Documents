@@ -90,7 +90,7 @@ public class AdaBoost {
         for (int i = 0; i < weights.length; ++i){
             if (i < positive.size()){
                 //weight for positive samples
-                weights[i] = 10 * negativeCount;
+                weights[i] = negativeCount;
             } else {
                 //weight for negative samples
                 weights[i] = positiveCount;
