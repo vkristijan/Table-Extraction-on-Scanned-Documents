@@ -101,7 +101,7 @@ public class WeakClassifier {
         double beta = error / (1 - error);
 
         for (int i = 0; i < weights.length; ++i){
-            if (errors.contains(i)){
+            if (!errors.contains(i)){
                 weights[i] *= beta;
             }
         }
