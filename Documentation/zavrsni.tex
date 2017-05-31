@@ -522,6 +522,19 @@ Takva grupacija neurona zove se sloj neuronske mreže.\\
 Sljedeći problem dobivenog modela je mogućnost rada isključivo sa linearno odvojivim podatcima. Taj se problem rješava dodavanjem novih slojeva neurona u neuronsku mrežu, na način da se izlazi neurona jednog sloja proslijede kao ulazi neuronima drugog sloja.
 Pri tome se razlikuju $3$ općenite vrste slojeva: ulazni sloj neurona koji služi kako bi se ulazne vrijednosti značajki prosliejdile ostatku neuronske mreže, skriveni sloj neurona koji se koristi prilikom računanja, ali nije vidljiv vanjskom korisniku te izlazni sloj, čiji se rezultat predaje krajnjem korisniku.
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/FFANN.pdf}
+    \captionsetup{justification=centering}
+    \caption{Model unaprijedne neuronske mreže}
+    \label{fig:ffann}
+\end{figure}
+
+Ovisno o načinu povezivanja neurona moguće je ostvariti različite arhitekture umjenih neuronskih mreža. 
+U radu je korištena unaprijedna neuronska mreža, kakva je prikazana na slici \ref{fig:ffann}.
+Jedna od prednosti umjetnih neuronskih mreža leži u mogućnosti učenja istih, a što je moguće učiniti promjenom težina ulaza za pojedini neuron.
+Jednom kad je mreža naučena, odnosno kada su određene težine uz koje mreža zadovoljavajuće izvršava zadatak za koji je predviđena, dobiene težine pohranjuju se u datoteku na računalu kako se a daljnja pokretanja mreža ne bi morala ponovno učiti.
+Ovo svojstvo omogućava veliku brzinu klasifikacije jednom kada je mreža naučena.
 
 
 \subsection{Detekcija AdaBoost algoritmom}
