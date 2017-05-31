@@ -23,11 +23,13 @@ public abstract class HaarFeature implements IFeature {
 
     @Override
     public int getFeature(GrayScaleImage img, int x, int y, int w, int h, double[] features, int index) {
+        IntegralImage iImg;
         if (!(img instanceof IntegralImage)){
-            throw new IllegalArgumentException("Viola features require an integral image!");
+            iImg = IntegralImage.fromGrayscaleImage(img);
+        } else {
+            iImg = (IntegralImage)img;
         }
 
-        IntegralImage iImg = (IntegralImage)img;
         features[index] = getFeature(iImg, x, y, w, h);
 
         return 1;

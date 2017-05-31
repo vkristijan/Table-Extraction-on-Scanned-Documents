@@ -6,6 +6,7 @@ import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.training.backprop.BackPropagation;
 import hr.fer.zemris.zavrad.table.CornerValue;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
+import hr.fer.zemris.zavrad.util.img.IntegralImage;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -15,17 +16,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
 public class CornerDetectionBackprop {
-    private static final double LEARNING_RATE = 0.05;
-    private static final int MAX_ITERATION = 150_000;
+    private static final double LEARNING_RATE = 0.0005;
+    private static final int MAX_ITERATION = 1_500_000;
+
+    private static Map<CornerValue, Double> modifiers;
 
     public static void main(String[] args) {
+        modifiers = new HashMap<>();
+
         Path dataPath = Paths.get(args[0]);
 
         CornerDetection detection = new CornerDetection();
@@ -40,7 +47,8 @@ public class CornerDetectionBackprop {
             for (Sample sample : samples){
                 RealVector input = new ArrayRealVector(sample.input);
                 int expectedOutput = sample.value.getValue();
-                backPropagation.propagate(input, expectedOutput);
+                double modifier = modifiers.get(sample.value);
+                backPropagation.propagate(input, expectedOutput, modifier);
             }
 
             double correct = 0;
@@ -68,6 +76,7 @@ public class CornerDetectionBackprop {
 
             File[] files = path.toFile().listFiles();
             if (files == null) return samples;
+            modifiers.put(value, 1.0 / files.length);
             for (File file : files){
                 try {
                     GrayScaleImage img = GrayScaleImage.load(file);
@@ -79,6 +88,15 @@ public class CornerDetectionBackprop {
                 }
             }
         }
+
+        double mean = samples.size() / CornerValue.values().length;
+        for (CornerValue value : CornerValue.values()){
+            double modifier = modifiers.get(value);
+            modifier *= mean;
+
+            modifiers.put(value, modifier);
+        }
+
         return samples;
     }
 }

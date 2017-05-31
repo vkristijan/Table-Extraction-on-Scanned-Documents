@@ -21,7 +21,8 @@ public class BackPropagation {
         layers = ffann.getLayers();
     }
 
-    public void propagate(RealVector input, int expectedOutput){
+    public void propagate(RealVector input, int expectedOutput, double modifier){
+        double alpha = learningRate * modifier;
         RealVector output = ffann.getOutput(input);
 
         int n = layers.length;
@@ -47,7 +48,7 @@ public class BackPropagation {
             for (int j = 0; j < neuronWeights.getDimension(); ++j){
                 double weight = neuronWeights.getEntry(j);
                 double inputValue = (j == 0 ? 1 : inputs.getEntry(j - 1));
-                weight -= learningRate * delta * inputValue;
+                weight -= alpha * delta * inputValue;
                 neuronWeights.setEntry(j, weight);
             }
 
@@ -82,7 +83,7 @@ public class BackPropagation {
                 for (int j = 0; j < neuronWeights.getDimension(); ++j){
                     double weight = neuronWeights.getEntry(j);
                     double inputValue = (j == 0 ? 1 : inputs.getEntry(j - 1));
-                    weight -= learningRate * delta * inputValue;
+                    weight -= alpha * delta * inputValue;
                     neuronWeights.setEntry(j, weight);
                 }
 

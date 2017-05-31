@@ -3,7 +3,9 @@ package hr.fer.zemris.zavrad.detection;
 import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.table.Corner;
+import hr.fer.zemris.zavrad.table.CornerValue;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
+import hr.fer.zemris.zavrad.util.img.IntegralImage;
 import hr.fer.zemris.zavrad.util.img.draw.Geometry;
 import hr.fer.zemris.zavrad.util.img.filters.ImageFilter;
 import hr.fer.zemris.zavrad.util.img.filters.threshold.ThresholdBinarization;
@@ -36,10 +38,12 @@ public class DetectionDemo {
         ImageFilter filter = new ThresholdBinarization(127);
         img = filter.filter(img);
 
-        List<Corner> corners = slider.detectCorners(img);
+        IntegralImage integralImage = IntegralImage.fromGrayscaleImage(img);
+        List<Corner> corners = slider.detectCorners(integralImage);
 
         System.out.println(corners.size());
         for (Corner corner : corners){
+            if (corner.getValue() != CornerValue.UL_CORNER) continue;
             int x = corner.getPosition().getX() - windowSize / 2;
             int y = corner.getPosition().getY() - windowSize / 2;
             Geometry.drawSquare(img, x, y, windowSize);
