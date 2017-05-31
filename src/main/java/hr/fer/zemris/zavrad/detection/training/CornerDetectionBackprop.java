@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class CornerDetectionBackprop {
     private static final double LEARNING_RATE = 0.0005;
-    private static final int MAX_ITERATION = 1_500_000;
+    private static final int MAX_ITERATION = 70_000;
 
     private static Map<CornerValue, Double> modifiers;
 

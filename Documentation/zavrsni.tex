@@ -4,6 +4,7 @@
 \usepackage{subcaption}
 \usepackage{gensymb}
 \usepackage{indentfirst}
+\usepackage{amssymb}
 
 \begin{document}
 
@@ -388,7 +389,7 @@ Osnovna funkcija značajki je pojednostavljenje slike koja se pokušava prepozna
 Potrebno je odrediti značajke koje vrijede neovisno o manjim pomacima slike, ili manjim šumovima koji mogu biti prisutni iz različitih razloga.
 Za potrebe toga odabrana su dva različita pristupa odabira značajki.\\
 
-Prvi korišteni način zasniva se na činjenici da se detektiraju djelovi tablica koji se sastoje isključivo od linija.
+Prvi korišteni način zasniva se na činjenici da se detektiraju djelovi tablica, koje se sastoje isključivo od vodoravnih i okomitih linija.
 Imajući to na umu moguće je uočiti da će u idealnom slučaju okomite i vodoravne zrake (prikazano crvenom bojom) sjeći vrh ćelije uvijek u samo jednoj točki, kao što je prikazano u primjeru na slici \ref{fig:lineFeatures}.
 
 \begin{figure}[th!]
@@ -416,11 +417,80 @@ Ista ta zraka na primjeru na slici \ref{fig:feature2} presjeca sliku na jednom m
 
 Ovaj pristup se nadopunjuje na način da se umjesto broja presjecišta određuje udaljenost od prvog presjecišta.
 Na taj se način razlikuje linija koja se očekivano pojavljuje na sredini slike od šuma koji se može pojaviti na svim mjestima slike.
+Prilikom ovog pristupa koji uključuje izračun udaljenosti do presjecišta potrebno je relativizirati dobivenu udaljenost u odnosu na veličinu slike na kojoj se radi analiza kako bi se osiguralo da značajke ne ovise o veličini slike.
 Osim navedenoga, koriste se i dijagonalne zrake s kojima se određuje broj presjecišta kako bi se dodatno povećala raznolikost značajki, a samim time i robusnost algoritma.\\
 
 Drugi pristup određivanja značajki slike temelji se na pristupu koji je korišten u radu \cite{ViolaJones}.
-Osnovna ideja je 
+Ove značajke temelje se na činjenici da različiti dijelovi slike sadrže različitu količinu crnih slikovnih elemenata.
+Kao što je prikazano na slici \ref{fig:haarFeatures}, gdje su prikazana $4$ različita oblika značajki ovog tipa koje se koriste u ovome radu, značajke se gledaju za određeni dio slike, što je prikazano pravokutnikom.
+Vrijednost značajke se računa kao razlika broja crnih slikovnih elemenata u crnom i bijelom djelu pravokutnika.
+Kako bi se postigla neovisnost o veličini slike nad kojom se vade značajke, izračunata razlika broja slikovnih elemenata dijeli se ukupnim brojem slikovnih elemenata u kvadratu značajke.
+Na ovaj način se ispituje je li neko područje tamnije od njemu susjednog područja, što je primjer kod linija tablice, gdje se linija prolazi sredinom promatranog područja koje je zbog toga tamno, a neposredno pored nje se nalazi bijelo područje. 
+Potencijalne smetnje koje mogu nastati na slici kao posljedica sadržaja tablice ne utječu značajno na vrijednost značajke, budući da značajka obuhvaća veću površinu, a potencijalne smetnje se u većini slučajeva nalaze na manjem lokalnom području.
 
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.5\linewidth]{Images/Haar_VD.pdf}
+        \captionsetup{justification=centering}
+        \caption{}
+        \label{fig:haar1}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.5\linewidth]{Images/Haar_HD.pdf}
+        \captionsetup{justification=centering}
+        \caption{}
+        \label{fig:haar2}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.5\linewidth]{Images/Haar_VT.pdf}
+        \captionsetup{justification=centering}
+        \caption{}
+        \label{fig:haar3}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.5\linewidth]{Images/Haar_HT.pdf}
+        \captionsetup{justification=centering}
+        \caption{}
+        \label{fig:haar4}
+    \end{subfigure}
+    \caption{Primjeri značajki temeljenih na razlici količine boje}
+    \label{fig:haarFeatures}
+\end{figure}
+
+Prednost ovog skupa značajki je u mogućnosti izračuna istih u konstantnoj složenosti, uz prethodno predprocesiranje podataka.
+Računa se novi oblik reprezentacije slike ($ii$) u kojemu je vrijednost na poziciji $x, y$ jednaka ukupnom broju crnih slikovnih elemenata na početnoj slici za sve elemente koji se nalaze gore lijevo od trenutnog, odnosno:
+\[
+    ii(x, y) = 
+        \displaystyle \sum_{x' < x} 
+        \displaystyle \sum_{y' < y}
+        i(x', y')
+\]
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/Integral.pdf}
+    \captionsetup{justification=centering}
+    \caption{Primjer izračuna broja crnih elemenata unutar kvadrata}
+    \label{fig:integral}
+\end{figure}
+
+Ove vrijednosti je moguće izračunati jednim prolazom kroz početnu sliku. 
+Korištenjem ovih suma moguće je izračunati broj crnih elemenata za bilo koji kvadrat na početnoj slici.
+Primjer izračuna prikazan je slikom \ref{fig:integral}, na kojoj je prikazan kvadrat $ABCD$ za kojega želimo izračunati opisanu vrijednost. 
+Važno je uočiti da su prethodno već izračunate sume od gornjeg lijevog kuta do svake pojedine točke.
+Traženu vrijednost je moguće prikazati kao kumulativnu sumu u točki $D$, što uključuje cijeli kvadrat, kao i područja lijevo i iznad njega.
+Vrijednost područja koje se nalazi lijevo od kvadrata jednaka je sumi u točki $C$ te se ta vrijednost oduzima od prethodne vrijednosti.
+Analogno tome, od trenutne vrijednosti oduzima se suma u točki $B$.
+Trenutni postupak je u dva navrata oduzeo vrijednost područja koje se nalazi gore lijevo od točke $A$ pravokutnika, zbog čega je potrebno trenutnoj vrijednosti jednom pridodati sumu u točki $A$.
+Konačna vrijednost za dani kvadrat glasi:
+\[
+    f = ii(D_x, D_y) - ii(C_x, C_y) - ii(B_x, B_y) + ii(A_x, A_y)
+\]
 
 \subsection{Detekcija korištenjem umjetne neuronske mreže}
 \subsection{Detekcija AdaBoost algoritmom}
