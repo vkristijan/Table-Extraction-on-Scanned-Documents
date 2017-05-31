@@ -5,6 +5,7 @@
 \usepackage{gensymb}
 \usepackage{indentfirst}
 \usepackage{amssymb}
+\usepackage{commath}
 
 \begin{document}
 
@@ -536,8 +537,83 @@ Jedna od prednosti umjetnih neuronskih mreža leži u mogućnosti učenja istih,
 Jednom kad je mreža naučena, odnosno kada su određene težine uz koje mreža zadovoljavajuće izvršava zadatak za koji je predviđena, dobiene težine pohranjuju se u datoteku na računalu kako se a daljnja pokretanja mreža ne bi morala ponovno učiti.
 Ovo svojstvo omogućava veliku brzinu klasifikacije jednom kada je mreža naučena.
 
-
 \subsection{Detekcija AdaBoost algoritmom}
+Umjetne neuronske mreže izvode velik broj računskih operacija kako bi klasificirale neki ulazni primjer.
+To predstavlja problem kada je potrebno klasificirati velik broj uzoraka, kao što je to slučaj kod detekcije vrhova ćelija, gdje je potrebno za svaki mogući element slike odrediti je li on vrh ćelije ili ne.
+Kako bi se taj postupak ubrzao koristi se drugačiji pristup klasificiranju primjenom bržih algoritama. \\
+
+Osnovna ideja AdaBoost algoritma je izgraditi jedan jaki klasifikator primjenom više slabih klasifikatora.
+U okviru ovog algoritma, jaki klasifikator je finalni klasifikator koji uz veliku točnost podatke raspoređuje u jednu od grupa, dok su slabi klasifikatori u stanju točno klasificirati samo manji podskup podataka, dok ostale svrstavaju u krive grupe.\\
+
+Slabi klasifikatori određuju fiksni prag za kojega će nešto klasificirti u jednu ili drugu kategoriju, ovisno o vrijednosti korištene značajke za sliku. Takav klasifikator prikazan je sljedećom funkcijom:
+\[
+    h(x, f, p, \theta) = 
+    \begin{cases}
+    1,  & \quad \text{ako je } pf(x) < p\theta \\
+    0,  & \quad \text{inače}\\
+    \end{cases}
+\]
+gdje je sa $h(x, f, p, \theta)$ označen klasifikator, sa $x$ uzorak, sa $f$ funkcija koja na temelju uzorka određuje značajku, a $p$ predstavlja faktor koji određuje smjer nejednakosti, ovisno o predznaku.
+Ukupna greška ovakvog klasifikatora definirana je kao težinska suma svih odstupanja, gdje se svakom uzorku pridjeluje određena težina kojom on doprinosi ukupnoj grešci.
+Izračun ukupne greške $\epsilon$ prikazan je formulom:
+\[
+    \epsilon = \displaystyle \sum_{i}w_i \abs{h(x, f, p, \theta) - y_i} 
+\]
+gdje je sa $w_i$ predstavljena težina $i$-tog po redu uzorka, a sa $y_i$ očekivana vrijednost izlaza klasifikatora.\\
+
+Jaki klasifikatori grade se kao spoj više slabih klasifikatora na način da se računa izlaz svakog od njih te se na temelju toga donosi konačna odluka o kategoriji u koju treba svrstati ulazni uzorak.
+Kako bi se stvorio jaki klasifikator potrebno je odrediti skup labeliranih ulaznih primjera koji se koriste tokom učenja.
+Budući da algoritam može klasificirati samo $2$ kategorije podataka, potrebno mu je predati uzorke koje smije i koje ne smije prepoznati, gdje je sa $1$ označen uzorak koji se prepoznaje, a sa $0$ uzorak koji se ne prepoznaje.
+Na slučaju tablica, algoritam prepoznaje sve obliek vrhova ćelija, a pritom ne prepoznaje sadržaj unutar tablice, linije tablice i ostale smetnje koje se pojavljuju na slici.
+Početne težine za svaki od uzoraka postavljene su na: 
+\[
+    w_i = 
+    \begin{cases}
+    \frac{1}{m}, & \quad y_i = 0\\
+    \frac{1}{l}, & \quad y_i = 1\\
+    \end{cases}
+\]
+Pritom je sa $m$ označen broj negativnih uzoraka, a sa $l$ broj pozitivnih uzoraka.
+Potom se ovisno o željenom broju slabih klasifikatora ponavlja sljedeći postupak.
+Prvo je potrebno normalizirati sve težine:
+\[
+    w_i \leftarrow \frac{w_i}{
+        \displaystyle \sum_{j = 1}^{n}w_j
+    }
+\]
+Potom se određuje slabi klasifikator $h$ koji za trenutne težine daje najmanju pogrešku $\epsilon$, izračunatu na prethodno opisani način.
+Dobiveni slabi klasifikator nije u mogućnosti točno klasificirati određeni dio podataka, zbog čega je potrebno postići da sljedeći slabi klasifikator uspješno prepozna te podatke.
+To se postiže mijenanjem trenutnih težina korištenih u izračunu greške na način da se povećavaju težine onih ulaza čija je vrijednost pogrešno klasificirana, a smanjuju težine ulaza čija je vrijednost ispravno klasificirana, prema formuli:
+\[
+    w_i \leftarrow 
+    \begin{cases}
+        w_i\beta, & \quad \text{ako je uzorak $i$ točno klasificiran}\\
+        w_i, & \quad \text{inače}\\
+    \end{cases}
+\]
+Pritom je koeficjent $\beta$ definiran kao: 
+\[
+    \beta = \frac{\epsilon}{1 - \epsilon}
+\]
+Za ovako određen slabi klasifikator računa se još i vrijednost $\alpha$ kao: 
+\[
+    \alpha = log(\frac{1}{\beta})
+\]
+što se koristi prilikom izrade konačnog jakog klasifikatora na način da izlazi klasifikatora sa većom vriejdnošću $\alpha$ više doprinose konačnoj odluci klasifikacije od onih sa manjom vrijednošću.
+Jaki klasifikator određen je kao:
+\[
+    C(x) = 
+    \begin{cases}
+        1, & \quad 
+            \displaystyle \sum_{t = 1}^{T}
+            \alpha_th_t(x)
+            \geq
+            \frac{1}{2} \displaystyle \sum_{t = 1}^{T}\alpha_t\\
+        0, & \quad \text{inače}\\
+    \end{cases}
+\]
+
+\subsection{Kombiniranje klasifikatora}
 
 \section{Rekonstrukcija tablice}
 
