@@ -43,7 +43,7 @@ public class DetectionDemo {
 
         System.out.println(corners.size());
         for (Corner corner : corners){
-            if (corner.getValue() != CornerValue.UL_CORNER) continue;
+            //if (corner.getValue() != CornerValue.UL_CORNER) continue;
             int x = corner.getPosition().getX() - windowSize / 2;
             int y = corner.getPosition().getY() - windowSize / 2;
             Geometry.drawSquare(img, x, y, windowSize);
