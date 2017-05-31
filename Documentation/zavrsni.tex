@@ -493,6 +493,37 @@ Konačna vrijednost za dani kvadrat glasi:
 \]
 
 \subsection{Detekcija korištenjem umjetne neuronske mreže}
+Umjetne neuronske mreže nastale su kao model kojim se nastoji simulirati način rada ljudskog mozga.
+Poznato je da se mozak sastoji od velikog broja međusobno povezanih neurona.
+Svaki se neuron sastoji od $3$ djela: dendrita koji primaju električne podražaje, tijela koje reagira na podražaj i aksona koji prosljeđuje podražaj sljedećim povezanim neuronima.
+Osnovni princip rada neurona temelji se upravo na spomenutoj propagaciji električnih impulsa. 
+Umjetni neuroni simuliraju pojednostavljeni model bioloških neurona na način da oponašaju prethodno navedene funkcionalnsti.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/Neuron.png}
+    \captionsetup{justification=centering}
+    \caption{Prikaz modela umjetnog neurona}
+    \label{fig:neuron}
+\end{figure}
+
+Slika \ref{fig:neuron} prikazuje opći model takvog neurona. 
+Ulazne vrijednosti neuronu čine vrijednosti od $x_1$ do $x_n$, te se svakoj od njih dodijeljuje određena težina $w_1$ do $w_n$ sa kojom se ulazna vrijednost množi.
+Na taj se način ostvaruje mogućnost postavljanja različitih prioriteta različitim ulazima.
+Tijelo neurona ostvareno je funkcijom sumacije koja zbraja težinske vrijednosti ulaza te tako dobiveni broj predaje prijenosnoj funkciji, koja se ponaša kao model aksona.
+Prijenosna funkcija za dani argument vraća rezultat iz određenog raspona, što se propagira kao ulaz sljedećim neuronima.\\
+
+Korištenjem samo jednog neurona moguće je ostvariti jednostavnije linearne klasifikacijske algoritme, na način da se kao ulazi neurona koriste značajke prema kojima se klasificira, a za prijenosnu funkciju odabere funkcija skoka.
+Ovisno o izlazu iz neurona uzorak se klasificira u jedan od dva rezreda.
+Prvi nedostatak ovog modela koji se uočava je nemogućnost istoga da uzorak klasificira ako postoji više različitih razreda.
+Taj se problem može riješiti dodavanjem novih neurona koji primaju jednake ulaze kao i prvi neuron, te izlaz svakog od njih odgovara pojedinom razredu u koji ulazni uzorak može biti klasificiran.
+Takva grupacija neurona zove se sloj neuronske mreže.\\
+
+Sljedeći problem dobivenog modela je mogućnost rada isključivo sa linearno odvojivim podatcima. Taj se problem rješava dodavanjem novih slojeva neurona u neuronsku mrežu, na način da se izlazi neurona jednog sloja proslijede kao ulazi neuronima drugog sloja.
+Pri tome se razlikuju $3$ općenite vrste slojeva: ulazni sloj neurona koji služi kako bi se ulazne vrijednosti značajki prosliejdile ostatku neuronske mreže, skriveni sloj neurona koji se koristi prilikom računanja, ali nije vidljiv vanjskom korisniku te izlazni sloj, čiji se rezultat predaje krajnjem korisniku.
+
+
+
 \subsection{Detekcija AdaBoost algoritmom}
 
 \section{Rekonstrukcija tablice}
