@@ -613,13 +613,26 @@ Jaki klasifikator određen je kao:
     \end{cases}
 \]
 
+Prednost ovako dobivenog klasifikatora leži u njegovoj brzini, pogotovo ako se kao značajke na temelju kojih se vrši klasifikacija koriste značajke koje je moguće jednostavno izračunti, poput druge skupine značajki opisanih u ovome radu.
+
+
 \subsection{Kombiniranje klasifikatora}
+Prethodno su objašnjena dva različita klasifikatora korištena prilikom detekcije tablica.
+Svaki od njih ima svoje prednosti, ali i mane.
+Kako bi se iskoristile dobre strane svakoga od njih, moguće je napraviti novi klasifikator koji će raditi korištenjem prethodno opisana dva klasifikatora.
+Za potrebe toga korišten je AdaBoost klasifikator koji analizira cijelu sliku te određuje točke od potencijalnog interesa. 
+To su točke na kojima je klasifikator rekao da se nalaze vrhovi ćelija, ali zbog prirode klasifikatora nije moguće znati točno o kojim je vrhovima riječ.
+Također, nije nužno potrebno da ovak klasifikator izbaci sve točke koje ne sadrže vrhove tablica, jer se sve pronađene točke ponovno klasificiraju korištenjem umjetne neuronske mreže.\\
+
+Umjetna neuronska mreža koristi se kako bi se za prethodno dobiene točke interesa odredilo koju vrstu vrha ćelije predstavljaju.
+Za potrebe toga moguće je koristiti neuronsku mrežu koja radi sa većim brojem ulaznih značajki, bez opasnosti od velikog vremena izvođenja, zahvaljujući činjenici da se neuronska mreža pokreće na malom skupu točaka slike. 
 
 \section{Rekonstrukcija tablice}
 
 \section{Korištenje prethodno stečenog znanja}
 
 \chapter{Implementacija i rezultati}
+
 \section{Umjetna neuronska mreža}
 \subsection{Treniranje genetskim algoritmom}
 \subsection{Treniranje korištenjem backpropagation algoritma}
