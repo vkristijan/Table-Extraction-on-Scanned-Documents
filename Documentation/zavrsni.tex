@@ -6,7 +6,6 @@
 \usepackage{indentfirst}
 \usepackage{amssymb}
 \usepackage{commath}
-
 \usepackage{hyperref} 
 
 \begin{document}
@@ -646,11 +645,27 @@ Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
 Kao značajke koje se koriste kao ulaz koriste se ručno odabrane značajke. 
 Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u stvarnosti koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.\\
 
-Prvo što je potrebno uočiti je da se kod svih objekatakoje je potrebo prepoznati linije nalaze na sredini slike.
+Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebo prepoznati linije nalaze na sredini slike.
 Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ukoliko i je prikazan, tada točka vrha nije približno u središtu slike.
 Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$
+Svaka od tih značajki generira dvije vrijednosti, udaljenost od gornjeg ruba slike do prvog crnog elementa te udaljenost od doljnje linije do prvog crnog elementa.
+Ove značajke vraćaju kvalitetnu informaciju o tome gdje se na slici nalazi linija, ali nisu otporne na potencijalne smetnje na slici.
+Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta sa okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba.
+Tako dobivene $4$ značajke su u stanju kvalitetno prikazati postoji li linija na tom mjestu ili ne, ali ne provjeravaju položaj linije, što je napravljeno prethodnim značajkama.
+Kako bi se omogućila dodatna robusnost algoritma, primjenjene su značajke koje su prikupljene kao broj presjecišta korištenjem dijagonalnih zraka.
+Kako vrh ćelije nije uvijek nužno u središtu slike moguće je da zraka koja prolazi dijagonalom ne prolazi vrhom te zbog toga ima $2$ sjecišta umjesto jednoga.
+Taj je problem riješen odmicanjem dijagonalnih zraka od glavne dijagonalne za određenu konstantnu vrijednost, čime se može provjeriti postoje li dvije okomite linije u određenom kvadrantu slike, ako postoje $2$ sjecišta.
+Ovisno o odmaku od središnje dijagonale ovisi i tolerancije prema odmaku središta vrha ćelije u odnosu na središte linije.
+Uz navedene, koriste se značajke koje se temelje na razlici broja crnih slikovnih elemenata u određenim kvadratnim područjima.
+Za potrebe toga definirana su $2$ značajke koje prikupljaju informacije o postojanju vodoravne linije. 
+Obje značajke koriste pravokutnik za uzorkovanje kakav je prikazan na slici \ref{fig:haar3}, a pravokutnici se po širini protežu od $0.1$ do $0.9$ širine slike uzorka.
+Visine pravokutnika se razlikuju te jedan prekriva većinu visine slike, dok je crno područje definirano kao uži dio oko centra slike.
+Na taj način ova značajka pruža uvid u odnos cjelokupne slike, ali zbog toga na nju jače utječu ostali crni elementi prisutni na slici.
+Kao rješenje tog problema koristi se drugi pravokutnik koji ima manju visinu zbog čega manje ovisi o ostatku slike, a više o prisutnosti linije.
 
 \subsection{Treniranje genetskim algoritmom}
+Prvi pokušaj treniranja neuronske mreže bio je korištenjem genetskog algoritma.
+
 \subsection{Treniranje korištenjem backpropagation algoritma}
 
 \section{AdaBoost algoritam}
