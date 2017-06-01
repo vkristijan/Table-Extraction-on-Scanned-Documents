@@ -7,6 +7,8 @@
 \usepackage{amssymb}
 \usepackage{commath}
 
+\usepackage{hyperref} 
+
 \begin{document}
 
 \thesisnumber{5187}
@@ -632,8 +634,22 @@ Za potrebe toga moguće je koristiti neuronsku mrežu koja radi sa većim brojem
 \section{Korištenje prethodno stečenog znanja}
 
 \chapter{Implementacija i rezultati}
+Svi postupci opisani u ovom radu implementirani su u programskom jeziku Java.
+Izvorni kodovi su javno dostupni su na adresi \href{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}.
 
 \section{Umjetna neuronska mreža}
+Kao što je perthodno opisano, prilikom klasifikacije se koristi unaprijedna umjetna neuronska mreža. 
+Mreža koristi arhitekturu sa $3$ sloja.
+Prvi, odnosno ulazni sloj sadrži $24$ neurona, koji kao ulaz primaju vrijednosti $24$ različite značajke.
+Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
+
+Kao značajke koje se koriste kao ulaz koriste se ručno odabrane značajke. 
+Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u stvarnosti koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.\\
+
+Prvo što je potrebno uočiti je da se kod svih objekatakoje je potrebo prepoznati linije nalaze na sredini slike.
+Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ukoliko i je prikazan, tada točka vrha nije približno u središtu slike.
+Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$
+
 \subsection{Treniranje genetskim algoritmom}
 \subsection{Treniranje korištenjem backpropagation algoritma}
 
