@@ -748,8 +748,45 @@ Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremeno
 
 \subsection{Treniranje korištenjem backpropagation algoritma}
 Drugi pristup treniranju neuronske mreže je korištenje algoritma backpropagation.
-Za razliku od genetskog algoritma koji nema nikakvo znanje o tome u kojem smjeru se nalazi optimalno rješenje, ovaj algoritam računa odstupanja dobivenog rezultata od očekivanog te primjenom gradijentnog spusta.
- 
+Za razliku od genetskog algoritma koji nema nikakvo znanje o tome u kojem smjeru se nalazi optimalno rješenje, ovaj algoritam računa odstupanja dobivenog rezultata od očekivanog za svaki neuron te primjenom gradijentnog spusta.
+
+\subsubsection{Ukupna greška}
+Ukupna greška neuronske mreže definirana je kao suma kvadratnih odstupanja, odnosno kao:
+\[
+    E_{total} = \sum\frac{1}{2}(y_i-\hat{y})^2
+\]
+gdje je $y_i$ očekivana vrijednost izlaza za određeni neuron izlaznog sloja, a $\hat{y}$ stvarna vrijednost izlaza.
+
+\subsubsection{Promjena težina izlaznog sloja}
+Pogreška $\delta_k$ za svaki neuron izlaznog sloja računa se kao:
+\[
+    \delta_k = o_k(1-o_k)(t_k-o_k)
+\]
+gdje je $o_k$ izlaz promatranog neurona, a $t_k$ očekivani izlaz za taj neuron.
+
+\subsubsection{Promjena težina skrivenog sloja}
+Pogreška $\delta_h$ za svaki neuron skrivenog sloja računa se kao:
+\[
+    \delta_h = o_h(1-o_h) \displaystyle\sum_s w_{hs}\delta_s
+\]
+gdje je $o_h$ izlaz promatranog neurona, a suma se računa za svaki izlaz $s$ iz neurona.
+
+
+\subsubsection{Rezultati}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/Backprop.pdf}
+    \captionsetup{justification=centering}
+    \caption{Rezultati izvođenja algoritma backpropagation}
+    \label{fig:backprop}
+\end{figure}
+
+Primjena ovako opisanog algoritma stvara probleme zbog činjenice da se broj podataka za pojedine kategorije skupa za učenje drastično razlikuju.
+To je riješeno na način da se prilikom ažuriranja vrijednosti težine, osim sa stopom učenja podatak množi i sa kontantom koja je obrnuto proporcionalna broju uzoraka za trenutnu kategoriju podatka.
+Vidljivo je kako u početnim iteracijama algoritma postotak točne klasifikacije korištenjem algoritma backpropagation raste približno slično rastu funkcije dobrote genetskog algoritma.
+Najveća razlika je uočiva kod vrijednosti koje prepoznaju više od $0.9$ podataka točno.
+Kod ovog algoritma takve se neuronske mreže i dalje unaprijeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
+Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od preko $0.99$ na testu za učenje.
 
 \section{AdaBoost algoritam}
 
