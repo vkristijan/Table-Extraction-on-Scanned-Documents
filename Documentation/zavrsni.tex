@@ -632,7 +632,7 @@ Za potrebe toga moguće je koristiti neuronsku mrežu koja radi sa većim brojem
 
 \section{Korištenje prethodno stečenog znanja}
 
-\chapter{Implementacija i rezultati}
+\chapter{Implementacija i rezultati} 
 Svi postupci opisani u ovom radu implementirani su u programskom jeziku Java.
 Izvorni kodovi su javno dostupni su na adresi \href{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}.
 
@@ -664,7 +664,87 @@ Na taj način ova značajka pruža uvid u odnos cjelokupne slike, ali zbog toga 
 Kao rješenje tog problema koristi se drugi pravokutnik koji ima manju visinu zbog čega manje ovisi o ostatku slike, a više o prisutnosti linije.
 
 \subsection{Treniranje genetskim algoritmom}
-Prvi pokušaj treniranja neuronske mreže bio je korištenjem genetskog algoritma.
+Prvi pokušaj treniranja neuronske mreže bio je korištenjem genetskog algoritma, koji su opisani u knjigama \cite{optjava} i \cite{GeneticAlgorithms}.
+Genetski algoritmi jedan su od često korištenih metaheurističkih algoritama.
+Nastali su po uzoru na Darwinovu teoriju evolucije, koja se temelji na sljedećih pet pretpostavki: 
+\begin{enumerate}
+\item uvijek postoji više potomaka nego što je potrebno
+\item veličina populacije je približno stalna
+\item količina hrane je ograničena
+\item razmnožavanjem jedinki nastaju nove, različite jedinke
+\item većina varijacija prenosi se nasljeđivanjem.
+\end{enumerate}
+Iz navedenih pretpostavki slijedi da ne mogu preživjeti sve jedinke zbog limitiranih resursa.
+Zbog toga dolazi do pojave da neke jedinke umiru, a preživljavaju one prilagođenije.
+Na taj način s vremenom ukupna populacija postaje prilagođenija okruženju u kojemu se nalazi.\\
+
+Genetski algoritmi modeliraju uočeno ponašanje iz prirode na način da rješenje problema prikazuju kao kromosom koji definira jednu jedinku.
+Za svaku jedinku moguće je odrediti funkciju njezine dobrote, koja predstavlja uspješnost te jedinke, pri čemu je cilj da uspješnije jedinke preživljavaju kako bi ukupna populacija težila optimalnom rješenju.
+Korištenjem operatora križanja moguće je iz dvije jedinke stvoriti novu, pri čemu se dio kromosoma jedne jedinke te dio kromosoma druge jedinke prenosi na novonastalu jedinku.
+Nad novodobivenom jedinkom se tada primjenjuje operator mutacije čime se uvodi novi genetski materijal u populaciju i nastoje izbjeći lokalni optimumi.
+Primjer rada takvog algoritma prikazan je slikom \ref{fig:gen}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/Gen.pdf}
+    \captionsetup{justification=centering}
+    \caption{Slijed rada generacijskog genetskog algoritma \cite{optjava}}
+    \label{fig:gen}
+\end{figure}
+
+\subsubsection{Kromosom}
+Kromosom korišten u genetskom algoritmu modelira jednu jedinku, odnosno služi kao reprezentacija jednog rješenja.
+Kako se algoritam koristi u svrhu treniranja neuronske mreže, kromosom je predstavljen nizom realnih brojeva koji odgovaraju težinama ulaza neurona neuronske mreže.
+
+\subsubsection{Evaluacija}
+Prilikom evaluacije je potrebno odrediti koliko je određena jedinka uspješna, što se u ovom slučaju mjeri kao postotak uspješno klasificiranih podataka iz skupa podataka za treniranje.
+Skup za treniranje sastoji se od $15910$ slika veličine $75x75$ slikovnih elemenata.
+Slike su unutar skupa podijeljene na $10$ kategorija gdje svaka od njih predstavlja po jednu moguću vrijednost vrha ćelije kako je prikazano na slici \ref{fig:corners}, te kategorije u kojoj se nalaze sve one slike koje na sebi ne sadrže element tablice.
+Dobrota jedinke prvotno je bila definirana samo kao postotak uspješno klasificiranih slika.
+Takav pristup je imao problema uzrokovanih neproporcionalnim količinama podataka svake od kategorije (primjerice postoji $13950$ slika koje nisu elementi tablice), zbog čega je jedinka mogla imati velik postoatk uspješnosti na način da sve klasificira kao nešto što nije element tablice.
+Taj je problem moguće riješiti povećanjem skupa za treniranje, što nije jednostavno izvedivo.
+Drugo rješenje koje je i iskorišteno u ovom slučaju je promjena evaluacijske funkcije na način da računa postotak uspješne klasifikacije za svaku pojedinu kategoriju podataka te kao konačan rezultat koristi aritmetičku sredinu tako dobivenih postotaka.
+ 
+\subsubsection{Selekcija}
+U koraku selekcije potrebno je odabrati dvije jedinke koje će biti korištene u daljnjem postupku križanja kako bi se stvorila nova jedinka.
+Postoje različiti postupci selekcija, a cilj istih je mogućnost utjecanja na to koje će jedinke stvarati potomstvo. 
+Ako se uvijek biraju samo najbolje jedinke, populacija kroz samo nekoliko generacija u potpunosti gubi genetsku raznolikost zbog čega lako zapinje u lokalnim optimumima.
+S druge strane, ako se sve jedinke biraju nasumično s jednakom vjerojatnošću, populacija neće napredovati te algoritam neće konvergirati ka boljim rješenjima.\\
+Kako bi se ostvario balans između navedena dva načina odabira, u implementaciji su korištena $2$ načina selekcije roditelja.
+Prvi roditelj se bira nasumično, gdje svaka jedinka ima jednaku vjerojatnost biti odabrana.
+Drugi roditelj se bira korištenjem turnirske selekcije, koja odabire određen broj potencijalnih roditelja (u ovom slučaju je korištena veličina turnira $3$) te od tako nasumično odabranih roditelja odabire onoga sa najvećom funkcijom dobrote.
+
+\subsubsection{Križanje}
+Nakon što su odabrani roditelji provodi se križanje. 
+U ovom je koraku potrebno stvoriti novu jedinku kombinacijom genetskog materijala roditelja. 
+Kao i u prethodnom koraku i ovdije se javlja problem mogućnosti konvergiranja rješenja u lokalni optimum te postoje različiti pristupi kojima je moguće efikasno izvesti ovu operaciju.
+U ovom radu korišteno je križanje BLX-$\alpha$ koje radi na način da svaku vrijednost određuje kao slučajnu vrijednost uniformne distribucije u intervalu vrijednosti roditelja kako je prikazano na slici \ref{fig:blx}, a što je detaljno opisano u knjizi \cite{GeneticAlgorithms}. 
+Kako bi se smanjilo sažimanje populacije, interval iz kojega se bira vrijednost pojedinog elementa djeteta se proširuje za $\alpha$ posto, čime se omogućava dobivanje rješenja različitih od roditelja.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/Blx-a.pdf}
+    \captionsetup{justification=centering}
+    \caption{Primjer rada BLX-$\alpha$ križanja}
+    \label{fig:blx}
+\end{figure}
+
+\subsubsection{Mutacija}
+Prilikom mutacije je potrebno promijeniti vrijednosti kromosoma koje su dobivene križanjem roditelja kako bi se uvela nova genetska raznolikost u populaciju.
+Korištena je mutacija koja uz vjerojatnost od $0.05\%$ određeni element kromosoma na način da mu doda nasumičnu vrijednost iz normalne distribucije, pomnoženu sa $0.5$. 
+
+\subsubsection{Rezultati}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/Ga.pdf}
+    \captionsetup{justification=centering}
+    \caption{Rezultati izvođenja genetskog algoritma}
+    \label{fig:ga}
+\end{figure}
+
+Opisana neuronska mreža ima $500$ težina koje je potrebno postaviti, što znači da genetski algoritam radi sa kromosomima duljine $500$. 
+Na slici \ref{fig:ga} prikazana je vrijednost najbolje jedinke pronađene genetskim algoritmom u odnosu na iteraciju algoritma.
+Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremenom usporava te algoritam ne uspjeva postići zadovoljavajuće razine točnosti.
 
 \subsection{Treniranje korištenjem backpropagation algoritma}
 
