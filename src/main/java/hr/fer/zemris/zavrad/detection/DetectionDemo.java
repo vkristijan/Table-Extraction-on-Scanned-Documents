@@ -39,14 +39,27 @@ public class DetectionDemo {
         img = filter.filter(img);
 
         IntegralImage integralImage = IntegralImage.fromGrayscaleImage(img);
+
+        long start_time = System.nanoTime();
         List<Corner> corners = slider.detectCorners(integralImage);
+        long end_time = System.nanoTime();
+        double difference = (end_time - start_time)/1e6;
+        System.out.println("Detection time: " + difference + "ms");
+
 
         System.out.println(corners.size());
         for (Corner corner : corners){
             //if (corner.getValue() != CornerValue.UL_CORNER) continue;
-            int x = corner.getPosition().getX() - windowSize / 2;
-            int y = corner.getPosition().getY() - windowSize / 2;
-            Geometry.drawSquare(img, x, y, windowSize);
+            int x = corner.getPosition().getX();// - windowSize / 2;
+            int y = corner.getPosition().getY();// - windowSize / 2;
+
+            for (int ii = 0; ii < 8; ++ii){
+                try {
+                    Geometry.drawSquare(integralImage, x - ii, y - ii, 2 * ii);
+                } catch (Exception e){
+                    continue;
+                }
+            }
         }
 
         img.save(output.toFile());

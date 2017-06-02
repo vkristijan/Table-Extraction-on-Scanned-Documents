@@ -44,10 +44,11 @@ public class AdaDetection {
 
         IntegralImage integralImage = IntegralImage.fromGrayscaleImage(img);
 
-        HorizontalDouble hd = new HorizontalDouble(0.4273, 0.2883, 0.544625, 0.49435, 0.3);
-        hd.getFeature(integralImage, 0, 0, img.getWidth(), img.getHeight());
-
+        long start_time = System.nanoTime();
         List<Corner> corners = detectCorners(integralImage);
+        long end_time = System.nanoTime();
+        double difference = (end_time - start_time)/1e6;
+        System.out.println("Detection time: " + difference + "ms");
 
         System.out.println(corners.size());
         for (Corner corner : corners){
