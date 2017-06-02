@@ -496,6 +496,7 @@ Konačna vrijednost za dani kvadrat glasi:
 
 \subsection{Detekcija korištenjem umjetne neuronske mreže}
 Umjetne neuronske mreže nastale su kao model kojim se nastoji simulirati način rada ljudskog mozga.
+U nastavku je ukratko opisan način rada istih, dok se detaljnije objašnjenje može pronaći u knjizi \cite{umjetnaInteligencija}.
 Poznato je da se mozak sastoji od velikog broja međusobno povezanih neurona.
 Svaki se neuron sastoji od $3$ djela: dendrita koji primaju električne podražaje, tijela koje reagira na podražaj i aksona koji prosljeđuje podražaj sljedećim povezanim neuronima.
 Osnovni princip rada neurona temelji se upravo na spomenutoj propagaciji električnih impulsa. 
@@ -747,30 +748,145 @@ Na slici \ref{fig:ga} prikazana je vrijednost najbolje jedinke pronađene genets
 Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremenom usporava te algoritam ne uspjeva postići zadovoljavajuće razine točnosti.
 
 \subsection{Treniranje korištenjem backpropagation algoritma}
-Drugi pristup treniranju neuronske mreže je korištenje algoritma backpropagation.
-Za razliku od genetskog algoritma koji nema nikakvo znanje o tome u kojem smjeru se nalazi optimalno rješenje, ovaj algoritam računa odstupanja dobivenog rezultata od očekivanog za svaki neuron te primjenom gradijentnog spusta.
+Drugi pristup treniranju neuronske mreže je korištenje algoritma propagacije pogreške unatrag koji je detaljno opisan u knjizi \cite{neuroracunarstvo}.
+Za razliku od genetskog algoritma koji nema nikakvo znanje o tome u kojem smjeru se nalazi optimalno rješenje, ovaj algoritam računa odstupanja dobivenog rezultata od očekivanog za svaki neuron te primjenom gradijentnog spusta podešava težine kako bi smanjio pogrešku.
+U ovom radu korištena je stohastička verzija navedenog algoritma koja težine ažurira na temelju greške nastale na samo jednom primjeru iz testnog skupa, a što je detaljnije objašnjeno u nastavku.
 
-\subsubsection{Ukupna greška}
-Ukupna greška neuronske mreže definirana je kao suma kvadratnih odstupanja, odnosno kao:
+
+\subsubsection{Izračun pogreške}
+Označimo li sa $t_o$ očekivani izlaz neuronske mreže za neuron $o$ za trenutni podatak te sa $y_o^{(k + 1)}$ stvarni izlaz neurona, greška neuronske mreže $E$ definirana je kao suma kvadratnih odstupanja, odnosno kao:
 \[
-    E_{total} = \sum\frac{1}{2}(y_i-\hat{y})^2
+    E = \frac{1}{2}\sum(t_o-y_o^{(k + 1)})^2
 \]
-gdje je $y_i$ očekivana vrijednost izlaza za određeni neuron izlaznog sloja, a $\hat{y}$ stvarna vrijednost izlaza.
-
-\subsubsection{Promjena težina izlaznog sloja}
-Pogreška $\delta_k$ za svaki neuron izlaznog sloja računa se kao:
+Kako bi se ostvario gradijentni spust, potrebno je za svaku težinu izračunati gradijent za svaku težinu $w_{ij}^{(k)}$, što označava težinu koja spaja $i$-ti neuron u sloju $k$ sa $j$-tim neuronom u sloju $k+1$:
 \[
-    \delta_k = o_k(1-o_k)(t_k-o_k)
+    \frac{\partial E}{\partial w_{ij}^{(k)}}
 \]
-gdje je $o_k$ izlaz promatranog neurona, a $t_k$ očekivani izlaz za taj neuron.
-
-\subsubsection{Promjena težina skrivenog sloja}
-Pogreška $\delta_h$ za svaki neuron skrivenog sloja računa se kao:
+Tada se težina ažurira kao:
 \[
-    \delta_h = o_h(1-o_h) \displaystyle\sum_s w_{hs}\delta_s
+    w_{ij}^{(k)} \leftarrow w_{ij}^{(k)} - \alpha \frac{\partial E}{\partial w_{ij}^{(k)}}
 \]
-gdje je $o_h$ izlaz promatranog neurona, a suma se računa za svaki izlaz $s$ iz neurona.
+gdje je $\alpha$ mala pozitivna konstanta poznata kao stopa učenja.
 
+\subsubsection{Gradijent izlaznog sloja}
+Potrebno je izračunati $\frac{\partial E}{\partial w_{ij}^{(k)}}$, što se može zapisati kao:
+\begin{equation*}
+\begin{split}
+    \frac{\partial E}{\partial w_{ij}^{(k)}}
+        & = \frac{\partial}{\partial w_{ij}^{(k)}} 
+        \left[\frac{1}{2}\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})^2\right]\\
+        & = \frac{1}{2} \displaystyle\sum_{o = 1}^m2(t_o - y_o^{(k + 1)})(-1) \frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k)}} \\
+        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k)}}
+\end{split}
+\end{equation*}
+
+Pritom težina $w_{ij}^{(k)}$ spaja $i$-ti neuron sloja $k$ sa $j$-tim neuronom sloja $k+1$ i nema utjecaja na ostale neurone, zbog čega su parcijalne derivacije $\frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k)}} = 0$ za $o != j$ pa se jednadžba može zapisati kao:
+
+\[
+    \frac{\partial E}{\partial w_{ij}^{(k)}}
+    = -(t_j - y_j^{(k + 1)})\frac{\partial y_j^{(k + 1)}}{\partial w_{ij}^{(k)}}
+\]
+Korištenjem lančanog pravila, parcijalna derivacija iz izraza se može zapisati kao:
+\[
+    \frac{\partial y_j^{(k + 1)}}{\partial w_{ij}^{(k)}}
+    = \frac{\partial y_j^{(k + 1)}}{\partial net_{j}^{(k+1)}}
+    \frac{\partial net_{j}^{(k+1)}}{\partial w_{ij}^{(k)}}
+\]
+gdje je sa $net_{j}^{(k+1)}$ označena težinska suma za neuron $j$ sloja $k+1$. Kako se koriste sigmoidalna aktivacijska funkcija, vrijedi da je:
+\[
+    \frac{\partial y_j^{(k + 1)}}{\partial net_{j}^{(k+1)}}
+    = y_j^{(k + 1)} (1 - y_j^{(k + 1)})
+\]
+Kako vrijedi da je
+\[
+    net_{j}^{(k+1)} = \displaystyle\sum_o w_{o,j}^{(k)}y_o^{(k)}    
+\]
+jedini član izraza koji ovisi o težini $w_{ij}^{(k)}$ je $w_{i,j}^{(k)}y_i^{(k)}$ zbog čega je parcijalna derivacija:
+\[
+    \frac{\partial net_{j}^{(k+1)}}{\partial w_{ij}^{(k)}} = y_i^{(k)}
+\]
+Uvrštavanjem dobivenog izraza u početnu jednadžbu dobiva se:
+\[
+    \frac{\partial E}{\partial w_{ij}^{(k)}}
+    = -(t_j - y_j^{(k + 1)})
+    y_j^{(k + 1)} (1 - y_j^{(k + 1)})
+    y_i^{(k)}
+\]
+Radi jednostavnosti se greška $j$-tog neorona za dani primjer za učenje označava sa $\delta_j^{(k+1)}$ te vrijedi:
+\[
+    \delta_j^{(k+1)} = y_j^{(k + 1)}(1 - y_j^{(k + 1)})(t_j - y_j^{(k + 1)})
+\]
+Te se sada parcijalna derivacija ukupne greške može prikazati kao:
+\[
+    \frac{\partial E}{\partial w_{ij}^{(k)}} = -\delta_j^{(k+1)}y_i^{(k)}
+\]
+
+\subsubsection{Gradijent skrivenog sloja}
+Potrebno je izračunati $\frac{\partial E}{\partial w_{ij}^{(k-1)}}$, što se može zapisati kao:
+\begin{equation*}
+\begin{split}
+    \frac{\partial E}{\partial w_{ij}^{(k-1)}}
+        & = \frac{\partial}{\partial w_{ij}^{(k-1)}} 
+        \left[\frac{1}{2}\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})^2\right]\\
+        & = \frac{1}{2} \displaystyle\sum_{o = 1}^m2(t_o - y_o^{(k + 1)})(-1) \frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}} \\
+        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}\\
+        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial net_{o}^{(k+1)}}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
+\end{split}
+\end{equation*}
+Prva parcijalna derivacija je derivacija sigmoidalne funkcije što je:
+\[
+    \frac{\partial y_o^{(k + 1)}}{\partial net_{o}^{(k+1)}}
+    = y_o^{(k + 1)} (1 - y_o^{(k + 1)})
+\]
+Uvrštavanjem izračunatog u početni izraz dobiva se:
+\begin{equation*}
+\begin{split}
+    \frac{\partial E}{\partial w_{ij}^{(k-1)}}
+        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})y_o^{(k + 1)} (1 - y_o^{(k + 1)})\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}\\
+        & = -\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
+\end{split}
+\end{equation*}
+Druga parcijalna deivacija računa se pomoću $net_o^{(k + 1)}$ koji se može zapisati kao:
+\[
+    net_o^{(k + 1)} = \displaystyle\sum_l w_{l,o}^{(k)}y_l^{(k)}
+\]
+Kako je potrebno izračunati parcijalnu derivaciju za težinu $w_{ij}^{(k-1)}$ valja uočiti da ta težina utječe samo na vrijednost neurona $j$ u sloju $k$ odnosno na vrijednost $y_j^{(k)}$, zbog čega vrijedi:
+\[
+    \frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
+    = w_{j,o}^{(k)}\frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}
+\]
+Parcijalna derivacija $\frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}$ rješava se na jednak način kao i u izlaznom sloju te vrijedi:
+\begin{equation*}
+\begin{split}
+    \frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}
+        & = \frac{\partial y_j^{(k)}}{\partial net_{j}^{(k)}}
+            \frac{\partial net_{j}^{(k)}}{\partial w_{ij}^{(k-1)}}\\
+        & = y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}
+\end{split}
+\end{equation*}
+Uvrštavanjem u prethodnu jednakost slijedi:
+\[
+    \frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
+        = w_{j,o}^{(k)}y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}
+\]
+Što vraćanjem u početnu jednakost daje:
+\begin{equation*}
+\begin{split}
+    \frac{\partial E}{\partial w_{ij}^{(k-1)}}
+        & = -\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)}y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}\\
+        & = -y_i^{(k - 1)} y_j^{(k)} (1 - y_j^{(k)})\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)}
+\end{split}
+\end{equation*}
+
+Ponovno se uvodi oznaka $\delta_j^{k}$ za grešku neurona, koja je definirana kao:
+\[
+    \delta_j^{k} = y_j^{(k)} (1 - y_j^{(k)})\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)} 
+\]
+Te se sada konačni rezultat može zapisati kao:
+\[
+    \frac{\partial E}{\partial w_{ij}^{(k-1)}} =
+    -y_i^{(k - 1)}\delta_j^{k}
+\]
 
 \subsubsection{Rezultati}
 \begin{figure}[ht!]
