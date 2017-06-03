@@ -942,6 +942,53 @@ Evidentno je kako najveću $\alpha$ vrijednost, a time i najveći doprinos u kla
 Svaki sljedeći klasifikator u pravilu ima sve manju $\alpha$ vrijednost, kao što je i očekivano zbog toga što je preostale podatke sve teže i teže točno klasificirati. 
 Zbog trenda pada doprinosa svakog sljedećeg klasifikatora moguće je jaki klasifikator izgraditi korištenjem prvih nekoliko slabih klasifikatora (u ovom slučaju korišteno je $20$ slabih klasifikatora), jer je sigurno da sljedeći klasifikator neće značajno doprinjeti ukupnom rezultatu, premda će usporiti pretragu.
 
+\section{Usporedba rezultata}
+Implementirani algoritmi testirani su na skupu podataka koji se sastoji od $216$ ručno ispunjenih tablica, koje su korištene za stvaranje skupa slika vrhova ćelija koji je korišten kao skup za učenje.
+Konačni algoritmi su također testirani na skupu od $2266$ slika dobivenih digitalizacijom obrazaca za odgovore ispita, što su podatci za koje je algoritam izrađen.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/ada.png}
+    \captionsetup{justification=centering}
+    \caption{Točke detektirane korištenjem algoritma AdaBoost}
+    \label{fig:adaResult}
+\end{figure}
+
+Na slici \ref{fig:adaResult} prikazana je slika tablice koja je korištena za potrebe testiranja te su na njoj crnim kvadratima označene pronađene točke.
+Primjećuje se da klasifikator uspješno prepoznaje sve točke za koje se očekuje da ih prepozna, ali također prepoznaje i određen broj točaka koje nisu vrhovi ćelija.
+Većina krivo prepoznatih točaka nalazi se u tablici sa tekstom pisanom na računalu, što je uzrokovano skupom za učenje u kojemu se kao primjeri koje ne treba prepoznati pretežno nalaze primjeri rukom pisanih znakova jer su to primjeri nad kojima algoritam u stvarnosti radi.
+Na pogrešku također utječe i činjenica da je jaki klasifikator izgrađen od samo $20$ slabih, premda se na grafu na slici \ref{fig:ada} primjećuje kako trend pada $\alpha$ vrijednosti sugerira kako postoji još slabih klasifikatora koji bi doprinosili konačnom rezultatu.
+Unatoč broju grešaka, klasifikator je moguće koristiti jer se njegov izlaz prosljeđuje drugom klasifikatoru čime se ostvaruje veća točnost, zbog čega je u konačnici korišteno rješenje sa manjim brojem klasifikatora kako bi se postigla veća brzina.\\
+
+Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $107.595$, $117.843$, $99.004$, $107.530$, $115.456$, $103.617$, $118.659$, $122.063$, $117.730$, $115.719$, izraženo u milisekundama. 
+Prosječno vrijeme izvođenja iznosi $112.5$ms.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/neural.png}
+    \captionsetup{justification=centering}
+    \caption{Točke detektirane korištenjem neuronske mreže}
+    \label{fig:neuralResult}
+\end{figure}
+
+Slika \ref{fig:neuralResult} prikazuje rezultate klasifikacije korištenjem neuronske mreže. 
+Također se uočava kako su sve stvarne vrijednosti uspješno prepoznate, ali postoji određen broj točaka koje su prepoznate premda ne bi trebale biti. 
+Problem je moguće riješiti promjenom arhitekture neuronske mreže dodavanjem dodatnih neurona ili čak dodavanjem novog skrivenog sloja, ili jednostavno drugačijom definicijom značajki ili dodavanjem novih značajki.
+Kako se neuronska mreža koristi nad rezultatima koje daje prethodni klasifikacijski algoritam, dobiveni rezultati pokazuju se zadovoljavajućima.\\
+
+Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $811.518$, $669.809$, $701.195$, $727.840$, $657.510$, $669.887$, $672.872$, $642.865$, $656.021$, $675.564$, izraženo u milisekundama. 
+Prosječno vrijeme izvođenja iznosi $688.5$ms.\\
+
+Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$ uz nivo značajnosti od $\alpha = 0.05$ dobivena je $P$ vrijednost $9.421\cdot10^{-12}$ na temelju čega se hipoteza $H_0$ odbacuje u korist hipoteze $H_1$ čime se zaključuje kako je prosječno vrijeme izvođenja klasifikacije algoritmom AdaBoost statistički značajno manje od prosječnog vremena izvođenja klasificiranja korištenjem umjetne neuronske mreže.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/combined.png}
+    \captionsetup{justification=centering}
+    \caption{Točke detektirane korištenjem kombinacije algoritma AdaBoost i umjetne neuronske mreže}
+    \label{fig:combinedResult}
+\end{figure}
+
 
 \chapter{Zaključak}
 Zaključak.
