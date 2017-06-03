@@ -50,14 +50,13 @@ public class DetectionDemo {
         System.out.println(corners.size());
         for (Corner corner : corners){
             //if (corner.getValue() != CornerValue.UL_CORNER) continue;
-            int x = corner.getPosition().getX();// - windowSize / 2;
-            int y = corner.getPosition().getY();// - windowSize / 2;
+            int x = corner.getPosition().getX();
+            int y = corner.getPosition().getY();
 
-            for (int ii = 0; ii < 8; ++ii){
+            for (int ii = 0; ii < 9; ++ii){
                 try {
                     Geometry.drawSquare(integralImage, x - ii, y - ii, 2 * ii);
-                } catch (Exception e){
-                    continue;
+                } catch (Exception ignored){
                 }
             }
         }
