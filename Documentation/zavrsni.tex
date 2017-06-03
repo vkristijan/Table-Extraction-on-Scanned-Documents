@@ -640,7 +640,16 @@ Na taj način je moguće vrhove raspoerditi u dvodimenzionalno polje na način d
 Ponavljanjem postupka za sve različite vrijednosti $Y$ koordinata određuju se svi retci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
 
 \section{Korištenje prethodno stečenog znanja}
-Prilikom prvog prepoznavanja tablice nije moguće pretpostaviti ništa o njezinom izgledu.
+Prilikom prvog prepoznavanja tablice nije moguće pretpostaviti ništa o njezinom izgledu te je do sada opisana metoda jedina točna i efikasna mogućnost.
+Kada se prepoznaje veći broj tablica koje su strukturno jednake te se nalaze na istim poyicijama na papiru, moguće je ubrzati pretragu tablica korištenjem znanja stečenog prilikom detekcije prve tablice. 
+Zbog mogućnosti pomaka papira u procesu digitalizacije nije mooguće očekivati jednake pozicije na slici dokumenta, zbog čega je potrebno izvršiti, no nije potrebno ponovno pretražiti sve slikovne elemente, već se pretražuju samo elementi unutar zadanog radiusa od pozicija sa prethodno prepoznate tablice.\\
+
+Opisani postupak moguće je dodatno ubrzati na način da se ne pretražuju ponovno svi vrhovi tablice, već samo jedan, poput na primjer gornjeg lijevog vrha.
+Nakon što se pronađe točna pozicija tog vrha na novoj slici zaključuje se kako je cijela tablica, odnosno svi vrhovi njezinih ćelija, pomaknuta za isti iznos u odnosu na prvotno detektiranu kao i pronađeni vrh.
+Mana ovog pristupa je velika osjetljivost na rotacije i ostale moguće pomake papira u postupku digitalizacije. 
+Problem rotacije je djelomično riješen prethodno opisanim postupkom detekcije zakrivljenosti slike, no unatoč tome postoji mogućnost da slika i nakon ispravka rotacije ostane blago rotirana, što za tablice većih dimenzija može predstavljati problem.
+Zbog opisanih problema ovaj je pristup odbačen te je korišten sporiji postupak opisan u prethodnom odlomku.
+
 
 \chapter{Implementacija i rezultati} 
 Svi postupci opisani u ovom radu implementirani su u programskom jeziku Java.
@@ -914,6 +923,24 @@ Kod ovog algoritma takve se neuronske mreže i dalje unaprijeđuju što je vidlj
 Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od preko $0.99$ na testu za učenje.
 
 \section{AdaBoost algoritam}
+Za potrebe ovog klasifikacijskog algoritma potrebno je odrediti način na koji se uče slabi klasifikatori.
+Svaki slabi klasifikator sastoji se od značajke, praga, konstante $p$ koja određuje vrstu nejednakosti te vrijednosti $\alpha$ koja određuje koliko je klasifikator značajan, odnosno koliko nejgov izlaz doprinosi konačnoj odluci jakog klasifikatora.
+Vrijednost $\alpha$ računa se na temelju ostalih argumenata klasifikatora na skupu podataka za treniranje koji je jednak skupu podataka korištenom prilikom treniranja umjetne neuronske mreže.
+Ostale parametre je potrebno odabrati na način da se minimizira pogreška klasifikatoar, što je učinjeno na način da se nasumično odabere značajka koja će se koristiti te se ona inicijalizira sa nasumično odabranim vrijednostima.
+Ostali parametri također su nasumično odabrani te se za tako dobiven klasifikator računa težinska pogreška na skupu podataka za učenje.
+Postupak se ponavlja velik broj puta kako bi se dobio klasifikator sa čim manjom pogreškom, koji se koristi prilikom izrade jakog klasifikatora.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/Ada.pdf}
+    \captionsetup{justification=centering}
+    \caption{$\alpha$ vrijednosti pojedinih slabih klasifikatora}
+    \label{fig:ada}
+\end{figure}
+
+Graf na slici \ref{fig:ada} prikazuje $\alpha$ vrijednosti za slabe klasifikatore korištene u izradi jakog klasifikatora. 
+Evidentno je kako najveću $\alpha$ vrijednost, a time i najveći doprinos u klasifikaciji ima prvi slabi klasifikator. 
+Svaki sljedeći klasifikator u pravilu ima sve manju $\alpha$ vrijednost, kao što je i očekivano zbog toga što je preostale podatke sve teže i teže točno klasificirati. 
+Zbog trenda pada doprinosa svakog sljedećeg klasifikatora moguće je jaki klasifikator izgraditi korištenjem prvih nekoliko slabih klasifikatora (u ovom slučaju korišteno je $20$ slabih klasifikatora), jer je sigurno da sljedeći klasifikator neće značajno doprinjeti ukupnom rezultatu, premda će usporiti pretragu.
 
 
 \chapter{Zaključak}
