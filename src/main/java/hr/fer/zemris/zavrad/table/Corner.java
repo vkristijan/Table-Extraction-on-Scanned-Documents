@@ -31,6 +31,9 @@ public class Corner implements Comparable<Corner>{
         this.position = position;
     }
 
+    public double distance(Corner other){
+        return position.distance(other.position);
+    }
 
     @Override
     public int compareTo(Corner o) {

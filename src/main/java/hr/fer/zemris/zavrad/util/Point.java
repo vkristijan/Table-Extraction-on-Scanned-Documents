@@ -29,6 +29,13 @@ public class Point implements Comparable<Point>{
         this.y = y;
     }
 
+    public double distance(Point other){
+        double dist = (x - other.x) * (x - other.x);
+        dist += (y - other.y) * (y - other.y);
+
+        return Math.sqrt(dist);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
