@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  */
 public class Table {
     private double minDist = 45;
+    private int minX = 10;
+    private int minY = 10;
 
     private GrayScaleImage image;
     private List<List<Corner>> corners;
@@ -27,7 +29,7 @@ public class Table {
     public Table(List<Corner> cornerList, GrayScaleImage image){
         this.image = image;
 
-        List<Corner> filteredCorners = filterCorners(cornerList);
+        List<Corner> filteredCorners = countCorners(cornerList);
         cornerList.sort(Comparator.naturalOrder());
 
         System.out.println(filteredCorners.size());
@@ -42,10 +44,49 @@ public class Table {
                 }
             }
         }
+    }
 
+    private List<Corner> countCorners(List<Corner> cornerList) {
+        List<Integer> xCandidates = new ArrayList<>();
+        List<Integer> yCandidates = new ArrayList<>();
+        for (Corner corner : cornerList){
+            xCandidates.add(corner.getPosition().getX());
+            yCandidates.add(corner.getPosition().getY());
+        }
 
+        List<Integer> xValues = getValues(xCandidates, minX);
+        List<Integer> yValues = getValues(yCandidates, minY);
 
+        List<Corner> corners = new ArrayList<>();
+        for (Integer x : xValues){
+            for (Integer y : yValues){
+                corners.add(new Corner(CornerValue.CENTER, new Point(x, y)));
+            }
+        }
+        return corners;
+    }
 
+    private List<Integer> getValues(List<Integer> candidates, int minCount) {
+        List<Integer> values = new ArrayList<>();
+
+        candidates.sort(Comparator.naturalOrder());
+        int n = candidates.size();
+        for (int i = 0; i < n; ++i){
+            int count = 1;
+            int x = candidates.get(i);
+            int total = x;
+            while (i + count < n && candidates.get(i + count) - x < minDist){
+                total += candidates.get(i + count);
+                count++;
+            }
+
+            if (count < minCount) continue;
+
+            values.add(total / count);
+            i += count - 1;
+        }
+
+        return values;
     }
 
     private List<Corner> filterCorners(List<Corner> cornerList) {
