@@ -55,7 +55,7 @@ public class Point implements Comparable<Point>{
 
     @Override
     public int compareTo(Point o) {
-        if (o.x != this.x){
+        if (Math.abs(o.x - this.x) < 45){
             return Integer.compare(this.x, o.x);
         }
         return Integer.compare(this.y, o.y);

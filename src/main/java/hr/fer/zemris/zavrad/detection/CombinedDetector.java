@@ -5,6 +5,7 @@ import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
 import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.table.Corner;
 import hr.fer.zemris.zavrad.table.CornerValue;
+import hr.fer.zemris.zavrad.table.Table;
 import hr.fer.zemris.zavrad.util.Point;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 import hr.fer.zemris.zavrad.util.img.IntegralImage;
@@ -126,18 +127,7 @@ public class CombinedDetector {
         System.out.println("Detection time: " + difference + "ms");
 
         System.out.println(corners.size());
-        for (Corner corner : corners){
-            //if (corner.getValue() != CornerValue.BOTTOM) continue;
-            int x = corner.getPosition().getX();
-            int y = corner.getPosition().getY();
-
-            for (int ii = 0; ii <= 7; ++ii){
-                try {
-                    Geometry.drawSquare(img, x - ii, y - ii, 2 * ii);
-                } catch (Exception ignored){
-                }
-            }
-        }
+        Table table = new Table(corners, img);
 
         img.save(output.toFile());
     }
