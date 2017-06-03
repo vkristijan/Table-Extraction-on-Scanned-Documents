@@ -6,7 +6,7 @@ import hr.fer.zemris.zavrad.util.Point;
  * @author Kristijan Vulinović
  * @version 1.0.0
  */
-public class Corner {
+public class Corner implements Comparable<Corner>{
     private CornerValue value;
     private Point position;
 
@@ -29,5 +29,11 @@ public class Corner {
 
     public void setPosition(Point position) {
         this.position = position;
+    }
+
+
+    @Override
+    public int compareTo(Corner o) {
+        return this.position.compareTo(o.position);
     }
 }
