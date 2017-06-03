@@ -630,8 +630,17 @@ Umjetna neuronska mreža koristi se kako bi se za prethodno dobiene točke inter
 Za potrebe toga moguće je koristiti neuronsku mrežu koja radi sa većim brojem ulaznih značajki, bez opasnosti od velikog vremena izvođenja, zahvaljujući činjenici da se neuronska mreža pokreće na malom skupu točaka slike. 
 
 \section{Rekonstrukcija tablice}
+Korištenjem prethodno opisanih klasifikatora dobiven je popis vrhova ćelija tablice sa prepoznatom vrstom vrha i koordinatom na kojoj se nalazi.
+Potrebno je na temelju tog znanja odrediti točan izgled tablice. 
+Poznavanjem pozicija vrhova označenih sa $1, 2, 3$ i $4$ na slici \ref{fig:corners} određena je točna lokacija tablice. 
+Ovisno o broju vrhova ovog tipa moguće je odrediti i točan izgled tablice u slučaju da ona nije pravilnog kvadratnog oblika.
+Vrhovi označeni sa $5, 6, 7$ i $8$ određuju vanjski obrub tablice, dok je unutrašnjost iste određena vrhovima tipa $9$ sa slike \ref{fig:corners}.
+Kako bi se ćelije točno poredale u prostoru potrebno je sortirati popis vrhova istih po jednoj, pa zatim po drugoj koordinati.
+Na taj način je moguće vrhove raspoerditi u dvodimenzionalno polje na način da se svi vrhovi sa jednakom vrijednošću $Y$ koordinate pohrane u isti red polja, te na taj način definiraju isti redak tablice.
+Ponavljanjem postupka za sve različite vrijednosti $Y$ koordinata određuju se svi retci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
 
 \section{Korištenje prethodno stečenog znanja}
+Prilikom prvog prepoznavanja tablice nije moguće pretpostaviti ništa o njezinom izgledu.
 
 \chapter{Implementacija i rezultati} 
 Svi postupci opisani u ovom radu implementirani su u programskom jeziku Java.
@@ -906,10 +915,6 @@ Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti 
 
 \section{AdaBoost algoritam}
 
-
-\chapter{Primjena na automatskom prepoznavanju rukom pisanih simbola}
-\subsection{Određivanje značajki}
-\subsection{Rezultati}
 
 \chapter{Zaključak}
 Zaključak.
