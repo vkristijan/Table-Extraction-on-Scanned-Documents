@@ -1066,16 +1066,31 @@ Zaključak.
 \bibliographystyle{fer}
 
 \begin{sazetak}
-Sažetak na hrvatskom jeziku.
+Problem očitavanja sadržaja skeniranih dokumenata javlja se u mnogim područjima ljudskoga rada.
+Automatizacija tog postupka može značajno smanjiti vrijeme koje se troši na ručno očitavanje. 
+Problem se pri tome može razložiti na niz potproblema, ovisno o strukturi informacija koje su prisutne u dokumentu.\\
 
-\kljucnerijeci{Ključne riječi, odvojene zarezima.}
+U okviru završnog rada istraženi su i opisani postupci precizne detekcije tablica. 
+Detektiran je položaj tablice te je ponuđena mogućnost izolirana svake od ćelija tablice, kako bi se njihov sadržaj potom mogao obraditi nekim drugim postupkom.
+Pri tome treba je moguće da se u okolini tablice nalaze različite smetnje te da ćelije tablice budu popunjene različitim sadržajima. 
+Razvijeno je programsko rješenje koje korištenjem klasifikatora temeljenog na algoritmu AdaBoost i klasifikatora pomoću unaprijedne umjetne neuronske mreže uspješno prepoznaje tablice.
+
+
+\kljucnerijeci{detekcija tablica, ekstrakcija ćelija, prepoznavanje objekata, klasifikacija}
 \end{sazetak}
 
 \engtitle{Table Extraction on Scanned Documents}
 \begin{abstract}
-Abstract.
+The problem with reading content from scanned documents occurs in many areas of human activities.
+Automation of this process can significantly reduce the time that is spent on manual readings.
+This problem can be broken down into a series of subproblems, depending on the structure of the information that is present in the document.\\
 
-\keywords{Keywords.}
+This thesis researches and describes algorithms for precise table detection.
+The position of the table is beeing detected, and the possibility of extracting the content of each individual cell is offered, so that it can be used for further detection.
+It is possible for the document to contain various interferences within the region of the table, and that table cells are filled with a variety of content.
+The developer software solution, that uses a classifier based on the AdaBoost algorithm and a classifier based on feedforward artificial neural networks, successfully identifies the table on given grayscale images.
+
+\keywords{table detection, cell extraction, object detection, classification}
 \end{abstract}
 
 \end{document}
