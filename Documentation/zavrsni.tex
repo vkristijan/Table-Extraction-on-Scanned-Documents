@@ -943,6 +943,8 @@ Svaki sljedeći klasifikator u pravilu ima sve manju $\alpha$ vrijednost, kao š
 Zbog trenda pada doprinosa svakog sljedećeg klasifikatora moguće je jaki klasifikator izgraditi korištenjem prvih nekoliko slabih klasifikatora (u ovom slučaju korišteno je $20$ slabih klasifikatora), jer je sigurno da sljedeći klasifikator neće značajno doprinjeti ukupnom rezultatu, premda će usporiti pretragu.
 
 \section{Usporedba rezultata}
+
+\subsection{Detekcija vrhova ćelija}
 Implementirani algoritmi testirani su na skupu podataka koji se sastoji od $216$ ručno ispunjenih tablica, koje su korištene za stvaranje skupa slika vrhova ćelija koji je korišten kao skup za učenje.
 Konačni algoritmi su također testirani na skupu od $2266$ slika dobivenih digitalizacijom obrazaca za odgovore ispita, što su podatci za koje je algoritam izrađen.
 
@@ -989,6 +991,56 @@ Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$ uz niv
     \label{fig:combinedResult}
 \end{figure}
 
+Slika \ref{fig:combinedResult} prikazuje rezultat dobiven korištenjem oba prethodno opisana klasifikatora, na način kakav je prethodno objašnjen.
+Primjećuje se kako su sve točke od interesa i dalje prepoznate, no svejedno postoji manji broj manji broj točaka koje nisu trebale biti prepoznate.
+Valja uočiti kako su sve stvarne točke od interesa prepoznate nekoliko puta, što je kasnije iskorišteno kako bi se maknule lažno prepoznate točke.\\
+
+Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $423.615$, $415.388$, $397.672$, $417.765$, $446.087$, $396.153$, $403.633$, $414.420$, $416.799$, $407.353$, izraženo u milisekundama. 
+Prosječno vrijeme izvođenja iznosi $413.9$ms.\\
+
+Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$, gdje je sa $\mu_1$ označeno prosječno vrijeme izvođenja klasifikatora dobivenim korištenjem algoritma AdaBoost i neuronske mreže, a sa $\mu_2$ klasifikator koji koristi isključivo neuronsku mrežu.
+Dobivena je $P$ vrijednost $2.979\cdot10^{-9}$ na temelju čega se uz nivo značajnosti $\alpha = 0.05$   hipoteza $H_0$ odbacuje u korist hipoteze $H_1$ čime se zaključuje kako je prosječno vrijeme izvođenja klasifikacije kombinacijom algoritma AdaBoost i umjetne neuronske mreže statistički značajno manje od prosječnog vremena izvođenja klasificiranja korištenjem isključivo umjetne neuronske mreže.
+
+\subsection{Detekcija tablice}
+Na temelju prepoznatih točaka vrhova ćelija potrebno je odrediti stvarnu tablicu.
+Pri tome postoji nekoliko problema: svaki vrh je prepoznat više puta, postoje točke koje nisu vrhovi ćelija, potrebno je odrediti kako su vrhovi međusobno povezani.\\
+
+Prvi isprobani pristup temelji se na pronalaženju grupe točaka unutar određenog radiusa te postavljanje stvarne točke na poziciju određenu aritmetičkom sredinom tih točaka.
+Točke koje ne predstavljaju stvarni vrh ćelije detektiraju sa tako što se nalaze same bez okolnih točaka.
+Drugi način odbacivanja točke radi se kada se unutar dozvoljenog radijusa oko točke nalaze dvije točke koje su međusobno jako razmaknute, što zapravo znači da se točka nalazi na sredini između $2$ stvarna kuta te su zbog toga unutar dozvoljenog radiusa uključene točke različitih vrhova.
+Problem može nastupiti kada se krivo prepoznata točka nalazi u blizini stvarnog vrha, zbog čega se pozicija konačne točke pomiče u odnosu na stvarno poziciju.\\
+
+Konačna rekonstrukcija tablice radi se sortiranjem preostalih točaka po jednoj, zatim po drugoj koordinati.
+Pritom treba paziti da točke koje leže na istoj vodoravnoj liniji tablice ne moraju nužno imati jednake vrijednosti $y$ koordinata, zbog čega prilikom sortiranja treba zanemariti razlike manje od određene konstante.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/tableV1.png}
+    \captionsetup{justification=centering}
+    \caption{Primjer tablice prepoznate grupiranjem susjednih točaka}
+    \label{fig:tableV1}
+\end{figure}
+
+Drugi korišteni način prikazan je na slici \ref{fig:tableV2}.
+Tablica se prepoznaje tako da se naprave liste $x$ i $y$ koordinata prepoznatih točaka koje se potom sortiraju.
+U sortiranim listama se traže grupe vrijednosti te se računa aritmetička sredina svake grupe kako bi se odredila $x$ odnosno $y$ koordinata svakog stupca odnosno retka tablice. 
+Prilikom pronalaženja grupa vrijednosti provjerava se i broj pojavljivanja vrijednosti kako bi se izbacile točke koje se pojavljuju malo puta, odnosno koje su nastale greškom u klasifikaciji.\\
+
+Rekonstrukcija tablice radi se na način da se na svaki mogući par $x$
+i $y$ koordinata iz lista koordinata postavlja odgovarajući vrh ćelije.
+Pri tome više ne postoji mogućnost da točke na istoj liniji imaju različite koordinate, što predstavlja problem u slučaju rotacije slike.
+Dodatna limitacija ovog pristupa je korištenje pretpostavke da sve tablice imaju jednak broj ćelija u svakom retku, čime se gubi mogućnost spajanja ćelija ili tablica čiji vanjski obrub nije kvadratnog oblika.
+Unatoč tome, u radu je korišten ovaj način rekonstrukcije tablice jer se pokazao robusnijim u odnosu na prepoznavanje grupa točaka za svaki vrh, a tablice nad kojima se algoritam koristi zadovoljavaju dodatne restrikcije ovog pristupa.\\
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/tableV2.png}
+    \captionsetup{justification=centering}
+    \caption{Primjer tablice prepoznate grupiranjem točaka po retcima i po stupcima}
+    \label{fig:tableV2}
+\end{figure}
+
+Konačan algoritam pokrenut je na skupu od $2266$ tablica te je u potpunosti uspješno prepoznao $XYZ$ od njih.
 
 \chapter{Zaključak}
 Zaključak.
