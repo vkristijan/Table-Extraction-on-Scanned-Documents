@@ -41,6 +41,7 @@ public class MultipleDetection {
         File[] files = in.toFile().listFiles();
         if (files == null) return;
         int index = 0;
+        List<Corner> oldCorners = null;
         for (File input : files){
             GrayScaleImage img = GrayScaleImage.load(input);
 
@@ -48,10 +49,17 @@ public class MultipleDetection {
             ImageFilter filter = new ThresholdBinarization(127);
             img = filter.filter(img);
 
-            List<Corner> corners = detector.detect(img);
+            List<Corner> corners;
+            if (oldCorners != null){
+                corners = detector.detect(img, oldCorners);
+            } else {
+                corners = detector.detect(img);
+            }
 
-            //System.out.println(corners.size());
             Table table = new Table(corners, img);
+            if (oldCorners == null){
+                oldCorners = table.getCorners();
+            }
 
             long end_time = System.nanoTime();
             double difference = (end_time - start_time)/1e6;

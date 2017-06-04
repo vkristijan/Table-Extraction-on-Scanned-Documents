@@ -44,6 +44,12 @@ public class CombinedDetector {
         return corners;
     }
 
+    public List<Corner> detect(GrayScaleImage img, List<Corner> oldCorners){
+        List<Corner> corners = adaDetect(img, oldCorners);
+
+        return corners;
+    }
+
     private List<Corner> neuralDetect(GrayScaleImage img, List<Corner> pointsOfInterest) {
         List<Corner> corners = new ArrayList<>();
         IntegralImage integralImage = IntegralImage.fromGrayscaleImage(img);
@@ -83,6 +89,37 @@ public class CombinedDetector {
                 Point position = new Point(x + windowSize / 2, y + windowSize / 2);
                 Corner corner = new Corner(CornerValue.CENTER, position);
                 corners.add(corner);
+            }
+        }
+        return corners;
+    }
+
+    private List<Corner> adaDetect(GrayScaleImage img, List<Corner> oldCorners) {
+        IntegralImage integralImage;
+        if (img instanceof IntegralImage){
+            integralImage = (IntegralImage)img;
+        } else {
+            integralImage = IntegralImage.fromGrayscaleImage(img);
+        }
+
+        List<Corner> corners = new ArrayList<>();
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        for (Corner old : oldCorners){
+            int oldX = old.getPosition().getX() - windowSize/2;
+            int oldY = old.getPosition().getY() - windowSize/2;
+            for (int y = oldY - windowSize/2; y < oldY + windowSize/2; y += step){
+                for (int x = oldX - windowSize/2; x < oldX + windowSize/2; x += step){
+                    if (x <= 0|| x >= width - windowSize) continue;
+                    if (y <= 0 || y >= height - windowSize) continue;
+
+                    if (adaBoost.classify(integralImage, x, y, windowSize, windowSize) == 0) continue;
+
+                    Point position = new Point(x + windowSize / 2, y + windowSize / 2);
+                    Corner corner = new Corner(CornerValue.CENTER, position);
+                    corners.add(corner);
+                }
             }
         }
         return corners;

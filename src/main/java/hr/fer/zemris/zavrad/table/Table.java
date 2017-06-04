@@ -56,11 +56,17 @@ public class Table {
         List<Integer> xValues = getValues(xCandidates, minX);
         List<Integer> yValues = getValues(yCandidates, minY);
 
+        this.corners = new ArrayList<>();
         List<Corner> corners = new ArrayList<>();
         for (Integer x : xValues){
+            List<Corner> rowCorners = new ArrayList<>();
+
             for (Integer y : yValues){
-                corners.add(new Corner(CornerValue.CENTER, new Point(x, y)));
+                Corner c = new Corner(CornerValue.CENTER, new Point(x, y));
+                corners.add(c);
+                rowCorners.add(c);
             }
+            this.corners.add(rowCorners);
         }
         return corners;
     }
@@ -176,5 +182,15 @@ public class Table {
         int height = to.getPosition().getY() - y;
 
         return image.getSubset(x, y, width, height);
+    }
+
+    public List<Corner> getCorners() {
+        List<Corner> returnValue = new ArrayList<>();
+
+        for (List<Corner> cornerList : corners){
+            returnValue.addAll(cornerList);
+        }
+
+        return returnValue;
     }
 }
