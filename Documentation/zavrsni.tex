@@ -20,11 +20,11 @@
 \izvornik
 
 % Dodavanje zahvale ili prazne stranice. Ako ne želite dodati zahvalu, naredbu ostavite radi prazne stranice.
-\zahvala{Zahvaljujem svima onima koji su odvojili dio svojeg vremena na ispunjavanje primjeraka tablica, kao i svima koji su pomogli prilikom prikupljanja istih.}
+\zahvala{Zahvaljujem svima onima koji su dio svojeg vremena odvojili kako bi ispunili primjerke tabli   ca, kao i svima koji su pomogli prilikom prikupljanja istih.}
 
 \tableofcontents
 
-\chapter{Uvod}
+\chapter{Uvod   }
 U današnje vrijeme postoje izuzetno velike količine papirnatih dokumenata.
 Samo u Sjedinjenim Američkim Državama nastaje više od milijarde novih papirnatih dokumenata svakog radnog dana. 
 Mogućnost digitalizacije takvih dokumenata može biti od velike koristi prilikom pohrane, slanja ili pretraživanja istih. \cite{article:Skew-detection}
@@ -38,12 +38,17 @@ Ovaj rad se fokusira isključivo na prepoznavanje tablica, što je prethodno ve�
 Taj postupak se dijeli na prepoznavanje položaja tablice u odnosu na ostatak dokumenta, prilikom čega je potrebno u dokumentu izdvojiti tablicu od ostatka teksta i ostalih grafičkih objekata, a što je opisano u radu \cite{article:Medium-IndependentTableDetection}.
 Nakon što je tablica pronađena određuje se njezin izgled, odnosno broj redaka i stupaca, odnosno koordinate pojedine ćelije, a što je detaljnije opisano u nastavku rada. \\
 
+U radu \cite{article:Medium-IndependentTableDetection} je opisan postupak u kojemu se tablice prepoznaju na temelju praznog prostora koji ih okružuje, odnosno pomoću praznog prostora između redaka i stupaca kod tablica koje nemaju crte. Fokus rada je na prepoznavanju ASCII tablica. Rad \cite{article:SimpleAndEffectiveTableDetectionSystemFromDocumentImages} također se zasniva na sličnom principu, uz razliku da je namijenjen općenitim dokumentima te prepoznaje tablice sa crtama, što radi na način da mjeri udaljenosti između teksta koje se razlikuju od standardnih udaljenosti znakova u riječima.
+U radu \cite{LayoutRecognitionofTable-Form} predstavljena je metoda koja detekciju tablice obavlja u $2$ koraka.
+Najprije se generira stablo strukture dokumenta, što omogućava prepoznavanje tablica bilo kakvog oblika, a ne nužno samo standardnih kvadratnih tablica, nakon čega se vrši ekstrakcija sadržaja ćelija kako bi se isti dodatno obradio.
+Rad \cite{conference:AutomaticTableDetectionInDocumentImages} opisuje postupak detekcije tablica na temelju obrade slike te prepoznavanju pozicija linija i njihovih sjecišta.
+Na taj se način određuju vrhovi ćelija iz čega se rekonstruira tablica, te je postignuto prepoznavanje tablica bez prethodnog procesa učenja.
+\\
+
 Predstavljeno rješenje počinje od slike u sivim tonovima (engl. \textit{gray-scale}), koja se binarizira kako bi se dobila slika koja se sastoji od isključivo crne i bijele boje.
 Dobivena crno-bijela slika koristi se u daljnjoj obradi te se provjerava je li slika rotirana, odnosno kut rotacije iste, nakon čega se slika po potrebi rotira kako bi tablica stajala okomito.
-Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija, te kasnijoj rekonstrukciji istih a koji je detaljnije opisan u nastavku rada.
-
-
-\chapter{Pregled područja}
+Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija korištenjem klasifikatora temljenog na algoritmu AdaBoost i klasifikatora primjenom umjetne neuronske mreže.
+Prepoznati kutevi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljno opisano u nastavku rada.
 
 \chapter{Binarizacija slike}
 Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena sa vrijednošću $0$, a bijela sa $255$.
