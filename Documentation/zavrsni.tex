@@ -20,7 +20,7 @@
 \izvornik
 
 % Dodavanje zahvale ili prazne stranice. Ako ne želite dodati zahvalu, naredbu ostavite radi prazne stranice.
-\zahvala{Zahvaljujem svima onima koji su dio svojeg vremena odvojili kako bi ispunili primjerke tabli   ca, kao i svima koji su pomogli prilikom prikupljanja istih.}
+\zahvala{Zahvaljujem svima onima koji su dio svojeg vremena odvojili kako bi ispunili primjerke tablica, kao i svima koji su pomogli prilikom prikupljanja istih.}
 
 \tableofcontents
 
@@ -38,7 +38,7 @@ Ovaj rad se fokusira isključivo na prepoznavanje tablica, što je prethodno ve�
 Taj postupak se dijeli na prepoznavanje položaja tablice u odnosu na ostatak dokumenta, prilikom čega je potrebno u dokumentu izdvojiti tablicu od ostatka teksta i ostalih grafičkih objekata, a što je opisano u radu \cite{article:Medium-IndependentTableDetection}.
 Nakon što je tablica pronađena određuje se njezin izgled, odnosno broj redaka i stupaca, odnosno koordinate pojedine ćelije, a što je detaljnije opisano u nastavku rada. \\
 
-U radu \cite{article:Medium-IndependentTableDetection} je opisan postupak u kojemu se tablice prepoznaju na temelju praznog prostora koji ih okružuje, odnosno pomoću praznog prostora između redaka i stupaca kod tablica koje nemaju crte. Fokus rada je na prepoznavanju ASCII tablica. Rad \cite{article:SimpleAndEffectiveTableDetectionSystemFromDocumentImages} također se zasniva na sličnom principu, uz razliku da je namijenjen općenitim dokumentima te prepoznaje tablice sa crtama, što radi na način da mjeri udaljenosti između teksta koje se razlikuju od standardnih udaljenosti znakova u riječima.
+U radu \cite{article:Medium-IndependentTableDetection} je opisan postupak u kojemu se tablice prepoznaju na temelju praznog prostora koji ih okružuje, odnosno pomoću praznog prostora između redaka i stupaca kod tablica koje nemaju crte. Fokus rada je na prepoznavanju ASCII tablica. Rad \cite{article:SimpleAndEffectiveTableDetectionSystemFromDocumentImages} također se zasniva na sličnom principu, uz razliku da je namijenjen općenitim dokumentima te prepoznaje tablice s crtama, što radi tako da mjeri udaljenosti između teksta koje se razlikuju od standardnih udaljenosti znakova u riječima.
 U radu \cite{LayoutRecognitionofTable-Form} predstavljena je metoda koja detekciju tablice obavlja u $2$ koraka.
 Najprije se generira stablo strukture dokumenta, što omogućava prepoznavanje tablica bilo kakvog oblika, a ne nužno samo standardnih kvadratnih tablica, nakon čega se vrši ekstrakcija sadržaja ćelija kako bi se isti dodatno obradio.
 Rad \cite{conference:AutomaticTableDetectionInDocumentImages} opisuje postupak detekcije tablica na temelju obrade slike te prepoznavanju pozicija linija i njihovih sjecišta.
@@ -47,21 +47,21 @@ Na taj se način određuju vrhovi ćelija iz čega se rekonstruira tablica, te j
 
 Predstavljeno rješenje počinje od slike u sivim tonovima (engl. \textit{gray-scale}), koja se binarizira kako bi se dobila slika koja se sastoji od isključivo crne i bijele boje.
 Dobivena crno-bijela slika koristi se u daljnjoj obradi te se provjerava je li slika rotirana, odnosno kut rotacije iste, nakon čega se slika po potrebi rotira kako bi tablica stajala okomito.
-Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija korištenjem klasifikatora temljenog na algoritmu AdaBoost i klasifikatora primjenom umjetne neuronske mreže.
+Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija korištenjem klasifikatora temeljenog na algoritmu AdaBoost i klasifikatora primjenom umjetne neuronske mreže.
 Prepoznati kutevi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljno opisano u nastavku rada.
 
 \chapter{Binarizacija slike}
-Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena sa vrijednošću $0$, a bijela sa $255$.
+Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena s vrijednošću $0$, a bijela sa $255$.
 Prije nego li se započne bilo kakva analiza slike, potrebno je istu binarizirati, odnosno pretvoriti u oblik koji će sadržavati isključivo crne ili bijele elemente, bez ostalih nijansi sive.
-To je moguće učiniti na dva načina: korištenjem fiksno definiranog praga nakon kojega ćemo svako vrijednost proglasiti crnom, ili korištenjem adaptivne binarizacije koja se temelji na usporedbi trenutnog intenziteta sive sa intenzitetom sive u okruženju.
+To je moguće učiniti na dva načina: korištenjem fiksno definiranog praga nakon kojega ćemo svako vrijednost proglasiti crnom, ili korištenjem adaptivne binarizacije koja se temelji na usporedbi trenutnog intenziteta sive s intenzitetom sive u okruženju.
 
 \section{Binarizacija fiksnim pragom}
 Najjednostavniji oblik binarizacije je korištenje fiksno definiranog praga.
-U tom se slučaju gleda svaki pojedini slikovnog elementa te ukoliko je njegova vrijednost manja od zadanog praga, element se postavlja na crnu boju, dok se u protivnom postavlja na bijelu.
+U tom se slučaju gleda svaki pojedini slikovnog elementa te ako je njegova vrijednost manja od zadanog praga, element se postavlja na crnu boju, dok se u protivnom postavlja na bijelu.
 Prednosti ove metode su izrazito jednostavna implementacija, ali i velika brzina izvođenja. 
 Nedostatci se primjećuju u slučajevima lošeg ili nejednoličnog osvjetljenja gdje se događa da se neki dijelovi dokumenta u potpunosti prepoznaju kao crni, unatoč činjenici da je prethodno bilo moguće razlikovati i prepoznati pozadinu od sadržaja dokumenta.
-Slika \ref{fig:threshold} prikazuje opisani problem te se na istoj može primjetiti kako je u doljnjem lijevom kutu slike tamno područje, koje nakon binarizacije postaje u potpunosti crno. 
-Također se primjećuje i kako je gornji desni kut slike slabije osvjetljen, zbog čega u binariziranoj slici slova postaju tanja i slabije vidljiva.\\
+Slika \ref{fig:threshold} prikazuje opisani problem te se na istoj može primijetiti kako je u donjem lijevom kutu slike tamno područje, koje nakon binarizacije postaje u potpunosti crno. 
+Također se primjećuje i kako je gornji desni kut slike slabije osvijetljen, zbog čega u binariziranoj slici slova postaju tanja i slabije vidljiva.\\
 
 \begin{figure}[th!]
     \centering
@@ -82,7 +82,7 @@ Također se primjećuje i kako je gornji desni kut slike slabije osvjetljen, zbo
 \end{figure}
 
 \section{Adaptivna binarizacija}
-Problemi prikazani u prethodnom postupku rješavaju se primjenom adaptivne binarizacije koja vrijednost sakog pojedinog slikovnog elementa ne određuje samo na osnovu njegove boje, već u obzir uzima i boju okoline.
+Problemi prikazani u prethodnom postupku rješavaju se primjenom adaptivne binarizacije koja vrijednost svakog pojedinog slikovnog elementa ne određuje samo na osnovu njegove boje, već u obzir uzima i boju okoline.
 U nastavku je opisan postupak koji je predložen u \cite{AdaptiveBinarization}.
 Prikazani primjeri koriste sliku \ref{fig:sub1} kao početnu.
 
@@ -102,7 +102,7 @@ Sa $\sigma^2$ označena je varijanca vrijednosti slikovnih elemenata u okruženj
     \displaystyle \sum_{i = x-\frac{N}{2}}^{x+\frac{N}{2}}
     \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
 (I_s(i, j)^2 - \mu^2)\]
-Sa $v^2$ je označena srednja vrijednost svih lokalnih varijanci.
+S $v^2$ je označena srednja vrijednost svih lokalnih varijanci.
 Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5$x$5$ prikazan je na slici \ref{fig:wiener}.
 
 \begin{figure}[!ht]
@@ -124,8 +124,8 @@ Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5$x$5$ prikaza
 
 \subsection{Procjena sadržaja}
 Sljedeći korak binarizacije temelji se na procjenjivanju sadržaja dokumenta. 
-Cilj ovog koraka je procijeniti koji elementi slike pripadaju pozadini, a koji pripadaju saržaju dokumenta. 
-Pritom je procijenjeni sadržaj zapravo nadskup stvarnog sadržaja, odnosno na dobivenoj slici biti će prisutan šum. 
+Cilj ovog koraka je procijeniti koji elementi slike pripadaju pozadini, a koji pripadaju sadržaju dokumenta. 
+Pritom je procijenjeni sadržaj zapravo nadskup stvarnog sadržaja, odnosno na dobivenoj slici bit će prisutan šum. 
 Za potrebe ovoga koristi se Niblackov algoritam adaptivne binarizacije. \cite{AdaptiveBinarization}\\
 
 Algoritam se temelji na ideji kliznog prozora određenih dimenzija, pomoću kojega se računa lokalni median vrijednosti $m$ te varijanca $s$. 
@@ -148,7 +148,7 @@ Na slici se primjećuje kako je sav tekst prepoznat i prikazan crnom bojom, ali 
 \subsection{Procjena pozadine}
 U ovom koraku pokušava se procijeniti izgled pozadine dokumenta, što je označeno sa $B$. 
 Za potrebe toga koristi se obrađena početna slika $I$ te prethodno dobivena slika $N$.
-Ako je neki slikovni element na slici $N$ označen nulom, taj element predstavlja pozadinu slike i njegova vrijednost na slici $B$ biti će jednaka onoj sa slike $I$.
+Ako je neki slikovni element na slici $N$ označen nulom, taj element predstavlja pozadinu slike i njegova vrijednost na slici $B$ bit će jednaka onoj sa slike $I$.
 U protivnome će vrijednost tog slikovnog elementa biti određena interpolacijom vrijednosti susjednih slikovnih elemenata.
 Konačna formula za elemente slike $B$ glasi:
 \[
@@ -188,14 +188,14 @@ Postupak je u cijelosti objašnjen u radu \cite{AdaptiveBinarization}.\\
 \end{minipage}
 \end{figure}
 
-Rezultati ovog postupka, primjenjenog na slici \ref{fig:sub1} prikazani su na slici \ref{fig:background}, uz $dx=3$ i $dy=3$.
+Rezultati ovog postupka, primijenjenog  na slici \ref{fig:sub1} prikazani su na slici \ref{fig:background}, uz $dx=3$ i $dy=3$.
 Moguće je uočiti kako se na slici i dalje primjećuju obrisi slova, premda sama slova nisu prisutna.
 
 \subsection{Binarizacija}
 Kao što je opisano u radu \cite{AdaptiveBinarization}, u ovom koraku se provodi konačna binarizacija, uspoređivanjem izračunate pozadine $B$ i izvorne slike $I$.
 Postupak se temelji na tome da je razlika u boji teksta i pozadine veća nego li razlika u boji šuma dobivenog procjenom sadržaja dokumenta i pozadine.
 Ovisno o intenzitetu sive boje okruženja, računa se prag binarizacije $d$, kako bi se sačuvao tekst u tamnim područjima.
-Kako bi se to postiglo, vrijednost praga $d$ mora biti manja u područjima sa tamnom pozadinom.
+Kako bi se to postiglo, vrijednost praga $d$ mora biti manja u područjima s tamnom pozadinom.
 Konačna slika $T$ određena je formulom:
 \[
     T(x, y) = 
@@ -221,8 +221,8 @@ Vrijednost $\delta$ možemo izračunati kao
 \]
 
 Konačan rezultat nakon primjene opisanog postupka binarizacije prikazan je na slici \ref{fig:finalThreshold}.
-Za razliku od rezultata korištenjem binarizacije sa fiksnim pragom, prikazanim na slici \ref{fig:sub2}, primjećjuje se kako zatamnjeno područje u donjem lijevom kutu slike ne predstavlja problem prilikom raspoznavanja teksta od pozadine.
-Također je potrebno primjetiti i šumove koji su ostali prisutni nakon trenutno opisanog postupka, a koji su riješeni u nastavku.
+Za razliku od rezultata korištenjem binarizacije s fiksnim pragom, prikazanim na slici \ref{fig:sub2}, primjećuje se kako zatamnjeno područje u donjem lijevom kutu slike ne predstavlja problem prilikom raspoznavanja teksta od pozadine.
+Također je potrebno primijetiti i šumove koji su ostali prisutni nakon trenutno opisanog postupka, a koji su riješeni u nastavku.
 
 \subsection{Dodatna obrada slike}
 Završni korak obrade slike koristi se kako bi se popravila kvaliteta konačne binarizirane slike.
@@ -261,7 +261,7 @@ Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6$.
 
 \chapter{Prepoznavanje zakrivljenosti slike}
 Jedan od problema koji nastaje prilikom digitalizacije dokumenata je mogućnost da dokument bude nakošen. 
-Do toga može doći ili prilikom nepažnje tokom ubacivanja papira u optički čitač, ili zbog nesvjesnog zakrivljenja prilikom korištenja kamere mobilnog uređaja.
+Do toga može doći ili prilikom nepažnje tijekom ubacivanja papira u optički čitač, ili zbog nesvjesnog zakrivljenja prilikom korištenja kamere mobilnog uređaja.
 Nakošenost digitalizirane slike može uzrokovati teže ili lošije prepoznavanje elemenata na slici, zbog čega je korisno i poželjno otkriti stupanj rotacije dokumenta i ispraviti ga.
 
 \section{Računanje kuta rotacije}
@@ -277,20 +277,20 @@ Ova pretpostavka vrijedi isključivo iz razloga da se rad fokusira na prepoznava
     \label{fig:skew_original}
 \end{figure}
 
-Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presječe okomitim linijama, što je predloženo u radu \cite{article:Skew-detection}.
+Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presiječe okomitim linijama, što je predloženo u radu \cite{article:Skew-detection}.
 Za svaku okomitu liniju se računaju točke u kojima ona sječe linije osnovnog dokumenta.
 Jednom kada su određene točke sjecišta, moguće je odabrati jednu takvu točku najljevije okomite linije ($T_1$) te usporediti tu točku sa svim točkama koje se nalaze desno od nje ($T_2$).
-Dvije tako odabrane točke analiziraju se na način da se kroz njih povuče pravac, čija jednadžba glasi: 
+Dvije tako odabrane točke analiziraju se tako da se kroz njih povuče pravac, čija jednadžba glasi: 
 \[
     y - y_1 = k(x - x_1),
 \]
-gdje je $k$ koeficjent smjera:
+gdje je $k$ koeficijent smjera:
 \[
     k = \frac{y_2 - y_1}{x_2 - x_1}.
 \]
-Pomoću koeficjenta smjera $k$ moguće je izračunati kut pod kojim je nagnut dobiveni pravac, kao $\alpha = tan^{-1}(k)$.
+Pomoću koeficijenta  smjera $k$ moguće je izračunati kut pod kojim je nagnut dobiveni pravac, kao $\alpha = tan^{-1}(k)$.
 Uz pretpostavku da dokument nije rotiran te da se točke $T_1$ i $T_2$ nalaze na istim vodoravnim linijama dokumenta, kut $\alpha$ trebao bi iznositi $0\degree$.
-U slučaju da je dokument rotiran, ovako određen kut $\alpha$ biti će jednak stupnju rotacije dokumenta.\\
+U slučaju da je dokument rotiran, ovako određen kut $\alpha$ bit će jednak stupnju rotacije dokumenta.\\
 
 \begin{figure}[th!]
     \centering
@@ -313,16 +313,16 @@ U slučaju da je dokument rotiran, ovako određen kut $\alpha$ biti će jednak s
 \end{figure}
 
 Jedan od problema koji preostaje je početna pretpostavka da se točke $T_1$ i $T_2$ nalaze na istoj vodoravnoj liniji dokumenta, što neće biti istinito u većini slučajeva.
-To se rješava na način da se izračunaju kutevi koje zatvaraju svi pravci koji počinju u točki $T_1$, a pritom se bilježi koliko puta se pojavio koji kut.
+To se rješava tako da se izračunaju kutevi koje zatvaraju svi pravci koji počinju u točki $T_1$, a pritom se bilježi koliko puta se pojavio koji kut.
 Uz ovaj pristup rotaciju dokumenta više ne određuje kut $\alpha$ koji je dobiven za jedan pravac, već onaj kut koji je najviše puta zabilježen.
 Ovaj pristup prikazan je na slici \ref{fig:skew_verticalLines}, gdje je za određenu podjelu okomitim linijama i odabranu početnu točku prikazan izračun triju kuteva: \textbf{A}, \textbf{B}, \textbf{C}.
 Slika \ref{fig:skew_equidistant} također prikazuje i važnost načina odabira okomitih linija.
 Na navedenoj slici odabrane su ekvidistantne linije, zbog čega dolazi do toga da se sva tri kuta javljaju jednak broj puta, što ometa rad algoritma.
-Za razliku od toga, na slici \ref{fig:skwe_random} koriste se linije sa nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj kut \textbf{B} javlja prilikom svakog presjeka okomite linije sa vodoravnom linijom na kojoj se nalazi početna točka $T_1$, dok se ostali kutevi javljaju samo jednom, čime se prepoznaje da oni dolaze radi krivo odaranih točaka.
+Za razliku od toga, na slici \ref{fig:skwe_random} koriste se linije s nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj kut \textbf{B} javlja prilikom svakog presjeka okomite linije s vodoravnom linijom na kojoj se nalazi početna točka $T_1$, dok se ostali kutevi javljaju samo jednom, čime se prepoznaje da oni dolaze radi krivo odabranih točaka.
 
 
 \section{Rezultati}
-Kako bi se uštedjelo na vremenu izvođenja, navedeni algoritam je implementiran na način da nakon što odredi nasumične okomite linije odabire samo $4$ početne točke, prethodno označene sa $T_1$.
+Kako bi se uštedjelo na vremenu izvođenja, navedeni algoritam je implementiran tako da nakon što odredi nasumične okomite linije odabire samo $4$ početne točke, prethodno označene sa $T_1$.
 Za te točke se računaju kutevi sa svim ostalim točkama, a na kraju se provjerava postoji li kut koji prevladava.
 Primjer jednog takvog izvođenja prikazan je na slici \ref{fig:skew1}.\\
 
@@ -334,7 +334,7 @@ Primjer jednog takvog izvođenja prikazan je na slici \ref{fig:skew1}.\\
     \label{fig:skew1}
 \end{figure}
 
-Iz slike se može lako primjetiti kako je najčešće izmjeren kut od $5\degree$ stupnjeva, iz čega se zaključuje da je slika rotirana za točno taj iznos.
+Iz slike se primjećuje kako je najčešće izmjeren kut od $5\degree$ stupnjeva, iz čega se zaključuje da je slika rotirana za točno taj iznos.
 Isti postupak ponovljen je za sliku koja je bila rotirana za kut od $10\degree$ stupnjeva, a rezultati toga prikazani su histogramom na slici \ref{fig:skew2}.
 Na ovoj slici se primjećuje kako se za veće iznose kuteva javlja veći šum u izračunatim kutevima, no i dalje je moguće razaznati dominantnu vrijednost kuta rotacije.\\
 
@@ -348,7 +348,7 @@ Na ovoj slici se primjećuje kako se za veće iznose kuteva javlja veći šum u 
 
 Problem se javlja kod izračuna koji je prikazan histogramom na slici \ref{fig:skew3}, gdje nije moguće sa sigurnošću odrediti kako je slika rotirana.
 Do ovog problema je moglo doći iz više razloga, poput loše odabranih okomitih linija, ili problema zbog točaka dobivenih kao sjecišta okomitih linija i teksta koji se nalazi u tablicama.
-Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okomitih linija te ponovan izračun kuteva sa nove proizvoljne $4$ točke.
+Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okomitih linija te ponovan izračun kuteva s $4$ nove proizvoljne točke.
 
 \begin{figure}[ht!]
     \centering
@@ -382,12 +382,12 @@ Nakon što se pronađu tako opisani rubovi, vrh označen brojem $9$ na slici mo�
 Ovaj pristup nije detaljnije razrađen u ovom radu te nije korišten u implementaciji, a navodi se isključivo kao prijedlog potencijalne optimizacije korištenog algoritma.
 
 \section{Detekcija vrhova ćelija}
-Detekcija vrhova ćelija obavlja se na način da se svaki dio slike provjerava te se za njega utvrđuje prikazuje li on vrh ćelije ili ne. 
+Detekcija vrhova ćelija obavlja se tako da se svaki dio slike provjerava te se za njega utvrđuje prikazuje li on vrh ćelije ili ne. 
 Kako bi se to izvelo, potrebno je odrediti točno koji dio slike se provjerava u nekom određenom trenutku, a što se čini korištenjem pomičnog prozora. 
 Definiran je prozor određenih dimenzija $X$x$Y$, te se promatra samo dio slike unutar njega. 
-Tako dobiven isječak slike potom se analizira i ispituje sadrči li on vrh ćelije ili ne.
+Tako dobiven isječak slike potom se analizira i ispituje sadrži li on vrh ćelije ili ne.
 Jednom kad je detekcija završena za trenutni prozor, prozor se pomiče po $x$ osi za udaljenost $dx$, te se detekcija vrši na tako dobivenom novom isječku slike.
-Jedno od mogućih poboljšanja ove metode predloženo je u radu \cite{ViolaJones}, gdje se ne koristi fiksna veličina pomičnog prozora, već se pretraga započinje s jednom veličinom prozora te se ona iterativno smanjuje tokom pretrage.
+Jedno od mogućih poboljšanja ove metode predloženo je u radu \cite{ViolaJones}, gdje se ne koristi fiksna veličina pomičnog prozora, već se pretraga započinje s jednom veličinom prozora te se ona iterativno smanjuje tijekom pretrage.
 
 
 \subsection{Određivanje značajki}
@@ -396,7 +396,7 @@ Osnovna funkcija značajki je pojednostavljenje slike koja se pokušava prepozna
 Potrebno je odrediti značajke koje vrijede neovisno o manjim pomacima slike, ili manjim šumovima koji mogu biti prisutni iz različitih razloga.
 Za potrebe toga odabrana su dva različita pristupa odabira značajki.\\
 
-Prvi korišteni način zasniva se na činjenici da se detektiraju djelovi tablica, koje se sastoje isključivo od vodoravnih i okomitih linija.
+Prvi korišteni način zasniva se na činjenici da se detektiraju dijelovi tablica, koje se sastoje isključivo od vodoravnih i okomitih linija.
 Imajući to na umu moguće je uočiti da će u idealnom slučaju okomite i vodoravne zrake (prikazano crvenom bojom) sjeći vrh ćelije uvijek u samo jednoj točki, kao što je prikazano u primjeru na slici \ref{fig:lineFeatures}.
 
 \begin{figure}[th!]
@@ -420,9 +420,9 @@ Imajući to na umu moguće je uočiti da će u idealnom slučaju okomite i vodor
 \end{figure}
 
 Ovisno o koordinati zrake moguće je odrediti koja je to vrsta vrha, točnije na danom primjeru na slici \ref{fig:feature1} nema sjecišta zrake i linije, iz čega se zaključuje kako se na slici ne nalaze određeni vrhovi ćelija, poput na primjer vrha označenog brojem $2$ na slici \ref{fig:corners}, koji ima vodoravnu liniju na lijevoj strani.
-Ista ta zraka na primjeru na slici \ref{fig:feature2} presjeca sliku na jednom mjestu, iz čega se zaključuje da je na slici potencijalno vrh koji na tom mjestu ima liniju.\\
+Ista ta zraka na primjeru na slici \ref{fig:feature2} presijeca sliku na jednom mjestu, iz čega se zaključuje da je na slici potencijalno vrh koji na tom mjestu ima liniju.\\
 
-Ovaj pristup se nadopunjuje na način da se umjesto broja presjecišta određuje udaljenost od prvog presjecišta.
+Ovaj pristup se nadopunjuje tako da se umjesto broja presjecišta određuje udaljenost od prvog presjecišta.
 Na taj se način razlikuje linija koja se očekivano pojavljuje na sredini slike od šuma koji se može pojaviti na svim mjestima slike.
 Prilikom ovog pristupa koji uključuje izračun udaljenosti do presjecišta potrebno je relativizirati dobivenu udaljenost u odnosu na veličinu slike na kojoj se radi analiza kako bi se osiguralo da značajke ne ovise o veličini slike.
 Osim navedenoga, koriste se i dijagonalne zrake s kojima se određuje broj presjecišta kako bi se dodatno povećala raznolikost značajki, a samim time i robusnost algoritma.\\
@@ -469,7 +469,7 @@ Potencijalne smetnje koje mogu nastati na slici kao posljedica sadržaja tablice
     \label{fig:haarFeatures}
 \end{figure}
 
-Prednost ovog skupa značajki je u mogućnosti izračuna istih u konstantnoj složenosti, uz prethodno predprocesiranje podataka.
+Prednost ovog skupa značajki je mogućnost izračuna istih u konstantnoj složenosti, uz prethodno pretprocesiranje podataka.
 Računa se novi oblik reprezentacije slike ($ii$) u kojemu je vrijednost na poziciji $x, y$ jednaka ukupnom broju crnih slikovnih elemenata na početnoj slici za sve elemente koji se nalaze gore lijevo od trenutnog, odnosno:
 \[
     ii(x, y) = 
@@ -505,7 +505,7 @@ U nastavku je ukratko opisan način rada istih, dok se detaljnije objašnjenje m
 Poznato je da se mozak sastoji od velikog broja međusobno povezanih neurona.
 Svaki se neuron sastoji od $3$ djela: dendrita koji primaju električne podražaje, tijela koje reagira na podražaj i aksona koji prosljeđuje podražaj sljedećim povezanim neuronima.
 Osnovni princip rada neurona temelji se upravo na spomenutoj propagaciji električnih impulsa. 
-Umjetni neuroni simuliraju pojednostavljeni model bioloških neurona na način da oponašaju prethodno navedene funkcionalnsti.
+Umjetni neuroni simuliraju pojednostavljeni model bioloških neurona tako da oponašaju prethodno navedene funkcionalnosti.
 
 \begin{figure}[ht!]
     \centering
@@ -516,19 +516,20 @@ Umjetni neuroni simuliraju pojednostavljeni model bioloških neurona na način d
 \end{figure}
 
 Slika \ref{fig:neuron} prikazuje opći model takvog neurona. 
-Ulazne vrijednosti neuronu čine vrijednosti od $x_1$ do $x_n$, te se svakoj od njih dodijeljuje određena težina $w_1$ do $w_n$ sa kojom se ulazna vrijednost množi.
+Ulazne vrijednosti neuronu čine vrijednosti od $x_1$ do $x_n$, te se svakoj od njih dodjeljuje određena težina $w_1$ do $w_n$ s kojom se ulazna vrijednost množi.
 Na taj se način ostvaruje mogućnost postavljanja različitih prioriteta različitim ulazima.
 Tijelo neurona ostvareno je funkcijom sumacije koja zbraja težinske vrijednosti ulaza te tako dobiveni broj predaje prijenosnoj funkciji, koja se ponaša kao model aksona.
 Prijenosna funkcija za dani argument vraća rezultat iz određenog raspona, što se propagira kao ulaz sljedećim neuronima.\\
 
-Korištenjem samo jednog neurona moguće je ostvariti jednostavnije linearne klasifikacijske algoritme, na način da se kao ulazi neurona koriste značajke prema kojima se klasificira, a za prijenosnu funkciju odabere funkcija skoka.
-Ovisno o izlazu iz neurona uzorak se klasificira u jedan od dva rezreda.
+Korištenjem samo jednog neurona moguće je ostvariti jednostavnije linearne klasifikacijske algoritme, tako da se kao ulazi neurona koriste značajke prema kojima se klasificira, a za prijenosnu funkciju odabere funkcija skoka.
+Ovisno o izlazu iz neurona uzorak se klasificira u jedan od dva razreda.
 Prvi nedostatak ovog modela koji se uočava je nemogućnost istoga da uzorak klasificira ako postoji više različitih razreda.
 Taj se problem može riješiti dodavanjem novih neurona koji primaju jednake ulaze kao i prvi neuron, te izlaz svakog od njih odgovara pojedinom razredu u koji ulazni uzorak može biti klasificiran.
 Takva grupacija neurona zove se sloj neuronske mreže.\\
 
-Sljedeći problem dobivenog modela je mogućnost rada isključivo sa linearno odvojivim podatcima. Taj se problem rješava dodavanjem novih slojeva neurona u neuronsku mrežu, na način da se izlazi neurona jednog sloja proslijede kao ulazi neuronima drugog sloja.
-Pri tome se razlikuju $3$ općenite vrste slojeva: ulazni sloj neurona koji služi kako bi se ulazne vrijednosti značajki prosliejdile ostatku neuronske mreže, skriveni sloj neurona koji se koristi prilikom računanja, ali nije vidljiv vanjskom korisniku te izlazni sloj, čiji se rezultat predaje krajnjem korisniku.
+Sljedeći problem dobivenog modela je mogućnost rada isključivo s linearno odvojivim podatcima. 
+Taj se problem rješava dodavanjem novih slojeva neurona u neuronsku mrežu, tako da se izlazi neurona jednog sloja proslijede kao ulazi neuronima drugog sloja.
+Pri tome se razlikuju $3$ općenite vrste slojeva: ulazni sloj neurona koji služi kako bi se ulazne vrijednosti značajki proslijedile ostatku neuronske mreže, skriveni sloj neurona koji se koristi prilikom računanja, ali nije vidljiv vanjskom korisniku te izlazni sloj, čiji se rezultat predaje krajnjem korisniku.
 
 \begin{figure}[ht!]
     \centering
@@ -538,10 +539,10 @@ Pri tome se razlikuju $3$ općenite vrste slojeva: ulazni sloj neurona koji slu�
     \label{fig:ffann}
 \end{figure}
 
-Ovisno o načinu povezivanja neurona moguće je ostvariti različite arhitekture umjenih neuronskih mreža. 
+Ovisno o načinu povezivanja neurona moguće je ostvariti različite arhitekture umjetnih neuronskih mreža. 
 U radu je korištena unaprijedna neuronska mreža, kakva je prikazana na slici \ref{fig:ffann}.
 Jedna od prednosti umjetnih neuronskih mreža leži u mogućnosti učenja istih, a što je moguće učiniti promjenom težina ulaza za pojedini neuron.
-Jednom kad je mreža naučena, odnosno kada su određene težine uz koje mreža zadovoljavajuće izvršava zadatak za koji je predviđena, dobiene težine pohranjuju se u datoteku na računalu kako se a daljnja pokretanja mreža ne bi morala ponovno učiti.
+Jednom kad je mreža naučena, odnosno kada su određene težine uz koje mreža zadovoljavajuće izvršava zadatak za koji je predviđena, dobivene težine pohranjuju se u datoteku na računalu kako se a daljnja pokretanja mreža ne bi morala ponovno učiti.
 Ovo svojstvo omogućava veliku brzinu klasifikacije jednom kada je mreža naučena.
 
 \subsection{Detekcija AdaBoost algoritmom}
@@ -552,7 +553,7 @@ Kako bi se taj postupak ubrzao koristi se drugačiji pristup klasificiranju prim
 Osnovna ideja AdaBoost algoritma je izgraditi jedan jaki klasifikator primjenom više slabih klasifikatora.
 U okviru ovog algoritma, jaki klasifikator je finalni klasifikator koji uz veliku točnost podatke raspoređuje u jednu od grupa, dok su slabi klasifikatori u stanju točno klasificirati samo manji podskup podataka, dok ostale svrstavaju u krive grupe.\\
 
-Slabi klasifikatori određuju fiksni prag za kojega će nešto klasificirti u jednu ili drugu kategoriju, ovisno o vrijednosti korištene značajke za sliku. Takav klasifikator prikazan je sljedećom funkcijom:
+Slabi klasifikatori određuju fiksni prag za kojega će nešto klasificirati u jednu ili drugu kategoriju, ovisno o vrijednosti korištene značajke za sliku. Takav klasifikator prikazan je sljedećom funkcijom:
 \[
     h(x, f, p, \theta) = 
     \begin{cases}
@@ -561,17 +562,17 @@ Slabi klasifikatori određuju fiksni prag za kojega će nešto klasificirti u je
     \end{cases}
 \]
 gdje je sa $h(x, f, p, \theta)$ označen klasifikator, sa $x$ uzorak, sa $f$ funkcija koja na temelju uzorka određuje značajku, a $p$ predstavlja faktor koji određuje smjer nejednakosti, ovisno o predznaku.
-Ukupna greška ovakvog klasifikatora definirana je kao težinska suma svih odstupanja, gdje se svakom uzorku pridjeluje određena težina kojom on doprinosi ukupnoj grešci.
+Ukupna greška ovakvog klasifikatora definirana je kao težinska suma svih odstupanja, gdje se svakom uzorku pridjeljuje određena težina kojom on doprinosi ukupnoj grešci.
 Izračun ukupne greške $\epsilon$ prikazan je formulom:
 \[
     \epsilon = \displaystyle \sum_{i}w_i \abs{h(x, f, p, \theta) - y_i} 
 \]
 gdje je sa $w_i$ predstavljena težina $i$-tog po redu uzorka, a sa $y_i$ očekivana vrijednost izlaza klasifikatora.\\
 
-Jaki klasifikatori grade se kao spoj više slabih klasifikatora na način da se računa izlaz svakog od njih te se na temelju toga donosi konačna odluka o kategoriji u koju treba svrstati ulazni uzorak.
-Kako bi se stvorio jaki klasifikator potrebno je odrediti skup labeliranih ulaznih primjera koji se koriste tokom učenja.
+Jaki klasifikatori grade se kao spoj više slabih klasifikatora tako da se računa izlaz svakog od njih te se na temelju toga donosi konačna odluka o kategoriji u koju treba svrstati ulazni uzorak.
+Kako bi se stvorio jaki klasifikator potrebno je odrediti skup labeliranih ulaznih primjera koji se koriste tijekom učenja.
 Budući da algoritam može klasificirati samo $2$ kategorije podataka, potrebno mu je predati uzorke koje smije i koje ne smije prepoznati, gdje je sa $1$ označen uzorak koji se prepoznaje, a sa $0$ uzorak koji se ne prepoznaje.
-Na slučaju tablica, algoritam prepoznaje sve obliek vrhova ćelija, a pritom ne prepoznaje sadržaj unutar tablice, linije tablice i ostale smetnje koje se pojavljuju na slici.
+Na slučaju tablica, algoritam prepoznaje sve oblike vrhova ćelija, a pritom ne prepoznaje sadržaj unutar tablice, linije tablice i ostale smetnje koje se pojavljuju na slici.
 Početne težine za svaki od uzoraka postavljene su na: 
 \[
     w_i = 
@@ -589,8 +590,8 @@ Prvo je potrebno normalizirati sve težine:
     }
 \]
 Potom se određuje slabi klasifikator $h$ koji za trenutne težine daje najmanju pogrešku $\epsilon$, izračunatu na prethodno opisani način.
-Dobiveni slabi klasifikator nije u mogućnosti točno klasificirati određeni dio podataka, zbog čega je potrebno postići da sljedeći slabi klasifikator uspješno prepozna te podatke.
-To se postiže mijenanjem trenutnih težina korištenih u izračunu greške na način da se povećavaju težine onih ulaza čija je vrijednost pogrešno klasificirana, a smanjuju težine ulaza čija je vrijednost ispravno klasificirana, prema formuli:
+Dobiveni slabi klasifikator ne može točno klasificirati određeni dio podataka, zbog čega je potrebno postići da sljedeći slabi klasifikator uspješno prepozna te podatke.
+To se postiže mijenjanjem trenutnih težina korištenih u izračunu greške tako da se povećavaju težine onih ulaza čija je vrijednost pogrešno klasificirana, a smanjuju težine ulaza čija je vrijednost ispravno klasificirana, prema formuli:
 \[
     w_i \leftarrow 
     \begin{cases}
@@ -598,7 +599,7 @@ To se postiže mijenanjem trenutnih težina korištenih u izračunu greške na n
         w_i, & \quad \text{inače}\\
     \end{cases}
 \]
-Pritom je koeficjent $\beta$ definiran kao: 
+Pritom je koeficijent $\beta$ definiran kao: 
 \[
     \beta = \frac{\epsilon}{1 - \epsilon}
 \]
@@ -606,7 +607,7 @@ Za ovako određen slabi klasifikator računa se još i vrijednost $\alpha$ kao:
 \[
     \alpha = log(\frac{1}{\beta})
 \]
-što se koristi prilikom izrade konačnog jakog klasifikatora na način da izlazi klasifikatora sa većom vriejdnošću $\alpha$ više doprinose konačnoj odluci klasifikacije od onih sa manjom vrijednošću.
+što se koristi prilikom izrade konačnog jakog klasifikatora tako da izlazi klasifikatora s većom vrijednošću $\alpha$ više doprinose konačnoj odluci klasifikacije od onih s manjom vrijednošću.
 Jaki klasifikator određen je kao:
 \[
     C(x) = 
@@ -620,7 +621,7 @@ Jaki klasifikator određen je kao:
     \end{cases}
 \]
 
-Prednost ovako dobivenog klasifikatora leži u njegovoj brzini, pogotovo ako se kao značajke na temelju kojih se vrši klasifikacija koriste značajke koje je moguće jednostavno izračunti, poput druge skupine značajki opisanih u ovome radu.
+Prednost ovako dobivenog klasifikatora leži u njegovoj brzini, pogotovo ako se kao značajke na temelju kojih se vrši klasifikacija koriste značajke koje je moguće jednostavno izračunati, poput druge skupine značajki opisanih u ovome radu.
 
 
 \subsection{Kombiniranje klasifikatora}
@@ -629,27 +630,27 @@ Svaki od njih ima svoje prednosti, ali i mane.
 Kako bi se iskoristile dobre strane svakoga od njih, moguće je napraviti novi klasifikator koji će raditi korištenjem prethodno opisana dva klasifikatora.
 Za potrebe toga korišten je AdaBoost klasifikator koji analizira cijelu sliku te određuje točke od potencijalnog interesa. 
 To su točke na kojima je klasifikator rekao da se nalaze vrhovi ćelija, ali zbog prirode klasifikatora nije moguće znati točno o kojim je vrhovima riječ.
-Također, nije nužno potrebno da ovak klasifikator izbaci sve točke koje ne sadrže vrhove tablica, jer se sve pronađene točke ponovno klasificiraju korištenjem umjetne neuronske mreže.\\
+Također, nije nužno potrebno da ovaj klasifikator izbaci sve točke koje ne sadrže vrhove tablica, jer se sve pronađene točke ponovno klasificiraju korištenjem umjetne neuronske mreže.\\
 
-Umjetna neuronska mreža koristi se kako bi se za prethodno dobiene točke interesa odredilo koju vrstu vrha ćelije predstavljaju.
-Za potrebe toga moguće je koristiti neuronsku mrežu koja radi sa većim brojem ulaznih značajki, bez opasnosti od velikog vremena izvođenja, zahvaljujući činjenici da se neuronska mreža pokreće na malom skupu točaka slike. 
+Umjetna neuronska mreža koristi se kako bi se za prethodno dobivene točke interesa odredilo koju vrstu vrha ćelije predstavljaju.
+Za potrebe toga moguće je koristiti neuronsku mrežu koja radi s većim brojem ulaznih značajki, bez opasnosti od velikog vremena izvođenja, zahvaljujući činjenici da se neuronska mreža pokreće na malom skupu točaka slike. 
 
 \section{Rekonstrukcija tablice}
-Korištenjem prethodno opisanih klasifikatora dobiven je popis vrhova ćelija tablice sa prepoznatom vrstom vrha i koordinatom na kojoj se nalazi.
+Korištenjem prethodno opisanih klasifikatora dobiven je popis vrhova ćelija tablice s prepoznatom vrstom vrha i koordinatom na kojoj se nalazi.
 Potrebno je na temelju tog znanja odrediti točan izgled tablice. 
 Poznavanjem pozicija vrhova označenih sa $1, 2, 3$ i $4$ na slici \ref{fig:corners} određena je točna lokacija tablice. 
 Ovisno o broju vrhova ovog tipa moguće je odrediti i točan izgled tablice u slučaju da ona nije pravilnog kvadratnog oblika.
 Vrhovi označeni sa $5, 6, 7$ i $8$ određuju vanjski obrub tablice, dok je unutrašnjost iste određena vrhovima tipa $9$ sa slike \ref{fig:corners}.
 Kako bi se ćelije točno poredale u prostoru potrebno je sortirati popis vrhova istih po jednoj, pa zatim po drugoj koordinati.
-Na taj način je moguće vrhove raspoerditi u dvodimenzionalno polje na način da se svi vrhovi sa jednakom vrijednošću $Y$ koordinate pohrane u isti red polja, te na taj način definiraju isti redak tablice.
-Ponavljanjem postupka za sve različite vrijednosti $Y$ koordinata određuju se svi retci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
+Tako je moguće vrhove rasporediti u dvodimenzionalno polje na način da se svi vrhovi s jednakom vrijednošću $Y$ koordinate pohrane u isti red polja, te tako definiraju isti redak tablice.
+Ponavljanjem postupka za sve različite vrijednosti $Y$ koordinata određuju se svi redci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
 
 \section{Korištenje prethodno stečenog znanja}
 Prilikom prvog prepoznavanja tablice nije moguće pretpostaviti ništa o njezinom izgledu te je do sada opisana metoda jedina točna i efikasna mogućnost.
-Kada se prepoznaje veći broj tablica koje su strukturno jednake te se nalaze na istim poyicijama na papiru, moguće je ubrzati pretragu tablica korištenjem znanja stečenog prilikom detekcije prve tablice. 
-Zbog mogućnosti pomaka papira u procesu digitalizacije nije mooguće očekivati jednake pozicije na slici dokumenta, zbog čega je potrebno izvršiti, no nije potrebno ponovno pretražiti sve slikovne elemente, već se pretražuju samo elementi unutar zadanog radiusa od pozicija sa prethodno prepoznate tablice.\\
+Kada se prepoznaje veći broj tablica koje su strukturno jednake te se nalaze na istim pozicijama na papiru, moguće je ubrzati pretragu tablica korištenjem znanja stečenog prilikom detekcije prve tablice. 
+Zbog mogućnosti pomaka papira u procesu digitalizacije nije moguće očekivati jednake pozicije na slici dokumenta, zbog čega je potrebno izvršiti, no nije potrebno ponovno pretražiti sve slikovne elemente, već se pretražuju samo elementi unutar zadanog radiusa od pozicija s prethodno prepoznate tablice.\\
 
-Opisani postupak moguće je dodatno ubrzati na način da se ne pretražuju ponovno svi vrhovi tablice, već samo jedan, poput na primjer gornjeg lijevog vrha.
+Opisani postupak moguće je dodatno ubrzati tako da se ne pretražuju ponovno svi vrhovi tablice, već samo jedan, poput na primjer gornjeg lijevog vrha.
 Nakon što se pronađe točna pozicija tog vrha na novoj slici zaključuje se kako je cijela tablica, odnosno svi vrhovi njezinih ćelija, pomaknuta za isti iznos u odnosu na prvotno detektiranu kao i pronađeni vrh.
 Mana ovog pristupa je velika osjetljivost na rotacije i ostale moguće pomake papira u postupku digitalizacije. 
 Problem rotacije je djelomično riješen prethodno opisanim postupkom detekcije zakrivljenosti slike, no unatoč tome postoji mogućnost da slika i nakon ispravka rotacije ostane blago rotirana, što za tablice većih dimenzija može predstavljati problem.
@@ -661,7 +662,7 @@ Svi postupci opisani u ovom radu implementirani su u programskom jeziku Java.
 Izvorni kodovi su javno dostupni su na adresi \href{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}.
 
 \section{Umjetna neuronska mreža}
-Kao što je perthodno opisano, prilikom klasifikacije se koristi unaprijedna umjetna neuronska mreža. 
+Kao što je prethodno opisano, prilikom klasifikacije se koristi unaprijedna umjetna neuronska mreža. 
 Mreža koristi arhitekturu sa $3$ sloja.
 Prvi, odnosno ulazni sloj sadrži $24$ neurona, koji kao ulaz primaju vrijednosti $24$ različite značajke.
 Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
@@ -669,14 +670,14 @@ Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
 Kao značajke koje se koriste kao ulaz koriste se ručno odabrane značajke. 
 Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u stvarnosti koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.\\
 
-Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebo prepoznati linije nalaze na sredini slike.
-Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ukoliko i je prikazan, tada točka vrha nije približno u središtu slike.
+Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebno prepoznati linije nalaze na sredini slike.
+Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ako i je prikazan, tada točka vrha nije približno u središtu slike.
 Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$
-Svaka od tih značajki generira dvije vrijednosti, udaljenost od gornjeg ruba slike do prvog crnog elementa te udaljenost od doljnje linije do prvog crnog elementa.
+Svaka od tih značajki generira dvije vrijednosti, udaljenost od gornjeg ruba slike do prvog crnog elementa te udaljenost od donje linije do prvog crnog elementa.
 Ove značajke vraćaju kvalitetnu informaciju o tome gdje se na slici nalazi linija, ali nisu otporne na potencijalne smetnje na slici.
-Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta sa okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba.
+Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta s okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba.
 Tako dobivene $4$ značajke su u stanju kvalitetno prikazati postoji li linija na tom mjestu ili ne, ali ne provjeravaju položaj linije, što je napravljeno prethodnim značajkama.
-Kako bi se omogućila dodatna robusnost algoritma, primjenjene su značajke koje su prikupljene kao broj presjecišta korištenjem dijagonalnih zraka.
+Kako bi se omogućila dodatna robusnost algoritma, primijenjene su značajke koje su prikupljene kao broj presjecišta korištenjem dijagonalnih zraka.
 Kako vrh ćelije nije uvijek nužno u središtu slike moguće je da zraka koja prolazi dijagonalom ne prolazi vrhom te zbog toga ima $2$ sjecišta umjesto jednoga.
 Taj je problem riješen odmicanjem dijagonalnih zraka od glavne dijagonalne za određenu konstantnu vrijednost, čime se može provjeriti postoje li dvije okomite linije u određenom kvadrantu slike, ako postoje $2$ sjecišta.
 Ovisno o odmaku od središnje dijagonale ovisi i tolerancije prema odmaku središta vrha ćelije u odnosu na središte linije.
@@ -684,7 +685,7 @@ Uz navedene, koriste se značajke koje se temelje na razlici broja crnih slikovn
 Za potrebe toga definirana su $2$ značajke koje prikupljaju informacije o postojanju vodoravne linije. 
 Obje značajke koriste pravokutnik za uzorkovanje kakav je prikazan na slici \ref{fig:haar3}, a pravokutnici se po širini protežu od $0.1$ do $0.9$ širine slike uzorka.
 Visine pravokutnika se razlikuju te jedan prekriva većinu visine slike, dok je crno područje definirano kao uži dio oko centra slike.
-Na taj način ova značajka pruža uvid u odnos cjelokupne slike, ali zbog toga na nju jače utječu ostali crni elementi prisutni na slici.
+Tako ova značajka pruža uvid u odnos cjelokupne slike, ali zbog toga na nju jače utječu ostali crni elementi prisutni na slici.
 Kao rješenje tog problema koristi se drugi pravokutnik koji ima manju visinu zbog čega manje ovisi o ostatku slike, a više o prisutnosti linije.
 
 \subsection{Treniranje genetskim algoritmom}
@@ -700,9 +701,9 @@ Nastali su po uzoru na Darwinovu teoriju evolucije, koja se temelji na sljedeći
 \end{enumerate}
 Iz navedenih pretpostavki slijedi da ne mogu preživjeti sve jedinke zbog limitiranih resursa.
 Zbog toga dolazi do pojave da neke jedinke umiru, a preživljavaju one prilagođenije.
-Na taj način s vremenom ukupna populacija postaje prilagođenija okruženju u kojemu se nalazi.\\
+Tako s vremenom ukupna populacija postaje prilagođenija okruženju u kojemu se nalazi.\\
 
-Genetski algoritmi modeliraju uočeno ponašanje iz prirode na način da rješenje problema prikazuju kao kromosom koji definira jednu jedinku.
+Genetski algoritmi modeliraju uočeno ponašanje iz prirode tako da rješenje problema prikazuju kao kromosom koji definira jednu jedinku.
 Za svaku jedinku moguće je odrediti funkciju njezine dobrote, koja predstavlja uspješnost te jedinke, pri čemu je cilj da uspješnije jedinke preživljavaju kako bi ukupna populacija težila optimalnom rješenju.
 Korištenjem operatora križanja moguće je iz dvije jedinke stvoriti novu, pri čemu se dio kromosoma jedne jedinke te dio kromosoma druge jedinke prenosi na novonastalu jedinku.
 Nad novodobivenom jedinkom se tada primjenjuje operator mutacije čime se uvodi novi genetski materijal u populaciju i nastoje izbjeći lokalni optimumi.
@@ -725,9 +726,9 @@ Prilikom evaluacije je potrebno odrediti koliko je određena jedinka uspješna, 
 Skup za treniranje sastoji se od $15910$ slika veličine $75x75$ slikovnih elemenata.
 Slike su unutar skupa podijeljene na $10$ kategorija gdje svaka od njih predstavlja po jednu moguću vrijednost vrha ćelije kako je prikazano na slici \ref{fig:corners}, te kategorije u kojoj se nalaze sve one slike koje na sebi ne sadrže element tablice.
 Dobrota jedinke prvotno je bila definirana samo kao postotak uspješno klasificiranih slika.
-Takav pristup je imao problema uzrokovanih neproporcionalnim količinama podataka svake od kategorije (primjerice postoji $13950$ slika koje nisu elementi tablice), zbog čega je jedinka mogla imati velik postoatk uspješnosti na način da sve klasificira kao nešto što nije element tablice.
+Takav pristup je imao problema uzrokovanih neproporcionalnim količinama podataka svake od kategorije (primjerice postoji $13950$ slika koje nisu elementi tablice), zbog čega je jedinka mogla imati velik postotak uspješnosti tako da sve klasificira kao nešto što nije element tablice.
 Taj je problem moguće riješiti povećanjem skupa za treniranje, što nije jednostavno izvedivo.
-Drugo rješenje koje je i iskorišteno u ovom slučaju je promjena evaluacijske funkcije na način da računa postotak uspješne klasifikacije za svaku pojedinu kategoriju podataka te kao konačan rezultat koristi aritmetičku sredinu tako dobivenih postotaka.
+Drugo rješenje koje je i iskorišteno u ovom slučaju je promjena evaluacijske funkcije tako da računa postotak uspješne klasifikacije za svaku pojedinu kategoriju podataka te kao konačan rezultat koristi aritmetičku sredinu tako dobivenih postotaka.
  
 \subsubsection{Selekcija}
 U koraku selekcije potrebno je odabrati dvije jedinke koje će biti korištene u daljnjem postupku križanja kako bi se stvorila nova jedinka.
@@ -736,12 +737,12 @@ Ako se uvijek biraju samo najbolje jedinke, populacija kroz samo nekoliko genera
 S druge strane, ako se sve jedinke biraju nasumično s jednakom vjerojatnošću, populacija neće napredovati te algoritam neće konvergirati ka boljim rješenjima.\\
 Kako bi se ostvario balans između navedena dva načina odabira, u implementaciji su korištena $2$ načina selekcije roditelja.
 Prvi roditelj se bira nasumično, gdje svaka jedinka ima jednaku vjerojatnost biti odabrana.
-Drugi roditelj se bira korištenjem turnirske selekcije, koja odabire određen broj potencijalnih roditelja (u ovom slučaju je korištena veličina turnira $3$) te od tako nasumično odabranih roditelja odabire onoga sa najvećom funkcijom dobrote.
+Drugi roditelj se bira korištenjem turnirske selekcije, koja odabire određen broj potencijalnih roditelja (u ovom slučaju je korištena veličina turnira $3$) te od tako nasumično odabranih roditelja odabire onoga s najvećom funkcijom dobrote.
 
 \subsubsection{Križanje}
 Nakon što su odabrani roditelji provodi se križanje. 
 U ovom je koraku potrebno stvoriti novu jedinku kombinacijom genetskog materijala roditelja. 
-Kao i u prethodnom koraku i ovdije se javlja problem mogućnosti konvergiranja rješenja u lokalni optimum te postoje različiti pristupi kojima je moguće efikasno izvesti ovu operaciju.
+Kao i u prethodnom koraku i ovdje se javlja problem mogućnosti konvergiranja rješenja u lokalni optimum te postoje različiti pristupi kojima je moguće efikasno izvesti ovu operaciju.
 U ovom radu korišteno je križanje BLX-$\alpha$ koje radi na način da svaku vrijednost određuje kao slučajnu vrijednost uniformne distribucije u intervalu vrijednosti roditelja kako je prikazano na slici \ref{fig:blx}, a što je detaljno opisano u knjizi \cite{GeneticAlgorithms}. 
 Kako bi se smanjilo sažimanje populacije, interval iz kojega se bira vrijednost pojedinog elementa djeteta se proširuje za $\alpha$ posto, čime se omogućava dobivanje rješenja različitih od roditelja.
 
@@ -755,7 +756,7 @@ Kako bi se smanjilo sažimanje populacije, interval iz kojega se bira vrijednost
 
 \subsubsection{Mutacija}
 Prilikom mutacije je potrebno promijeniti vrijednosti kromosoma koje su dobivene križanjem roditelja kako bi se uvela nova genetska raznolikost u populaciju.
-Korištena je mutacija koja uz vjerojatnost od $0.05\%$ određeni element kromosoma na način da mu doda nasumičnu vrijednost iz normalne distribucije, pomnoženu sa $0.5$. 
+Korištena je mutacija koja uz vjerojatnost od $0.05\%$ određeni element kromosoma tako da mu doda nasumičnu vrijednost iz normalne distribucije, pomnoženu sa $0.5$. 
 
 \subsubsection{Rezultati}
 \begin{figure}[ht!]
@@ -766,9 +767,9 @@ Korištena je mutacija koja uz vjerojatnost od $0.05\%$ određeni element kromos
     \label{fig:ga}
 \end{figure}
 
-Opisana neuronska mreža ima $500$ težina koje je potrebno postaviti, što znači da genetski algoritam radi sa kromosomima duljine $500$. 
+Opisana neuronska mreža ima $500$ težina koje je potrebno postaviti, što znači da genetski algoritam radi s kromosomima duljine $500$. 
 Na slici \ref{fig:ga} prikazana je vrijednost najbolje jedinke pronađene genetskim algoritmom u odnosu na iteraciju algoritma.
-Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremenom usporava te algoritam ne uspjeva postići zadovoljavajuće razine točnosti.
+Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremenom usporava te algoritam ne uspijeva postići zadovoljavajuće razine točnosti.
 
 \subsection{Treniranje korištenjem backpropagation algoritma}
 Drugi pristup treniranju neuronske mreže je korištenje algoritma propagacije pogreške unatrag koji je detaljno opisan u knjizi \cite{neuroracunarstvo}.
@@ -869,7 +870,7 @@ Uvrštavanjem izračunatog u početni izraz dobiva se:
         & = -\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
 \end{split}
 \end{equation*}
-Druga parcijalna deivacija računa se pomoću $net_o^{(k + 1)}$ koji se može zapisati kao:
+Druga parcijalna derivacija računa se pomoću $net_o^{(k + 1)}$ koji se može zapisati kao:
 \[
     net_o^{(k + 1)} = \displaystyle\sum_l w_{l,o}^{(k)}y_l^{(k)}
 \]
@@ -920,19 +921,19 @@ Te se sada konačni rezultat može zapisati kao:
 \end{figure}
 
 Primjena ovako opisanog algoritma stvara probleme zbog činjenice da se broj podataka za pojedine kategorije skupa za učenje drastično razlikuju.
-To je riješeno na način da se prilikom ažuriranja vrijednosti težine, osim sa stopom učenja podatak množi i sa kontantom koja je obrnuto proporcionalna broju uzoraka za trenutnu kategoriju podatka.
+To je riješeno tako da se prilikom ažuriranja vrijednosti težine, osim sa stopom učenja podatak množi i s konstantom koja je obrnuto proporcionalna broju uzoraka za trenutnu kategoriju podatka.
 Vidljivo je kako u početnim iteracijama algoritma postotak točne klasifikacije korištenjem algoritma backpropagation raste približno slično rastu funkcije dobrote genetskog algoritma.
 Najveća razlika je uočiva kod vrijednosti koje prepoznaju više od $0.9$ podataka točno.
-Kod ovog algoritma takve se neuronske mreže i dalje unaprijeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
+Kod ovog algoritma takve se neuronske mreže i dalje unaprjeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
 Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od preko $0.99$ na testu za učenje.
 
 \section{AdaBoost algoritam}
 Za potrebe ovog klasifikacijskog algoritma potrebno je odrediti način na koji se uče slabi klasifikatori.
-Svaki slabi klasifikator sastoji se od značajke, praga, konstante $p$ koja određuje vrstu nejednakosti te vrijednosti $\alpha$ koja određuje koliko je klasifikator značajan, odnosno koliko nejgov izlaz doprinosi konačnoj odluci jakog klasifikatora.
+Svaki slabi klasifikator sastoji se od značajke, praga, konstante $p$ koja određuje vrstu nejednakosti te vrijednosti $\alpha$ koja određuje koliko je klasifikator značajan, odnosno koliko njegov izlaz doprinosi konačnoj odluci jakog klasifikatora.
 Vrijednost $\alpha$ računa se na temelju ostalih argumenata klasifikatora na skupu podataka za treniranje koji je jednak skupu podataka korištenom prilikom treniranja umjetne neuronske mreže.
-Ostale parametre je potrebno odabrati na način da se minimizira pogreška klasifikatoar, što je učinjeno na način da se nasumično odabere značajka koja će se koristiti te se ona inicijalizira sa nasumično odabranim vrijednostima.
+Ostale parametre je potrebno odabrati tako da se minimizira pogreška klasifikatora, što je učinjeno tako da se nasumično odabere značajka koja će se koristiti te se ona inicijalizira s nasumično odabranim vrijednostima.
 Ostali parametri također su nasumično odabrani te se za tako dobiven klasifikator računa težinska pogreška na skupu podataka za učenje.
-Postupak se ponavlja velik broj puta kako bi se dobio klasifikator sa čim manjom pogreškom, koji se koristi prilikom izrade jakog klasifikatora.
+Postupak se ponavlja velik broj puta kako bi se dobio klasifikator s čim manjom pogreškom, koji se koristi prilikom izrade jakog klasifikatora.
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.85\textwidth]{Images/Ada.pdf}
@@ -944,7 +945,7 @@ Postupak se ponavlja velik broj puta kako bi se dobio klasifikator sa čim manjo
 Graf na slici \ref{fig:ada} prikazuje $\alpha$ vrijednosti za slabe klasifikatore korištene u izradi jakog klasifikatora. 
 Evidentno je kako najveću $\alpha$ vrijednost, a time i najveći doprinos u klasifikaciji ima prvi slabi klasifikator. 
 Svaki sljedeći klasifikator u pravilu ima sve manju $\alpha$ vrijednost, kao što je i očekivano zbog toga što je preostale podatke sve teže i teže točno klasificirati. 
-Zbog trenda pada doprinosa svakog sljedećeg klasifikatora moguće je jaki klasifikator izgraditi korištenjem prvih nekoliko slabih klasifikatora (u ovom slučaju korišteno je $20$ slabih klasifikatora), jer je sigurno da sljedeći klasifikator neće značajno doprinjeti ukupnom rezultatu, premda će usporiti pretragu.
+Zbog trenda pada doprinosa svakog sljedećeg klasifikatora moguće je jaki klasifikator izgraditi korištenjem prvih nekoliko slabih klasifikatora (u ovom slučaju korišteno je $20$ slabih klasifikatora), jer je sigurno da sljedeći klasifikator neće značajno doprinijeti ukupnom rezultatu, premda će usporiti pretragu.
 
 \section{Usporedba rezultata}
 
@@ -962,9 +963,9 @@ Konačni algoritmi su također testirani na skupu od $2266$ slika dobivenih digi
 
 Na slici \ref{fig:adaResult} prikazana je slika tablice koja je korištena za potrebe testiranja te su na njoj crnim kvadratima označene pronađene točke.
 Primjećuje se da klasifikator uspješno prepoznaje sve točke za koje se očekuje da ih prepozna, ali također prepoznaje i određen broj točaka koje nisu vrhovi ćelija.
-Većina krivo prepoznatih točaka nalazi se u tablici sa tekstom pisanom na računalu, što je uzrokovano skupom za učenje u kojemu se kao primjeri koje ne treba prepoznati pretežno nalaze primjeri rukom pisanih znakova jer su to primjeri nad kojima algoritam u stvarnosti radi.
+Većina krivo prepoznatih točaka nalazi se u tablici s tekstom pisanom na računalu, što je uzrokovano skupom za učenje u kojemu se kao primjeri koje ne treba prepoznati pretežno nalaze primjeri rukom pisanih znakova jer su to primjeri nad kojima algoritam u stvarnosti radi.
 Na pogrešku također utječe i činjenica da je jaki klasifikator izgrađen od samo $20$ slabih, premda se na grafu na slici \ref{fig:ada} primjećuje kako trend pada $\alpha$ vrijednosti sugerira kako postoji još slabih klasifikatora koji bi doprinosili konačnom rezultatu.
-Unatoč broju grešaka, klasifikator je moguće koristiti jer se njegov izlaz prosljeđuje drugom klasifikatoru čime se ostvaruje veća točnost, zbog čega je u konačnici korišteno rješenje sa manjim brojem klasifikatora kako bi se postigla veća brzina.\\
+Unatoč broju grešaka, klasifikator je moguće koristiti jer se njegov izlaz prosljeđuje drugom klasifikatoru čime se ostvaruje veća točnost, zbog čega je u konačnici korišteno rješenje s manjim brojem klasifikatora kako bi se postigla veća brzina.\\
 
 Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $107.595$, $117.843$, $99.004$, $107.530$, $115.456$, $103.617$, $118.659$, $122.063$, $117.730$, $115.719$, izraženo u milisekundama. 
 Prosječno vrijeme izvođenja iznosi $112.5$ms.
@@ -1010,7 +1011,7 @@ Na temelju prepoznatih točaka vrhova ćelija potrebno je odrediti stvarnu tabli
 Pri tome postoji nekoliko problema: svaki vrh je prepoznat više puta, postoje točke koje nisu vrhovi ćelija, potrebno je odrediti kako su vrhovi međusobno povezani.\\
 
 Prvi isprobani pristup temelji se na pronalaženju grupe točaka unutar određenog radiusa te postavljanje stvarne točke na poziciju određenu aritmetičkom sredinom tih točaka.
-Točke koje ne predstavljaju stvarni vrh ćelije detektiraju sa tako što se nalaze same bez okolnih točaka.
+Točke koje ne predstavljaju stvarni vrh ćelije detektiraju se tako što se nalaze same bez okolnih točaka.
 Drugi način odbacivanja točke radi se kada se unutar dozvoljenog radijusa oko točke nalaze dvije točke koje su međusobno jako razmaknute, što zapravo znači da se točka nalazi na sredini između $2$ stvarna kuta te su zbog toga unutar dozvoljenog radiusa uključene točke različitih vrhova.
 Problem može nastupiti kada se krivo prepoznata točka nalazi u blizini stvarnog vrha, zbog čega se pozicija konačne točke pomiče u odnosu na stvarno poziciju.\\
 
@@ -1030,7 +1031,7 @@ Tablica se prepoznaje tako da se naprave liste $x$ i $y$ koordinata prepoznatih 
 U sortiranim listama se traže grupe vrijednosti te se računa aritmetička sredina svake grupe kako bi se odredila $x$ odnosno $y$ koordinata svakog stupca odnosno retka tablice. 
 Prilikom pronalaženja grupa vrijednosti provjerava se i broj pojavljivanja vrijednosti kako bi se izbacile točke koje se pojavljuju malo puta, odnosno koje su nastale greškom u klasifikaciji.\\
 
-Rekonstrukcija tablice radi se na način da se na svaki mogući par $x$
+Rekonstrukcija tablice radi se tako da se na svaki mogući par $x$
 i $y$ koordinata iz lista koordinata postavlja odgovarajući vrh ćelije.
 Pri tome više ne postoji mogućnost da točke na istoj liniji imaju različite koordinate, što predstavlja problem u slučaju rotacije slike.
 Dodatna limitacija ovog pristupa je korištenje pretpostavke da sve tablice imaju jednak broj ćelija u svakom retku, čime se gubi mogućnost spajanja ćelija ili tablica čiji vanjski obrub nije kvadratnog oblika.
@@ -1045,19 +1046,19 @@ Unatoč tome, u radu je korišten ovaj način rekonstrukcije tablice jer se poka
 \end{figure}
 
 Konačan algoritam pokrenut je na $4$ skupa tablica.
-U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $13981.90$ms, odnosno prosječno $22.02$ms po tablici, pritom u navedeno vrijeme nije ubrojeno vrijeme učitavanja slike sa diska niti vrijeme spremanja rezultata na disk.
+U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $13981.90$ms, odnosno prosječno $22.02$ms po tablici, pritom u navedeno vrijeme nije ubrojeno vrijeme učitavanja slike s diska niti vrijeme spremanja rezultata na disk.
 U drugom skupu uspješno je prepoznato $362/362$ tablica za što je bilo potrebno $11584.47$ms, odnosno prosječno $32.00$ms po tablici.
 U trećem skupu uspješno je prepoznato $685/685$ tablica za što je bilo potrebno $25604.96$ms, odnosno prosječno $44.17$ms po tablici.
 U četvrtom skupu uspješno je prepoznato $580/580$ tablica za što je bilo potrebno $21010.13$ms, odnosno prosječno $36.22$ms po tablici.
 Valja napomenuti kako ovi rezultati ne znače da je svaka ćelija točno određena, već su moguća manja odstupanja.\\
 
-Korištenjem postupka detekcije koji koristi prethodno stečeno znanje kao što je pethodno bilo opisano dobiveni su sljedeći rezultati.
+Korištenjem postupka detekcije koji koristi prethodno stečeno znanje kao što je prethodno bilo opisano dobiveni su sljedeći rezultati.
 U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $7779.37$ms, odnosno prosječno $12.25$ms po tablici..
 U drugom skupu uspješno je prepoznato $362/362$ tablica za što je bilo potrebno $6157.72$ms, odnosno prosječno $17.01$ms po tablici.
 U trećem skupu uspješno je prepoznato $650/685$ tablica za što je bilo potrebno $13174.98$ms, odnosno prosječno $19.23$ms po tablici.
 U četvrtom skupu uspješno je prepoznato $578/580$ tablica za što je bilo potrebno $10059.67$ms, odnosno prosječno $17.34$ms po tablici.
 Primjećuje se kako je u ovom slučaju točnost prepoznavanja tablica smanjena.
-Točnost uvelike ovisi i o selekciji referentne tablice prilikom prepoznavanja daljnjih tablica, te je ovdije uvijek korištena prva tablica iz skupa podataka.
+Točnost uvelike ovisi i o selekciji referentne tablice prilikom prepoznavanja daljnjih tablica, te je ovdje uvijek korištena prva tablica iz skupa podataka.
 Podatci iz trećeg skupa ponovno su detektirani korištenjem drugačije odabrane referentne tablice, što je rezultiralo točnošću od $680/685$ ispravno prepoznatih tablica.
 Navedeni problem moguće je riješiti ponovnom detekcijom tablice, bez korištenja prethodno stečenog znanja za slučajeve u kojima se tablica krivo prepoznala.
 Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađenih vrhova ćelija od onoga koji je očekivan.\\
@@ -1067,8 +1068,8 @@ Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađeni
 Ovaj rad analizira različite pristupe detekcije tablica na skeniranim dokumentima, sa svrhom primjene u automatizaciji ispravljanja pismenih ispita.
 Isprobani su različiti načini binarizacije slike kao i obrade iste prije početka detekcije te je ustanovljeno kako nije potrebno koristiti adaptivnu binarizaciju.
 Postupak detekcije podijeljen je na postupak detekcije vrhova ćelija i na rekonstrukciju tablice iz pronađenih vrhova.
-Detekcija i klasifiakcija ćelija radi se korištenjem unaprijedne umjetne neuronske mreže, koja kao ulaze dobiva elemente koje je klasifikator temeljen na algoritmu AdaBoost prepoznao kao potencijalne vrhove.
-Na taj je način dobiven konačan klasifikator koji nakon što se jednom iztrenira radi brzo nad novim ulaznim slikama.
+Detekcija i klasifikacija ćelija radi se korištenjem unaprijedne umjetne neuronske mreže, koja kao ulaze dobiva elemente koje je klasifikator temeljen na algoritmu AdaBoost prepoznao kao potencijalne vrhove.
+Na taj je način dobiven konačan klasifikator koji nakon što se jednom istrenira radi brzo nad novim ulaznim slikama.
 Konačna rekonstrukcija tablice testirana je nad skupom od preko $2000$ tablica te se pokazala uspješnom.
 
 
