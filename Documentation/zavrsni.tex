@@ -1039,7 +1039,24 @@ Unatoč tome, u radu je korišten ovaj način rekonstrukcije tablice jer se poka
     \label{fig:tableV2}
 \end{figure}
 
-Konačan algoritam pokrenut je na skupu od $2266$ tablica te je u potpunosti uspješno prepoznao $XYZ$ od njih.
+Konačan algoritam pokrenut je na $4$ skupa tablica.
+U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $13981.90$ms, odnosno prosječno $22.02$ms po tablici, pritom u navedeno vrijeme nije ubrojeno vrijeme učitavanja slike sa diska niti vrijeme spremanja rezultata na disk.
+U drugom skupu uspješno je prepoznato $362/362$ tablica za što je bilo potrebno $11584.47$ms, odnosno prosječno $32.00$ms po tablici.
+U trećem skupu uspješno je prepoznato $685/685$ tablica za što je bilo potrebno $25604.96$ms, odnosno prosječno $44.17$ms po tablici.
+U četvrtom skupu uspješno je prepoznato $580/580$ tablica za što je bilo potrebno $21010.13$ms, odnosno prosječno $36.22$ms po tablici.
+Valja napomenuti kako ovi rezultati ne znače da je svaka ćelija točno određena, već su moguća manja odstupanja.\\
+
+Korištenjem postupka detekcije koji koristi prethodno stečeno znanje kao što je pethodno bilo opisano dobiveni su sljedeći rezultati.
+U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $7779.37$ms, odnosno prosječno $12.25$ms po tablici..
+U drugom skupu uspješno je prepoznato $362/362$ tablica za što je bilo potrebno $6157.72$ms, odnosno prosječno $17.01$ms po tablici.
+U trećem skupu uspješno je prepoznato $650/685$ tablica za što je bilo potrebno $13174.98$ms, odnosno prosječno $19.23$ms po tablici.
+U četvrtom skupu uspješno je prepoznato $578/580$ tablica za što je bilo potrebno $10059.67$ms, odnosno prosječno $17.34$ms po tablici.
+Primjećuje se kako je u ovom slučaju točnost prepoznavanja tablica smanjena.
+Točnost uvelike ovisi i o selekciji referentne tablice prilikom prepoznavanja daljnjih tablica, te je ovdije uvijek korištena prva tablica iz skupa podataka.
+Podatci iz trećeg skupa ponovno su detektirani korištenjem drugačije odabrane referentne tablice, što je rezultiralo točnošću od $680/685$ ispravno prepoznatih tablica.
+Navedeni problem moguće je riješiti ponovnom detekcijom tablice, bez korištenja prethodno stečenog znanja za slučajeve u kojima se tablica krivo prepoznala.
+Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađenih vrhova ćelija od onoga koji je očekivan.\\
+
 
 \chapter{Zaključak}
 Zaključak.
