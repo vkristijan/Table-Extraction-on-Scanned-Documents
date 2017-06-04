@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
  */
 public class Table {
     private double minDist = 45;
-    private int minX = 10;
-    private int minY = 10;
+    private int minX = 25;
+    private int minY = 4;
 
     private GrayScaleImage image;
     private List<List<Corner>> corners;
@@ -30,7 +30,6 @@ public class Table {
         this.image = image;
 
         List<Corner> filteredCorners = countCorners(cornerList);
-        cornerList.sort(Comparator.naturalOrder());
 
         System.out.println(filteredCorners.size());
         for (Corner corner : filteredCorners){
@@ -71,9 +70,11 @@ public class Table {
 
         candidates.sort(Comparator.naturalOrder());
         int n = candidates.size();
+        int lastValue = -1000;
         for (int i = 0; i < n; ++i){
             int count = 1;
             int x = candidates.get(i);
+            if (x - lastValue < minDist) continue;
             int total = x;
             while (i + count < n && candidates.get(i + count) - x < minDist){
                 total += candidates.get(i + count);
@@ -82,7 +83,8 @@ public class Table {
 
             if (count < minCount) continue;
 
-            values.add(total / count);
+            lastValue = total/count;
+            values.add(lastValue);
             i += count - 1;
         }
 
