@@ -53,7 +53,7 @@ Prepoznati kutevi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljn
 \chapter{Binarizacija slike}
 Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena s vrijednošću $0$, a bijela sa $255$.
 Prije nego li se započne bilo kakva analiza slike, potrebno je istu binarizirati, odnosno pretvoriti u oblik koji će sadržavati isključivo crne ili bijele elemente, bez ostalih nijansi sive.
-To je moguće učiniti na dva načina: korištenjem fiksno definiranog praga nakon kojega ćemo svako vrijednost proglasiti crnom, ili korištenjem adaptivne binarizacije koja se temelji na usporedbi trenutnog intenziteta sive s intenzitetom sive u okruženju.
+To je moguće učiniti na dva načina: korištenjem fiksno definiranog praga nakon kojega ćemo svaku vrijednost proglasiti crnom, ili korištenjem adaptivne binarizacije koja se temelji na usporedbi trenutnog intenziteta sive s intenzitetom sive u okruženju.
 
 \section{Binarizacija fiksnim pragom}
 Najjednostavniji oblik binarizacije je korištenje fiksno definiranog praga.
@@ -128,7 +128,7 @@ Cilj ovog koraka je procijeniti koji elementi slike pripadaju pozadini, a koji p
 Pritom je procijenjeni sadržaj zapravo nadskup stvarnog sadržaja, odnosno na dobivenoj slici bit će prisutan šum. 
 Za potrebe ovoga koristi se Niblackov algoritam adaptivne binarizacije. \cite{AdaptiveBinarization}\\
 
-Algoritam se temelji na ideji kliznog prozora određenih dimenzija, pomoću kojega se računa lokalni median vrijednosti $m$ te varijanca $s$. 
+Algoritam se temelji na ideji kliznog prozora (engl. \textit{sliding window}) određenih dimenzija, pomoću kojega se računa lokalni median vrijednosti $m$ te varijanca $s$. 
 Kako bi se ubrzao izračun, umjesto mediana se računa aritmetička sredina $\mu$.
 Konačan prag binarizacije, $T$, određuje se kao:
 \[ T = m + ks \]
@@ -206,8 +206,8 @@ Konačna slika $T$ određena je formulom:
 \]
 Vrijednost praga, $d(B(x, y))$, moguće je procijeniti kao 
 \[d = q * \delta\]
-, gdje je $q$ konstanta koja je fiksno postavljena na $0.8$, a $\delta$ se računa kao razlika intenziteta sive boje na početnoj slici za mjesta koja predstavljaju pozadinu i za mjesta koja predstavljaju tekst.
-Vrijednost $\delta$ možemo izračunati kao
+gdje je $q$ konstanta koja je fiksno postavljena na $0.8$, a $\delta$ se računa kao razlika intenziteta sive boje na početnoj slici za mjesta koja predstavljaju pozadinu i za mjesta koja predstavljaju tekst.
+Vrijednost $\delta$ možemo aproksimirati kao
 \[
     \delta = \frac{
         \displaystyle \sum_x
@@ -279,7 +279,7 @@ Ova pretpostavka vrijedi isključivo iz razloga da se rad fokusira na prepoznava
 
 Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presiječe okomitim linijama, što je predloženo u radu \cite{article:Skew-detection}.
 Za svaku okomitu liniju se računaju točke u kojima ona sječe linije osnovnog dokumenta.
-Jednom kada su određene točke sjecišta, moguće je odabrati jednu takvu točku najljevije okomite linije ($T_1$) te usporediti tu točku sa svim točkama koje se nalaze desno od nje ($T_2$).
+Jednom kada su određene točke sjecišta, moguće je odabrati jednu takvu točku najljevije okomite linije ($T_1$) te  ju usporediti sa svim točkama koje se nalaze desno od nje ($T_2$).
 Dvije tako odabrane točke analiziraju se tako da se kroz njih povuče pravac, čija jednadžba glasi: 
 \[
     y - y_1 = k(x - x_1),
@@ -288,7 +288,7 @@ gdje je $k$ koeficijent smjera:
 \[
     k = \frac{y_2 - y_1}{x_2 - x_1}.
 \]
-Pomoću koeficijenta  smjera $k$ moguće je izračunati kut pod kojim je nagnut dobiveni pravac, kao $\alpha = tan^{-1}(k)$.
+Pomoću koeficijenta  smjera $k$ moguće je izračunati kut pod kojim je dobiveni pravac nagnut u odnosu na $x$ os, kao $\alpha = tan^{-1}(k)$.
 Uz pretpostavku da dokument nije rotiran te da se točke $T_1$ i $T_2$ nalaze na istim vodoravnim linijama dokumenta, kut $\alpha$ trebao bi iznositi $0\degree$.
 U slučaju da je dokument rotiran, ovako određen kut $\alpha$ bit će jednak stupnju rotacije dokumenta.\\
 
@@ -383,8 +383,8 @@ Ovaj pristup nije detaljnije razrađen u ovom radu te nije korišten u implement
 
 \section{Detekcija vrhova ćelija}
 Detekcija vrhova ćelija obavlja se tako da se svaki dio slike provjerava te se za njega utvrđuje prikazuje li on vrh ćelije ili ne. 
-Kako bi se to izvelo, potrebno je odrediti točno koji dio slike se provjerava u nekom određenom trenutku, a što se čini korištenjem pomičnog prozora. 
-Definiran je prozor određenih dimenzija $X$x$Y$, te se promatra samo dio slike unutar njega. 
+Kako bi se to izvelo, potrebno je odrediti točno koji dio slike se provjerava u nekom određenom trenutku, a što se čini korištenjem kliznog prozora. 
+Definiran je prozor određenih dimenzija $X$x$Y$ te se promatra samo dio slike unutar njega. 
 Tako dobiven isječak slike potom se analizira i ispituje sadrži li on vrh ćelije ili ne.
 Jednom kad je detekcija završena za trenutni prozor, prozor se pomiče po $x$ osi za udaljenost $dx$, te se detekcija vrši na tako dobivenom novom isječku slike.
 Jedno od mogućih poboljšanja ove metode predloženo je u radu \cite{ViolaJones}, gdje se ne koristi fiksna veličina pomičnog prozora, već se pretraga započinje s jednom veličinom prozora te se ona iterativno smanjuje tijekom pretrage.
@@ -420,7 +420,7 @@ Imajući to na umu moguće je uočiti da će u idealnom slučaju okomite i vodor
 \end{figure}
 
 Ovisno o koordinati zrake moguće je odrediti koja je to vrsta vrha, točnije na danom primjeru na slici \ref{fig:feature1} nema sjecišta zrake i linije, iz čega se zaključuje kako se na slici ne nalaze određeni vrhovi ćelija, poput na primjer vrha označenog brojem $2$ na slici \ref{fig:corners}, koji ima vodoravnu liniju na lijevoj strani.
-Ista ta zraka na primjeru na slici \ref{fig:feature2} presijeca sliku na jednom mjestu, iz čega se zaključuje da je na slici potencijalno vrh koji na tom mjestu ima liniju.\\
+Ista ta zraka na primjeru na slici \ref{fig:feature2} presijeca sliku na jednom mjestu, iz čega se zaključuje da se na slici potencijalno nalazi vrh koji na tom mjestu ima liniju.\\
 
 Ovaj pristup se nadopunjuje tako da se umjesto broja presjecišta određuje udaljenost od prvog presjecišta.
 Na taj se način razlikuje linija koja se očekivano pojavljuje na sredini slike od šuma koji se može pojaviti na svim mjestima slike.
@@ -429,10 +429,10 @@ Osim navedenoga, koriste se i dijagonalne zrake s kojima se određuje broj presj
 
 Drugi pristup određivanja značajki slike temelji se na pristupu koji je korišten u radu \cite{ViolaJones}.
 Ove značajke temelje se na činjenici da različiti dijelovi slike sadrže različitu količinu crnih slikovnih elemenata.
-Kao što je prikazano na slici \ref{fig:haarFeatures}, gdje su prikazana $4$ različita oblika značajki ovog tipa koje se koriste u ovome radu, značajke se gledaju za određeni dio slike, što je prikazano pravokutnikom.
+Kao što je prikazano na slici \ref{fig:haarFeatures}, gdje su prikazana $4$ različita oblika značajki ovog tipa koje se koriste u ovome radu, značajke se računaju za određeni dio slike, što je prikazano pravokutnikom.
 Vrijednost značajke se računa kao razlika broja crnih slikovnih elemenata u crnom i bijelom djelu pravokutnika.
 Kako bi se postigla neovisnost o veličini slike nad kojom se vade značajke, izračunata razlika broja slikovnih elemenata dijeli se ukupnim brojem slikovnih elemenata u kvadratu značajke.
-Na ovaj način se ispituje je li neko područje tamnije od njemu susjednog područja, što je primjer kod linija tablice, gdje se linija prolazi sredinom promatranog područja koje je zbog toga tamno, a neposredno pored nje se nalazi bijelo područje. 
+Na ovaj način se ispituje je li neko područje tamnije od njemu susjednog područja, što je primjer kod linija tablice, gdje se linija nalazi na sredini promatranog područja koje je zbog toga tamno, a neposredno pored nje se nalazi bijelo područje. 
 Potencijalne smetnje koje mogu nastati na slici kao posljedica sadržaja tablice ne utječu značajno na vrijednost značajke, budući da značajka obuhvaća veću površinu, a potencijalne smetnje se u većini slučajeva nalaze na manjem lokalnom području.
 
 \begin{figure}[th!]
@@ -542,15 +542,15 @@ Pri tome se razlikuju $3$ općenite vrste slojeva: ulazni sloj neurona koji slu�
 Ovisno o načinu povezivanja neurona moguće je ostvariti različite arhitekture umjetnih neuronskih mreža. 
 U radu je korištena unaprijedna neuronska mreža, kakva je prikazana na slici \ref{fig:ffann}.
 Jedna od prednosti umjetnih neuronskih mreža leži u mogućnosti učenja istih, a što je moguće učiniti promjenom težina ulaza za pojedini neuron.
-Jednom kad je mreža naučena, odnosno kada su određene težine uz koje mreža zadovoljavajuće izvršava zadatak za koji je predviđena, dobivene težine pohranjuju se u datoteku na računalu kako se a daljnja pokretanja mreža ne bi morala ponovno učiti.
+Jednom kad je mreža naučena, odnosno kada su određene težine uz koje mreža zadovoljavajuće izvršava zadatak za koji je predviđena, dobivene težine pohranjuju se u datoteku na računalu kako se za daljnja pokretanja mreža ne bi morala ponovno učiti.
 Ovo svojstvo omogućava veliku brzinu klasifikacije jednom kada je mreža naučena.
 
-\subsection{Detekcija AdaBoost algoritmom}
+\subsection{Detekcija algoritmom AdaBoost}
 Umjetne neuronske mreže izvode velik broj računskih operacija kako bi klasificirale neki ulazni primjer.
 To predstavlja problem kada je potrebno klasificirati velik broj uzoraka, kao što je to slučaj kod detekcije vrhova ćelija, gdje je potrebno za svaki mogući element slike odrediti je li on vrh ćelije ili ne.
 Kako bi se taj postupak ubrzao koristi se drugačiji pristup klasificiranju primjenom bržih algoritama. \\
 
-Osnovna ideja AdaBoost algoritma je izgraditi jedan jaki klasifikator primjenom više slabih klasifikatora.
+Osnovna ideja algoritma AdaBoost je izgraditi jedan jaki klasifikator primjenom više slabih klasifikatora.
 U okviru ovog algoritma, jaki klasifikator je finalni klasifikator koji uz veliku točnost podatke raspoređuje u jednu od grupa, dok su slabi klasifikatori u stanju točno klasificirati samo manji podskup podataka, dok ostale svrstavaju u krive grupe.\\
 
 Slabi klasifikatori određuju fiksni prag za kojega će nešto klasificirati u jednu ili drugu kategoriju, ovisno o vrijednosti korištene značajke za sliku. Takav klasifikator prikazan je sljedećom funkcijom:
@@ -628,7 +628,7 @@ Prednost ovako dobivenog klasifikatora leži u njegovoj brzini, pogotovo ako se 
 Prethodno su objašnjena dva različita klasifikatora korištena prilikom detekcije tablica.
 Svaki od njih ima svoje prednosti, ali i mane.
 Kako bi se iskoristile dobre strane svakoga od njih, moguće je napraviti novi klasifikator koji će raditi korištenjem prethodno opisana dva klasifikatora.
-Za potrebe toga korišten je AdaBoost klasifikator koji analizira cijelu sliku te određuje točke od potencijalnog interesa. 
+Za potrebe toga korišten je jaki klasifikator nastao korištenjem algoritma AdaBoost koji analizira cijelu sliku te određuje točke od potencijalnog interesa. 
 To su točke na kojima je klasifikator rekao da se nalaze vrhovi ćelija, ali zbog prirode klasifikatora nije moguće znati točno o kojim je vrhovima riječ.
 Također, nije nužno potrebno da ovaj klasifikator izbaci sve točke koje ne sadrže vrhove tablica, jer se sve pronađene točke ponovno klasificiraju korištenjem umjetne neuronske mreže.\\
 
@@ -672,7 +672,7 @@ Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su 
 
 Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebno prepoznati linije nalaze na sredini slike.
 Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ako i je prikazan, tada točka vrha nije približno u središtu slike.
-Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$
+Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$.
 Svaka od tih značajki generira dvije vrijednosti, udaljenost od gornjeg ruba slike do prvog crnog elementa te udaljenost od donje linije do prvog crnog elementa.
 Ove značajke vraćaju kvalitetnu informaciju o tome gdje se na slici nalazi linija, ali nisu otporne na potencijalne smetnje na slici.
 Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta s okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba.
@@ -771,7 +771,7 @@ Opisana neuronska mreža ima $500$ težina koje je potrebno postaviti, što zna�
 Na slici \ref{fig:ga} prikazana je vrijednost najbolje jedinke pronađene genetskim algoritmom u odnosu na iteraciju algoritma.
 Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremenom usporava te algoritam ne uspijeva postići zadovoljavajuće razine točnosti.
 
-\subsection{Treniranje korištenjem backpropagation algoritma}
+\subsection{Treniranje korištenjem algoritma propagacije pogreške unatrag}
 Drugi pristup treniranju neuronske mreže je korištenje algoritma propagacije pogreške unatrag koji je detaljno opisan u knjizi \cite{neuroracunarstvo}.
 Za razliku od genetskog algoritma koji nema nikakvo znanje o tome u kojem smjeru se nalazi optimalno rješenje, ovaj algoritam računa odstupanja dobivenog rezultata od očekivanog za svaki neuron te primjenom gradijentnog spusta podešava težine kako bi smanjio pogrešku.
 U ovom radu korištena je stohastička verzija navedenog algoritma koja težine ažurira na temelju greške nastale na samo jednom primjeru iz testnog skupa, a što je detaljnije objašnjeno u nastavku.
@@ -782,7 +782,7 @@ Označimo li sa $t_o$ očekivani izlaz neuronske mreže za neuron $o$ za trenutn
 \[
     E = \frac{1}{2}\sum(t_o-y_o^{(k + 1)})^2
 \]
-Kako bi se ostvario gradijentni spust, potrebno je za svaku težinu izračunati gradijent za svaku težinu $w_{ij}^{(k)}$, što označava težinu koja spaja $i$-ti neuron u sloju $k$ sa $j$-tim neuronom u sloju $k+1$:
+Kako bi se ostvario gradijentni spust, potrebno je izračunati gradijent pogreške za svaku težinu $w_{ij}^{(k)}$, što označava težinu koja spaja $i$-ti neuron u sloju $k$ sa $j$-tim neuronom u sloju $k+1$:
 \[
     \frac{\partial E}{\partial w_{ij}^{(k)}}
 \]
@@ -927,7 +927,7 @@ Najveća razlika je uočiva kod vrijednosti koje prepoznaju više od $0.9$ podat
 Kod ovog algoritma takve se neuronske mreže i dalje unaprjeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
 Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od preko $0.99$ na testu za učenje.
 
-\section{AdaBoost algoritam}
+\section{Algoritam AdaBoost}
 Za potrebe ovog klasifikacijskog algoritma potrebno je odrediti način na koji se uče slabi klasifikatori.
 Svaki slabi klasifikator sastoji se od značajke, praga, konstante $p$ koja određuje vrstu nejednakosti te vrijednosti $\alpha$ koja određuje koliko je klasifikator značajan, odnosno koliko njegov izlaz doprinosi konačnoj odluci jakog klasifikatora.
 Vrijednost $\alpha$ računa se na temelju ostalih argumenata klasifikatora na skupu podataka za treniranje koji je jednak skupu podataka korištenom prilikom treniranja umjetne neuronske mreže.
@@ -997,7 +997,7 @@ Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$ uz niv
 \end{figure}
 
 Slika \ref{fig:combinedResult} prikazuje rezultat dobiven korištenjem oba prethodno opisana klasifikatora, na način kakav je prethodno objašnjen.
-Primjećuje se kako su sve točke od interesa i dalje prepoznate, no svejedno postoji manji broj manji broj točaka koje nisu trebale biti prepoznate.
+Primjećuje se kako su sve točke od interesa i dalje prepoznate, no svejedno postoji manji broj točaka koje nisu trebale biti prepoznate.
 Valja uočiti kako su sve stvarne točke od interesa prepoznate nekoliko puta, što je kasnije iskorišteno kako bi se maknule lažno prepoznate točke.\\
 
 Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $423.615$, $415.388$, $397.672$, $417.765$, $446.087$, $396.153$, $403.633$, $414.420$, $416.799$, $407.353$, izraženo u milisekundama. 
