@@ -949,7 +949,7 @@ Konačni algoritmi su također testirani na skupu od $2266$ slika dobivenih digi
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.75\linewidth]{Images/ada.png}
+    \frame{\includegraphics[width=.75\linewidth]{Images/ada.png}}
     \captionsetup{justification=centering}
     \caption{Točke detektirane korištenjem algoritma AdaBoost}
     \label{fig:adaResult}
@@ -966,7 +966,7 @@ Prosječno vrijeme izvođenja iznosi $112.5$ms.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.75\linewidth]{Images/neural.png}
+    \frame{\includegraphics[width=.75\linewidth]{Images/neural.png}}
     \captionsetup{justification=centering}
     \caption{Točke detektirane korištenjem neuronske mreže}
     \label{fig:neuralResult}
@@ -984,7 +984,7 @@ Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$ uz niv
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.75\linewidth]{Images/combined.png}
+    \frame{\includegraphics[width=.75\linewidth]{Images/combined.png}}
     \captionsetup{justification=centering}
     \caption{Točke detektirane korištenjem kombinacije algoritma AdaBoost i umjetne neuronske mreže}
     \label{fig:combinedResult}
@@ -1014,7 +1014,7 @@ Pritom treba paziti da točke koje leže na istoj vodoravnoj liniji tablice ne m
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.75\linewidth]{Images/tableV1.png}
+    \frame{\includegraphics[width=.75\linewidth]{Images/tableV1.png}}
     \captionsetup{justification=centering}
     \caption{Primjer tablice prepoznate grupiranjem susjednih točaka}
     \label{fig:tableV1}
@@ -1033,7 +1033,7 @@ Unatoč tome, u radu je korišten ovaj način rekonstrukcije tablice jer se poka
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=.75\linewidth]{Images/tableV2.png}
+    \frame{\includegraphics[width=.75\linewidth]{Images/tableV2.png}}
     \captionsetup{justification=centering}
     \caption{Primjer tablice prepoznate grupiranjem točaka po retcima i po stupcima}
     \label{fig:tableV2}
@@ -1059,7 +1059,13 @@ Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađeni
 
 
 \chapter{Zaključak}
-Zaključak.
+Ovaj rad analizira različite pristupe detekcije tablica na skeniranim dokumentima, sa svrhom primjene u automatizaciji ispravljanja pismenih ispita.
+Isprobani su različiti načini binarizacije slike kao i obrade iste prije početka detekcije te je ustanovljeno kako nije potrebno koristiti adaptivnu binarizaciju.
+Postupak detekcije podijeljen je na postupak detekcije vrhova ćelija i na rekonstrukciju tablice iz pronađenih vrhova.
+Detekcija i klasifiakcija ćelija radi se korištenjem unaprijedne umjetne neuronske mreže, koja kao ulaze dobiva elemente koje je klasifikator temeljen na algoritmu AdaBoost prepoznao kao potencijalne vrhove.
+Na taj je način dobiven konačan klasifikator koji nakon što se jednom iztrenira radi brzo nad novim ulaznim slikama.
+Konačna rekonstrukcija tablice testirana je nad skupom od preko $2000$ tablica te se pokazala uspješnom.
+
 
 
 \bibliography{literatura}
