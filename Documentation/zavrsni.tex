@@ -27,16 +27,17 @@
 \chapter{Uvod   }
 U današnje vrijeme postoje izuzetno velike količine papirnatih dokumenata.
 Samo u Sjedinjenim Američkim Državama nastaje više od milijarde novih papirnatih dokumenata svakog radnog dana. 
-Mogućnost digitalizacije takvih dokumenata može biti od velike koristi prilikom pohrane, slanja ili pretraživanja istih. \cite{article:Skew-detection}
-Digitalizaciju dokumenata možemo podijeliti u dva dijela: prepoznavanje teksta te prepoznavanje grafičkih objekata. \cite{conference:DetectionOfTableStructure} 
+Mogućnost digitalizacije takvih dokumenata može biti od velike koristi prilikom pohrane, slanja ili pretraživanja istih \cite{article:Skew-detection}.
+Digitalizaciju dokumenata možemo podijeliti u dva dijela: prepoznavanje teksta te prepoznavanje grafičkih objekata \cite{conference:DetectionOfTableStructure}. 
 Za prepoznavanje teksta dostupan je velik broj alata koji omogućuju optičko prepoznavanje znakova (engl. \textit{optical character recognition}).
 Prepoznavanje grafičkih objekata dokumenta mnogo je manje zastupljeno u odnosu na prepoznavanje teksta te je postalo popularnije tek u novije vrijeme. 
 U to spada prepoznavanje linija, oblika, slika, simbola, tablica i raznih drugih objekata koji se mogu nalaziti na skeniranim dokumentima.
-Najveći razvoj ovoga područja nastupio je zahvaljujući razvoju dubokih neuronskih mreža i sklopovlja koje omogućuje velike brzine izračuna koje prije nisu bile moguće.\\
+Intenzivan razvoj ovoga područja nastupio je zahvaljujući razvoju dubokih neuronskih mreža i sklopovlja koje omogućuje velike brzine izračuna koje prije nisu bile moguće.\\
 
 Ovaj rad se fokusira isključivo na prepoznavanje tablica, što je prethodno već opisano u radovima poput \cite{conference:DetectionOfTableStructure} i \cite{conference:AutomaticTableDetectionInDocumentImages}. 
 Taj postupak se dijeli na prepoznavanje položaja tablice u odnosu na ostatak dokumenta, prilikom čega je potrebno u dokumentu izdvojiti tablicu od ostatka teksta i ostalih grafičkih objekata, a što je opisano u radu \cite{article:Medium-IndependentTableDetection}.
-Nakon što je tablica pronađena određuje se njezin izgled, odnosno broj redaka i stupaca, odnosno koordinate pojedine ćelije, a što je detaljnije opisano u nastavku rada. \\
+Nakon što je tablica pronađena određuje se njezin izgled, tako da se odredi broj redaka i stupaca, a potom koordinate pojedine ćelije.
+Postupak je detaljnije opisan u nastavku rada. \\
 
 U radu \cite{article:Medium-IndependentTableDetection} je opisan postupak u kojemu se tablice prepoznaju na temelju praznog prostora koji ih okružuje, odnosno pomoću praznog prostora između redaka i stupaca kod tablica koje nemaju crte. Fokus rada je na prepoznavanju ASCII tablica. Rad \cite{article:SimpleAndEffectiveTableDetectionSystemFromDocumentImages} također se zasniva na sličnom principu, uz razliku da je namijenjen općenitim dokumentima te prepoznaje tablice s crtama, što radi tako da mjeri udaljenosti između teksta koje se razlikuju od standardnih udaljenosti znakova u riječima.
 U radu \cite{LayoutRecognitionofTable-Form} predstavljena je metoda koja detekciju tablice obavlja u $2$ koraka.
@@ -48,9 +49,19 @@ Na taj se način određuju vrhovi ćelija iz čega se rekonstruira tablica, te j
 Predstavljeno rješenje počinje od slike u sivim tonovima (engl. \textit{gray-scale}), koja se binarizira kako bi se dobila slika koja se sastoji od isključivo crne i bijele boje.
 Dobivena crno-bijela slika koristi se u daljnjoj obradi te se provjerava je li slika rotirana, odnosno kut rotacije iste, nakon čega se slika po potrebi rotira kako bi tablica stajala okomito.
 Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija korištenjem klasifikatora temeljenog na algoritmu AdaBoost i klasifikatora primjenom umjetne neuronske mreže.
-Prepoznati kutevi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljno opisano u nastavku rada.
+Prepoznati uglovi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljno opisano u nastavku rada.
+
+Ostatak ovog rada organiziran je kako slijedi.
+U poglavlju \ref{ch:binarization} objašnjen je postupak binarizacije slike.
+Objašnjena su $2$ različita postupka te su opisane prednosti i mane svakoga.
+Poglavlje \ref{ch:skewDetection} objšnjava postupak određivanja rotiranosti početne slike i ispravljanja prepoznate rotacije.
+Detekcija tablice objašnjena je u poglavlju \ref{ch:tableDetection}.
+U istom poglavlju objašnjeno je prikupljanje značajki na temelju kojih se tablice prepoznaju, kao i rad umjetnih neuronskih mreža i algoritam AdaBoost koji su korišteni u svrhu prepoznavanja.
+U poglavlju \ref{ch:implementation} objašnjena je implementacija algoritama iz poglavlja \ref{ch:tableDetection} te je objašnjen način rada genetskih algoritama i algoritma propagacije pogreške unatrag koji su korišteni prilikom treniranja neuronske mreže.
+
 
 \chapter{Binarizacija slike}
+\label{ch:binarization}
 Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena s vrijednošću $0$, a bijela sa $255$.
 Prije nego li se započne bilo kakva analiza slike, potrebno je istu binarizirati, odnosno pretvoriti u oblik koji će sadržavati isključivo crne ili bijele elemente, bez ostalih nijansi sive.
 To je moguće učiniti na dva načina: korištenjem fiksno definiranog praga nakon kojega ćemo svaku vrijednost proglasiti crnom, ili korištenjem adaptivne binarizacije koja se temelji na usporedbi trenutnog intenziteta sive s intenzitetom sive u okruženju.
@@ -260,6 +271,7 @@ Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6$.
 
 
 \chapter{Prepoznavanje zakrivljenosti slike}
+\label{ch:skewDetection}
 Jedan od problema koji nastaje prilikom digitalizacije dokumenata je mogućnost da dokument bude nakošen. 
 Do toga može doći ili prilikom nepažnje tijekom ubacivanja papira u optički čitač, ili zbog nesvjesnog zakrivljenja prilikom korištenja kamere mobilnog uređaja.
 Nakošenost digitalizirane slike može uzrokovati teže ili lošije prepoznavanje elemenata na slici, zbog čega je korisno i poželjno otkriti stupanj rotacije dokumenta i ispraviti ga.
@@ -359,6 +371,7 @@ Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okom
 \end{figure}
 
 \chapter{Detekcija tablice}
+\label{ch:tableDetection}
 Kao što je predloženo u radu \cite{conference:AutomaticTableDetectionInDocumentImages}, detekcija tablice temelji se na detekciji vrhova ćelija. 
 Analiziranjem općenitih tablica, moguće je uočiti kako postoji $9$ različitih mogućnosti koje se mogu pojaviti kao vrh ćelije, što je prikazano na slici \ref{fig:corners}.
 
@@ -658,6 +671,7 @@ Zbog opisanih problema ovaj je pristup odbačen te je korišten sporiji postupak
 
 
 \chapter{Implementacija i rezultati} 
+\label{ch:implementation}
 Svi postupci opisani u ovom radu implementirani su u programskom jeziku Java.
 Izvorni kodovi su javno dostupni su na adresi \href{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}{https://github.com/vkristijan/Table-Extraction-on-Scanned-Documents}.
 
@@ -1065,6 +1079,7 @@ Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađeni
 
 
 \chapter{Zaključak}
+\label{ch:conclusion}
 Ovaj rad analizira različite pristupe detekcije tablica na skeniranim dokumentima, sa svrhom primjene u automatizaciji ispravljanja pismenih ispita.
 Isprobani su različiti načini binarizacije slike kao i obrade iste prije početka detekcije te je ustanovljeno kako nije potrebno koristiti adaptivnu binarizaciju.
 Postupak detekcije podijeljen je na postupak detekcije vrhova ćelija i na rekonstrukciju tablice iz pronađenih vrhova.
