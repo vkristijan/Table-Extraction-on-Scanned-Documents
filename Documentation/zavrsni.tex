@@ -62,15 +62,15 @@ U poglavlju \ref{ch:implementation} objašnjena je implementacija algoritama iz 
 
 \chapter{Binarizacija slike}
 \label{ch:binarization}
-Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena s vrijednošću $0$, a bijela sa $255$.
+Početna slika dana je kao crno-bijela slika koja sadrži $256$ nijansi sive boje, gdje je crna označena s vrijednošću $0$, a bijela s $255$.
 Prije nego li se započne bilo kakva analiza slike, potrebno je istu binarizirati, odnosno pretvoriti u oblik koji će sadržavati isključivo crne ili bijele elemente, bez ostalih nijansi sive.
 To je moguće učiniti na dva načina: korištenjem fiksno definiranog praga nakon kojega ćemo svaku vrijednost proglasiti crnom, ili korištenjem adaptivne binarizacije koja se temelji na usporedbi trenutnog intenziteta sive s intenzitetom sive u okruženju.
 
 \section{Binarizacija fiksnim pragom}
 Najjednostavniji oblik binarizacije je korištenje fiksno definiranog praga.
-U tom se slučaju gleda svaki pojedini slikovnog elementa te ako je njegova vrijednost manja od zadanog praga, element se postavlja na crnu boju, dok se u protivnom postavlja na bijelu.
+U tom se slučaju gleda svaki pojedini slikovni element te ako je njegova vrijednost manja od zadanog praga, element se postavlja na crnu boju, dok se u protivnom postavlja na bijelu.
 Prednosti ove metode su izrazito jednostavna implementacija, ali i velika brzina izvođenja. 
-Nedostatci se primjećuju u slučajevima lošeg ili nejednoličnog osvjetljenja gdje se događa da se neki dijelovi dokumenta u potpunosti prepoznaju kao crni, unatoč činjenici da je prethodno bilo moguće razlikovati i prepoznati pozadinu od sadržaja dokumenta.
+Nedostatci se primjećuju u slučajevima lošeg ili nejednolikog osvjetljenja gdje se događa da se neki dijelovi dokumenta u potpunosti prepoznaju kao crni, unatoč činjenici da je prethodno bilo moguće razlikovati i prepoznati pozadinu od sadržaja dokumenta.
 Slika \ref{fig:threshold} prikazuje opisani problem te se na istoj može primijetiti kako je u donjem lijevom kutu slike tamno područje, koje nakon binarizacije postaje u potpunosti crno. 
 Također se primjećuje i kako je gornji desni kut slike slabije osvijetljen, zbog čega u binariziranoj slici slova postaju tanja i slabije vidljiva.\\
 
@@ -79,7 +79,8 @@ Također se primjećuje i kako je gornji desni kut slike slabije osvijetljen, zb
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.85\linewidth]{Images/Grayscale.png}
-        \caption{Početna crno-bijela slika}
+        \captionsetup{justification=centering}
+        \caption{Početna crno-bijela slika (slika je preuzeta iz \cite{AdaptiveBinarization})}
         \label{fig:sub1}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
@@ -99,22 +100,22 @@ Prikazani primjeri koriste sliku \ref{fig:sub1} kao početnu.
 
 \subsection{Filtriranje šuma}
 Ovisno o stanju dokumenta i načinu digitalizacije istoga moguće je da se na dobivenoj slici pojavljuje šum, kojega je potrebno otkloniti.
-Za potrebe opisanoga koristi se niskopropusni Wiener filter \cite{book:Two-Dimensional-Signal-Image-Processing}, koji se temelji na statističkoj procjeni temeljenoj na okruženju svakog pojedinog slikovnog elementa. \cite{AdaptiveBinarization}
-Označimo sa $I_s(x, y)$ vrijednost slikovnog elementa početne slike, a sa $I(x, y)$ vrijednost slikovnog elementa filtrirane slike.
-Tada se filtrirana slika $I$ može izračunati pomoću formule opisane u knjizi \cite{book:Two-Dimensional-Signal-Image-Processing}:
-\[I(x, y) = \mu(x, y) + \frac{\sigma(x, y)^2}{(\sigma(x, y)^2 - v^2)}(I_s(x, y) - \mu(x, y))\]
-Sa $\mu(x, y)$ označena je aritmetička sredina vrijednosti slikovnih elemenata u okruženju veličine $NxM$, prema formuli:
+Za potrebe opisanoga koristi se Wienerov niskopropusni filter \cite{book:Two-Dimensional-Signal-Image-Processing}, koji radi na principu statističke procjene intenziteta slikovnog elementa temeljene na okruženju svakog pojedinog slikovnog elementa \cite{AdaptiveBinarization}.
+Označimo s $I_s(x, y)$ vrijednost slikovnog elementa početne slike, a s $I(x, y)$ vrijednost slikovnog elementa filtrirane slike.
+Tada se filtrirana slika $I$ može izračunati pomoću izraza opisanog u knjizi \cite{book:Two-Dimensional-Signal-Image-Processing}:
+\[I(x, y) = \mu(x, y) + \frac{\sigma(x, y)^2}{(\sigma(x, y)^2 - v^2)}(I_s(x, y) - \mu(x, y)).\]
+$\mu(x, y)$ označava je aritmetičku sredinu vrijednosti intenziteta slikovnih elemenata u okruženju veličine $N\times M$, prema izrazu:
 \[\mu(x, y) = \frac{1}{NM} 
     \displaystyle \sum_{i = x-\frac{N}{2}}^{x+\frac{N}{2}}
     \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
-I_s(i, j)\]
-Sa $\sigma^2$ označena je varijanca vrijednosti slikovnih elemenata u okruženju veličine $NxM$, prema formuli:
+I_s(i, j),\]
+gdje $\sigma^2$ označava varijancu vrijednosti intenziteta slikovnih elemenata u okruženju veličine $N\times M$, prema izrazu:
 \[\sigma(x, y)^2 = \frac{1}{NM} 
     \displaystyle \sum_{i = x-\frac{N}{2}}^{x+\frac{N}{2}}
     \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
-(I_s(i, j)^2 - \mu^2)\]
-S $v^2$ je označena srednja vrijednost svih lokalnih varijanci.
-Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5$x$5$ prikazan je na slici \ref{fig:wiener}.
+(I_s(i, j)^2 - \mu^2).\]
+$v^2$ označava srednju vrijednost svih lokalnih varijanci.
+Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5\times 5$ prikazan je na slici \ref{fig:wiener}.
 
 \begin{figure}[!ht]
 \centering
@@ -137,12 +138,12 @@ Konačan rezultat filtriranja, korištenjem okruženja dimenzija $5$x$5$ prikaza
 Sljedeći korak binarizacije temelji se na procjenjivanju sadržaja dokumenta. 
 Cilj ovog koraka je procijeniti koji elementi slike pripadaju pozadini, a koji pripadaju sadržaju dokumenta. 
 Pritom je procijenjeni sadržaj zapravo nadskup stvarnog sadržaja, odnosno na dobivenoj slici bit će prisutan šum. 
-Za potrebe ovoga koristi se Niblackov algoritam adaptivne binarizacije. \cite{AdaptiveBinarization}\\
+Za potrebe ovoga koristi se Niblackov algoritam adaptivne binarizacije \cite{AdaptiveBinarization}.\\
 
-Algoritam se temelji na ideji kliznog prozora (engl. \textit{sliding window}) određenih dimenzija, pomoću kojega se računa lokalni median vrijednosti $m$ te varijanca $s$. 
-Kako bi se ubrzao izračun, umjesto mediana se računa aritmetička sredina $\mu$.
+Algoritam se temelji na ideji kliznog prozora (engl. \textit{sliding window}) određenih dimenzija, pomoću kojega se računa lokalni medijan  $m$ te varijanca $s$. 
+Kako bi se ubrzao izračun, umjesto medijana se računa aritmetička sredina $\mu$.
 Konačan prag binarizacije, $T$, određuje se kao:
-\[ T = m + ks \]
+\[ T = m + ks,\]
 gdje je $k$ proizvoljna konstanta koja određuje koliko će okolina trenutnog slikovnog elementa utjecati na prag binarizacije.
 Korištena vrijednost je $k = -0.2$.
 Konačna slika $N$, dobivena je od početne slike $I$ na sljedeći način:
@@ -150,7 +151,7 @@ Konačna slika $N$, dobivena je od početne slike $I$ na sljedeći način:
     N(x, y) =
     \begin{cases}
         1,   & \quad \text{ako je } I(x, y) > T\\
-        0,  & \quad \text{inače}\\
+        0,  & \quad \text{inače}.\\
     \end{cases}
 \]
 Rezultati ovog postupka, korištenjem kliznog prozora dimenzija $20$x$20$, uz $k=-0.2$, prikazan je na slici \ref{fig:niblack}.
@@ -161,7 +162,7 @@ U ovom koraku pokušava se procijeniti izgled pozadine dokumenta, što je označ
 Za potrebe toga koristi se obrađena početna slika $I$ te prethodno dobivena slika $N$.
 Ako je neki slikovni element na slici $N$ označen nulom, taj element predstavlja pozadinu slike i njegova vrijednost na slici $B$ bit će jednaka onoj sa slike $I$.
 U protivnome će vrijednost tog slikovnog elementa biti određena interpolacijom vrijednosti susjednih slikovnih elemenata.
-Konačna formula za elemente slike $B$ glasi:
+Konačan izraz za elemente slike $B$ glasi:
 \[
     B(x, y) =
     \begin{cases}
@@ -175,7 +176,7 @@ Konačna formula za elemente slike $B$ glasi:
             \displaystyle \sum_{i = x-dx}^{x+dx}
             \displaystyle \sum_{j = y-dy}^{y+dy}
             (1 - N(i, j))
-        }, & \quad \text{ako je} N(x, y) = 1\\
+        }, & \quad \text{ako je} N(x, y) = 1.\\
 
     \end{cases}
 \]
@@ -207,16 +208,16 @@ Kao što je opisano u radu \cite{AdaptiveBinarization}, u ovom koraku se provodi
 Postupak se temelji na tome da je razlika u boji teksta i pozadine veća nego li razlika u boji šuma dobivenog procjenom sadržaja dokumenta i pozadine.
 Ovisno o intenzitetu sive boje okruženja, računa se prag binarizacije $d$, kako bi se sačuvao tekst u tamnim područjima.
 Kako bi se to postiglo, vrijednost praga $d$ mora biti manja u područjima s tamnom pozadinom.
-Konačna slika $T$ određena je formulom:
+Konačna slika $T$ određena je izrazom:
 \[
     T(x, y) = 
     \begin{cases}
     1,  & \quad \text{ako je } B(x, y) - I(x, y) > d(B(x, y)) \\
-    0,  & \quad \text{inače}\\
+    0,  & \quad \text{inače}.\\
     \end{cases}
 \]
 Vrijednost praga, $d(B(x, y))$, moguće je procijeniti kao 
-\[d = q * \delta\]
+\[d = q \cdot \delta\]
 gdje je $q$ konstanta koja je fiksno postavljena na $0.8$, a $\delta$ se računa kao razlika intenziteta sive boje na početnoj slici za mjesta koja predstavljaju pozadinu i za mjesta koja predstavljaju tekst.
 Vrijednost $\delta$ možemo aproksimirati kao
 \[
@@ -258,14 +259,14 @@ Problemi koji se mogu uočiti na danim primjerima uključuju prisutnost šuma, k
 \end{figure}
 
 Prisutnost šuma se nastoji ukloniti tako što se pregledava cijela slika te se za svaki crni slikovni element provjerava je li on rezultat šuma.
-Za potrebe toga koristi se klizni prozor dimenzija $n$x$n$.
-U slučaju kada je središnji element kliznog prozora crne boje, prebrojavaju se svi pozadinski (bijeli) slikovni elementi unutar kliznog prozora, što je označeno sa $P_{sh}$.
+Za potrebe toga koristi se klizni prozor dimenzija $n\times n$.
+U slučaju kada je središnji element kliznog prozora crne boje, prebrojavaju se svi pozadinski (bijeli) slikovni elementi unutar kliznog prozora, što je označeno s $P_{sh}$.
 Ako je $P_{sh} > k_{sh}$, gdje je $k_{sh}$ proizvoljno zadana konstanta, središnji slikovni element se postavlja u bijelu boju.
 Na slici \ref{fig:shrink} prikazan je rezultat obrade binarizirane slike navedenim postupkom uz $n = 5$ i $k_{sh} = 0.8$.
 Primjećuje se kako i dalje postoje smetnje na slici, no problem nastaje kod toga što bi niža vrijednost parametra $k_{sh}$ osigurala bolje uklanjanje šumova, ali bi istovremeno povećala vjerojatnost da se uklone elementi teksta, što nije poželjno.\\
 
 Drugi korak spomenut u ovom postupku provodi se slično kao i prethodni.
-Potrebno je prebrojati broj crnih slikovnih elemenata, $P_{sw}$, koji se nalaze unutar kliznog prozora dimenzija $n$x$n$.
+Potrebno je prebrojati broj crnih slikovnih elemenata, $P_{sw}$, koji se nalaze unutar kliznog prozora dimenzija $n\times n$.
 Ako je srednji element bijel i vrijedi $P_{sw} > k_{sw}$, središnji se element pretvara u crni.
 Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6$.
 
