@@ -229,7 +229,7 @@ Vrijednost $\delta$ možemo aproksimirati kao
         \displaystyle \sum_x
         \displaystyle \sum_y
         N(x, y)
-    }
+    }.
 \]
 
 Konačan rezultat nakon primjene opisanog postupka binarizacije prikazan je na slici \ref{fig:finalThreshold}.
@@ -263,7 +263,9 @@ Za potrebe toga koristi se klizni prozor dimenzija $n\times n$.
 U slučaju kada je središnji element kliznog prozora crne boje, prebrojavaju se svi pozadinski (bijeli) slikovni elementi unutar kliznog prozora, što je označeno s $P_{sh}$.
 Ako je $P_{sh} > k_{sh}$, gdje je $k_{sh}$ proizvoljno zadana konstanta, središnji slikovni element se postavlja u bijelu boju.
 Na slici \ref{fig:shrink} prikazan je rezultat obrade binarizirane slike navedenim postupkom uz $n = 5$ i $k_{sh} = 0.8$.
-Primjećuje se kako i dalje postoje smetnje na slici, no problem nastaje kod toga što bi niža vrijednost parametra $k_{sh}$ osigurala bolje uklanjanje šumova, ali bi istovremeno povećala vjerojatnost da se uklone elementi teksta, što nije poželjno.\\
+Primjećuje se kako i dalje postoje smetnje na slici.
+Uočene smetnje mogu se ublažiti smanjenjem vrijednosti parametra $k_{sh}$, čime se osigurava bolje uklanjanje šuma.
+Problem kod toga je što se smanjenjem tog parametra istovremeno i povećava vjerojatnost da se uklone elementi teksta, što nije poželjno.\\
 
 Drugi korak spomenut u ovom postupku provodi se slično kao i prethodni.
 Potrebno je prebrojati broj crnih slikovnih elemenata, $P_{sw}$, koji se nalaze unutar kliznog prozora dimenzija $n\times n$.
@@ -279,30 +281,40 @@ Nakošenost digitalizirane slike može uzrokovati teže ili lošije prepoznavanj
 
 \section{Računanje kuta rotacije}
 Počevši od dokumenta kakav je prikazan na slici \ref{fig:skew_original}, može se uočiti kako se na njemu jasno prepoznaju vodoravne linije dokumenta.
-Unatoč činjenici da to nije opći slučaj koji uvijek vrijedi, u ovom radu nije razrađeno kako općeniti dokument svesti na ovakav oblik, već se kreće od pretpostavke da će dokument uvijek imati jasno izražene linije, bilo vodoravne, bilo okomite.
+Unatoč činjenici da to nije opći slučaj koji uvijek vrijedi, u ovom radu nije razrađeno kako općeniti dokument svesti na ovakav oblik, već se kreće od pretpostavke da će dokument uvijek imati jasno izražene linije, bilo vodoravne, bilo vertikalne.
 Ova pretpostavka vrijedi isključivo iz razloga da se rad fokusira na prepoznavanje tablica na skeniranim dokumentima.\\
 
 \begin{figure}[ht!] 
     \centering
     \includegraphics[width=.4\textwidth]{Images/Skew_original.png}
     \captionsetup{justification=centering}
-    \caption{Početni nakošeni dokument\cite{article:Skew-detection}}
+    \caption{Početni nakošeni dokument (slika je preuzeta iz \cite{article:Skew-detection})}
     \label{fig:skew_original}
 \end{figure}
 
-Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presiječe okomitim linijama, što je predloženo u radu \cite{article:Skew-detection}.
-Za svaku okomitu liniju se računaju točke u kojima ona sječe linije osnovnog dokumenta.
-Jednom kada su određene točke sjecišta, moguće je odabrati jednu takvu točku najljevije okomite linije ($T_1$) te  ju usporediti sa svim točkama koje se nalaze desno od nje ($T_2$).
+Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presiječe određenim brojem vertikalnih linija, što je predloženo u radu \cite{article:Skew-detection}.
+Za svaku vertikalnu liniju određuju se točke u kojima ona sječe vodoravne linije početnog dokumenta, kao što je prikazano na slici \ref{fig:skew_points}.
+Dobivene točke presjecišta označene su kao $T_{n, m}(x_{n, m}, y_{n, m})$, gdje $n$ označava broj vertikalne linije gledano od lijeva na desno, a broj $m$ označava točku prsjeka za danu vertikalnu liniju, gledano od gore prema dole.
+
+\begin{figure}[ht!] 
+    \centering
+    \includegraphics[width=.7\textwidth]{Images/Skew_points.png}
+    \captionsetup{justification=centering}
+    \caption{Prikaz isječka dokumenta presječenog sa $4$ proizvoljne okomite linije}
+    \label{fig:skew_points}
+\end{figure}
+
+Jednom kada su određene točke sjecišta, moguće je odabrati jednu takvu točku najljevije vertikalne linije ($T_{1, a}$) te  ju usporediti sa svim točkama linija koje se nalaze desno od nje ($T_{b, c}, \text{t.d. } b \geq 2$).
 Dvije tako odabrane točke analiziraju se tako da se kroz njih povuče pravac, čija jednadžba glasi: 
 \[
-    y - y_1 = k(x - x_1),
+    y - y_{1, a} = k(x - x_{1, a}),
 \]
 gdje je $k$ koeficijent smjera:
 \[
-    k = \frac{y_2 - y_1}{x_2 - x_1}.
+    k = \frac{y_{b, c} - y_{1, a}}{x_{b, c} - x_{1, a}}.
 \]
 Pomoću koeficijenta  smjera $k$ moguće je izračunati kut pod kojim je dobiveni pravac nagnut u odnosu na $x$ os, kao $\alpha = tan^{-1}(k)$.
-Uz pretpostavku da dokument nije rotiran te da se točke $T_1$ i $T_2$ nalaze na istim vodoravnim linijama dokumenta, kut $\alpha$ trebao bi iznositi $0\degree$.
+Uz pretpostavku da dokument nije rotiran te da se točke $T_{1, a}$ i $T_{b, c}$ nalaze na istim vodoravnim linijama dokumenta, kut $\alpha$ iznosi $0\degree$.
 U slučaju da je dokument rotiran, ovako određen kut $\alpha$ bit će jednak stupnju rotacije dokumenta.\\
 
 \begin{figure}[th!]
@@ -311,31 +323,34 @@ U slučaju da je dokument rotiran, ovako određen kut $\alpha$ bit će jednak st
         \centering
         \includegraphics[width=.85\linewidth]{Images/Skew_equidistant.png}
         \captionsetup{justification=centering}
-        \caption{Dokument podijeljen ekvidistantnim linijama\cite{article:Skew-detection}}
+        \caption{Dokument podijeljen ekvidistantnim linijama (slika je preuzeta iz \cite{article:Skew-detection})}
         \label{fig:skew_equidistant}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.85\linewidth]{Images/Skew_random.png}
         \captionsetup{justification=centering}
-        \caption{Dokument podijeljen linijama sa nasumičnim udaljenostima\cite{article:Skew-detection}}
+        \caption{Dokument podijeljen linijama sa nasumičnim udaljenostima (slika je preuzeta iz \cite{article:Skew-detection})}
         \label{fig:skwe_random}
     \end{subfigure}
     \caption{Primjer podjele dokumenta okomitim linijama}
     \label{fig:skew_verticalLines}
 \end{figure}
 
-Jedan od problema koji preostaje je početna pretpostavka da se točke $T_1$ i $T_2$ nalaze na istoj vodoravnoj liniji dokumenta, što neće biti istinito u većini slučajeva.
-To se rješava tako da se izračunaju kutevi koje zatvaraju svi pravci koji počinju u točki $T_1$, a pritom se bilježi koliko puta se pojavio koji kut.
+Jedan od problema koji preostaje je početna pretpostavka da se točke $T_{1, a}$ i $T_{b, c}$ nalaze na istoj vodoravnoj liniji dokumenta, što neće biti istinito u većini slučajeva.
+To se rješava tako da se izračunaju kutevi koje zatvaraju svi pravci koji počinju u točki $T_{1, a}$ i prolaze kroz točku $T_{b, c}$ za svaku moguću točku $T_{b, c}$.
+Pritom se bilježi koliko je puta izračunat pojedini kut.
 Uz ovaj pristup rotaciju dokumenta više ne određuje kut $\alpha$ koji je dobiven za jedan pravac, već onaj kut koji je najviše puta zabilježen.
-Ovaj pristup prikazan je na slici \ref{fig:skew_verticalLines}, gdje je za određenu podjelu okomitim linijama i odabranu početnu točku prikazan izračun triju kuteva: \textbf{A}, \textbf{B}, \textbf{C}.
-Slika \ref{fig:skew_equidistant} također prikazuje i važnost načina odabira okomitih linija.
-Na navedenoj slici odabrane su ekvidistantne linije, zbog čega dolazi do toga da se sva tri kuta javljaju jednak broj puta, što ometa rad algoritma.
-Za razliku od toga, na slici \ref{fig:skwe_random} koriste se linije s nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj kut \textbf{B} javlja prilikom svakog presjeka okomite linije s vodoravnom linijom na kojoj se nalazi početna točka $T_1$, dok se ostali kutevi javljaju samo jednom, čime se prepoznaje da oni dolaze radi krivo odabranih točaka.
+Ovaj pristup prikazan je na slici \ref{fig:skew_verticalLines}, gdje je za određenu podjelu vertikalnim linijama i odabranu početnu točku (označeno plavom bojom na slici) prikazan izračun kuteva triju pravaca: \textbf{A}, \textbf{B}, \textbf{C}.
+Slika \ref{fig:skew_equidistant} također prikazuje i važnost načina odabira vertikalnih linija kojima se dokument presjeca.
+Na navedenoj slici linije su postavljene ekvidistantno, zbog čega dolazi do toga da se sva tri pravca prolaze kroz jednak broj presjecišta horizontalnih i vertikalnih linija.
+Posljedica toga je da se svaki od triju prikazanih kuteva javlja $4$ puta što je prikazano crvenim točkama presjecišta, zbog čega nije moguće odrediti koji se kut javlja najveći broj puta.
+Za razliku od toga, na slici \ref{fig:skwe_random} koriste se vertikalne linije s nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj pravac označen sa \textbf{B} prolazi kroz $4$ presjecišta, dok pravci \textbf{A} i \textbf{C} prolaze svaki kroz samo jedno.
+Na temelju toga se zaključuje da je kut kojeg pravac \textbf{B} zatvara s $x$ osi jednak rotaciji dokumenta, a da se ostali izračunati kutevi javljaju kao rezultat točaka odabranih na različitim horizontalnim pravcima.
 
 
 \section{Rezultati}
-Kako bi se uštedjelo na vremenu izvođenja, navedeni algoritam je implementiran tako da nakon što odredi nasumične okomite linije odabire samo $4$ početne točke, prethodno označene sa $T_1$.
+Kako bi se uštedjelo na vremenu izvođenja, navedeni algoritam je implementiran tako da nakon što odredi nasumične okomite linije odabire samo $4$ početne točke, prethodno označene s $T_{1, a}$.
 Za te točke se računaju kutevi sa svim ostalim točkama, a na kraju se provjerava postoji li kut koji prevladava.
 Primjer jednog takvog izvođenja prikazan je na slici \ref{fig:skew1}.\\
 
@@ -343,7 +358,7 @@ Primjer jednog takvog izvođenja prikazan je na slici \ref{fig:skew1}.\\
     \centering
     \includegraphics[width=.8\textwidth]{Images/Skew1.pdf}
     \captionsetup{justification=centering}
-    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva}
+    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva uz kvant od $5\degree$}
     \label{fig:skew1}
 \end{figure}
 
@@ -355,7 +370,7 @@ Na ovoj slici se primjećuje kako se za veće iznose kuteva javlja veći šum u 
     \centering
     \includegraphics[width=.8\textwidth]{Images/Skew2.pdf}
     \captionsetup{justification=centering}
-    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva}
+    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva uz kvant od $5\degree$}
     \label{fig:skew2}
 \end{figure}
 
@@ -367,9 +382,11 @@ Jednostavno i efikasno rješenje navedenog problema je ponovno određivanje okom
     \centering
     \includegraphics[width=.8\textwidth]{Images/Skew3.pdf}
     \captionsetup{justification=centering}
-    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva}
+    \caption{Histogram s prikazom frekvencija pojavljivanja kuteva uz kvant od $5\degree$}
     \label{fig:skew3}
 \end{figure}
+
+Opisani postupak korišten je prije daljnje pretrage svih slika opisanih u nastavku rada.
 
 \chapter{Detekcija tablice}
 \label{ch:tableDetection}
