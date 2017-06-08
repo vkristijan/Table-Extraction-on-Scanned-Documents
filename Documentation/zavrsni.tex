@@ -16,7 +16,7 @@
 
 \maketitle
 
-% Ispis stranice s napomenom o umetanju izvornika rada. Uklonite naredbu \izvornik ako želite izbaciti tu stranicu.
+% Ispis stranice s napomenom o umetanju izvornika rada. Uklonite naredbu \izvornik ako želite izbaciti tu stranicu. 
 \izvornik
 
 % Dodavanje zahvale ili prazne stranice. Ako ne želite dodati zahvalu, naredbu ostavite radi prazne stranice.
@@ -294,7 +294,7 @@ Ova pretpostavka vrijedi isključivo iz razloga da se rad fokusira na prepoznava
 
 Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presiječe određenim brojem vertikalnih linija, što je predloženo u radu \cite{article:Skew-detection}.
 Za svaku vertikalnu liniju određuju se točke u kojima ona sječe vodoravne linije početnog dokumenta, kao što je prikazano na slici \ref{fig:skew_points}.
-Dobivene točke presjecišta označene su kao $T_{n, m}(x_{n, m}, y_{n, m})$, gdje $n$ označava broj vertikalne linije gledano od lijeva na desno, a broj $m$ označava točku prsjeka za danu vertikalnu liniju, gledano od gore prema dole.
+Dobivene točke presjecišta označene su kao $T_{n, m}(x_{n, m}, y_{n, m})$, gdje $n$ označava broj vertikalne linije gledano od lijeva na desno, a broj $m$ označava točku presjeka za danu vertikalnu liniju, gledano od gore prema dole.
 
 \begin{figure}[ht!] 
     \centering
@@ -347,7 +347,6 @@ Na navedenoj slici linije su postavljene ekvidistantno, zbog čega dolazi do tog
 Posljedica toga je da se svaki od triju prikazanih kuteva javlja $4$ puta što je prikazano crvenim točkama presjecišta, zbog čega nije moguće odrediti koji se kut javlja najveći broj puta.
 Za razliku od toga, na slici \ref{fig:skwe_random} koriste se vertikalne linije s nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj pravac označen sa \textbf{B} prolazi kroz $4$ presjecišta, dok pravci \textbf{A} i \textbf{C} prolaze svaki kroz samo jedno.
 Na temelju toga se zaključuje da je kut kojeg pravac \textbf{B} zatvara s $x$ osi jednak rotaciji dokumenta, a da se ostali izračunati kutevi javljaju kao rezultat točaka odabranih na različitim horizontalnim pravcima.
-
 
 \section{Rezultati}
 Kako bi se uštedjelo na vremenu izvođenja, navedeni algoritam je implementiran tako da nakon što odredi nasumične okomite linije odabire samo $4$ početne točke, prethodno označene s $T_{1, a}$.
@@ -408,7 +407,7 @@ Detektiranjem točnih pozicija ovih $9$ elemenata te točnom klasifikacijom isti
 
 Pretragu je moguće ubrzati korištenjem znanja o općem izgledu tablice.
 U skladu s time je moguće pronaći isključivo pozicije prve $4$ vrste vrhova, na temelju čega se određuju rubovi tablice.
-Koristeći te informacije moguće je odrediti vanjski obrub tablice, na kojemu se moraju nalaziti svi oblici označeni sa $5-8$ na slici \ref{fig:corners}, te nije potrebno pretraživati ostatak slike i vršiti klasifikaciju pronađenih kandidata.
+Koristeći te informacije moguće je odrediti vanjski obrub tablice, na kojemu se moraju nalaziti svi oblici označeni s $5-8$ na slici \ref{fig:corners}, te nije potrebno pretraživati ostatak slike i vršiti klasifikaciju pronađenih kandidata.
 Nakon što se pronađu tako opisani rubovi, vrh označen brojem $9$ na slici može se locirati kao sjecište linija između prethodno definiranih rubova tablice.
 Ovaj pristup nije detaljnije razrađen u ovom radu te nije korišten u implementaciji, a navodi se isključivo kao prijedlog potencijalne optimizacije korištenog algoritma.
 
@@ -423,7 +422,7 @@ Jedno od mogućih poboljšanja ove metode predloženo je u radu \cite{ViolaJones
 
 \subsection{Određivanje značajki}
 Prije nego li se može napraviti detekcija vrhova, potrebno je definirati značajke prema kojima se isti pretražuju.
-Osnovna funkcija značajki je pojednostavljenje slike koja se pokušava prepoznati kako bi se smanjio ukupan prostor stanja pretrage.
+Osnovna funkcija značajki je pojednostavljenje slike koja se pokušava prepoznati kako bi se smanjio ukupan prostor pretraživanja.
 Potrebno je odrediti značajke koje vrijede neovisno o manjim pomacima slike, ili manjim šumovima koji mogu biti prisutni iz različitih razloga.
 Za potrebe toga odabrana su dva različita pristupa odabira značajki.\\
 
@@ -450,7 +449,7 @@ Imajući to na umu moguće je uočiti da će u idealnom slučaju okomite i vodor
     \label{fig:lineFeatures}
 \end{figure}
 
-Ovisno o koordinati zrake moguće je odrediti koja je to vrsta vrha, točnije na danom primjeru na slici \ref{fig:feature1} nema sjecišta zrake i linije, iz čega se zaključuje kako se na slici ne nalaze određeni vrhovi ćelija, poput na primjer vrha označenog brojem $2$ na slici \ref{fig:corners}, koji ima vodoravnu liniju na lijevoj strani.
+Ovisno o koordinati zrake moguće je odrediti koja je to vrsta vrha, točnije na danom primjeru na slici \ref{fig:feature1} nema sjecišta zrake i linije, iz čega se zaključuje kako se na slici ne nalaze određeni vrhovi ćelija, poput, na primjer, vrha označenog brojem $2$ na slici \ref{fig:corners}, koji ima vodoravnu liniju na lijevoj strani.
 Ista ta zraka na primjeru na slici \ref{fig:feature2} presijeca sliku na jednom mjestu, iz čega se zaključuje da se na slici potencijalno nalazi vrh koji na tom mjestu ima liniju.\\
 
 Ovaj pristup se nadopunjuje tako da se umjesto broja presjecišta određuje udaljenost od prvog presjecišta.
@@ -506,7 +505,7 @@ Računa se novi oblik reprezentacije slike ($ii$) u kojemu je vrijednost na pozi
     ii(x, y) = 
         \displaystyle \sum_{x' < x} 
         \displaystyle \sum_{y' < y}
-        i(x', y')
+        i(x', y').
 \]
 
 \begin{figure}[ht!]
@@ -527,7 +526,7 @@ Analogno tome, od trenutne vrijednosti oduzima se suma u točki $B$.
 Trenutni postupak je u dva navrata oduzeo vrijednost područja koje se nalazi gore lijevo od točke $A$ pravokutnika, zbog čega je potrebno trenutnoj vrijednosti jednom pridodati sumu u točki $A$.
 Konačna vrijednost za dani kvadrat glasi:
 \[
-    f = ii(D_x, D_y) - ii(C_x, C_y) - ii(B_x, B_y) + ii(A_x, A_y)
+    f = ii(D_x, D_y) - ii(C_x, C_y) - ii(B_x, B_y) + ii(A_x, A_y).
 \]
 
 \subsection{Detekcija korištenjem umjetne neuronske mreže}
@@ -549,7 +548,7 @@ Umjetni neuroni simuliraju pojednostavljeni model bioloških neurona tako da opo
 Slika \ref{fig:neuron} prikazuje opći model takvog neurona. 
 Ulazne vrijednosti neuronu čine vrijednosti od $x_1$ do $x_n$, te se svakoj od njih dodjeljuje određena težina $w_1$ do $w_n$ s kojom se ulazna vrijednost množi.
 Na taj se način ostvaruje mogućnost postavljanja različitih prioriteta različitim ulazima.
-Tijelo neurona ostvareno je funkcijom sumacije koja zbraja težinske vrijednosti ulaza te tako dobiveni broj predaje prijenosnoj funkciji, koja se ponaša kao model aksona.
+Tijelo neurona ostvareno je funkcijom sumacije koja zbraja težinske vrijednosti ulaza i praga te tako dobiveni broj predaje prijenosnoj funkciji, koja se ponaša kao model aksona.
 Prijenosna funkcija za dani argument vraća rezultat iz određenog raspona, što se propagira kao ulaz sljedećim neuronima.\\
 
 Korištenjem samo jednog neurona moguće je ostvariti jednostavnije linearne klasifikacijske algoritme, tako da se kao ulazi neurona koriste značajke prema kojima se klasificira, a za prijenosnu funkciju odabere funkcija skoka.
@@ -589,36 +588,40 @@ Slabi klasifikatori određuju fiksni prag za kojega će nešto klasificirati u j
     h(x, f, p, \theta) = 
     \begin{cases}
     1,  & \quad \text{ako je } pf(x) < p\theta \\
-    0,  & \quad \text{inače}\\
+    0,  & \quad \text{inače},\\
     \end{cases}
 \]
-gdje je sa $h(x, f, p, \theta)$ označen klasifikator, sa $x$ uzorak, sa $f$ funkcija koja na temelju uzorka određuje značajku, a $p$ predstavlja faktor koji određuje smjer nejednakosti, ovisno o predznaku.
+gdje je s $h(x, f, p, \theta)$ označen klasifikator, s $x$ uzorak, s $f$ funkcija koja na temelju uzorka određuje značajku, a $p$ predstavlja faktor koji određuje smjer nejednakosti, ovisno o predznaku.
 Ukupna greška ovakvog klasifikatora definirana je kao težinska suma svih odstupanja, gdje se svakom uzorku pridjeljuje određena težina kojom on doprinosi ukupnoj grešci.
-Izračun ukupne greške $\epsilon$ prikazan je formulom:
+Izračun ukupne greške $\epsilon$ prikazan je izrazom:
 \[
-    \epsilon = \displaystyle \sum_{i}w_i \abs{h(x, f, p, \theta) - y_i} 
+    \epsilon = \displaystyle \sum_{i}w_i \abs{h(x, f, p, \theta) - y_i}, 
 \]
-gdje je sa $w_i$ predstavljena težina $i$-tog po redu uzorka, a sa $y_i$ očekivana vrijednost izlaza klasifikatora.\\
+gdje je s $w_i$ predstavljena težina $i$-tog po redu uzorka, a s $y_i$ očekivana vrijednost izlaza klasifikatora.
+Ovako definirani klasifikator točno klasificira samo manji podskup podataka.
+U postupku učenja istih potrebno je odrediti parametre $x, f, p, \theta$ koji za trenutno postavljene težine $w$ minimiziraju pogrešku $\epsilon$. 
+Točan postupak pronalaženja takvog slabog klasifikatora opisan je u poglavlju \ref{ch:implementation} gdje je objašnjena implementacija algoritma.
+Prilikom izgradnje jakog klasifikatora koji uz veliku točnost klasificira podatke koriste se ovako dobiveni slabi klasifikatori, ali se pritom svaki sljedeći slabi klasifikator određuje nakon što se težine $w$ promijene, kako bi se postiglo da sljedeći slabi klasifikator veći prioritet daje podatcima koji su prethodno pogrešno klasificirani, točan postupak dan je u nastavku.\\
 
 Jaki klasifikatori grade se kao spoj više slabih klasifikatora tako da se računa izlaz svakog od njih te se na temelju toga donosi konačna odluka o kategoriji u koju treba svrstati ulazni uzorak.
 Kako bi se stvorio jaki klasifikator potrebno je odrediti skup labeliranih ulaznih primjera koji se koriste tijekom učenja.
-Budući da algoritam može klasificirati samo $2$ kategorije podataka, potrebno mu je predati uzorke koje smije i koje ne smije prepoznati, gdje je sa $1$ označen uzorak koji se prepoznaje, a sa $0$ uzorak koji se ne prepoznaje.
+Budući da algoritam može klasificirati samo $2$ kategorije podataka, potrebno mu je predati uzorke koje smije i koje ne smije prepoznati, gdje je s $1$ označen uzorak koji se prepoznaje, a s $0$ uzorak koji se ne prepoznaje.
 Na slučaju tablica, algoritam prepoznaje sve oblike vrhova ćelija, a pritom ne prepoznaje sadržaj unutar tablice, linije tablice i ostale smetnje koje se pojavljuju na slici.
 Početne težine za svaki od uzoraka postavljene su na: 
 \[
     w_i = 
     \begin{cases}
     \frac{1}{m}, & \quad y_i = 0\\
-    \frac{1}{l}, & \quad y_i = 1\\
+    \frac{1}{l}, & \quad y_i = 1.\\
     \end{cases}
 \]
-Pritom je sa $m$ označen broj negativnih uzoraka, a sa $l$ broj pozitivnih uzoraka.
+Pritom je s $m$ označen broj negativnih uzoraka, a s $l$ broj pozitivnih uzoraka.
 Potom se ovisno o željenom broju slabih klasifikatora ponavlja sljedeći postupak.
 Prvo je potrebno normalizirati sve težine:
 \[
     w_i \leftarrow \frac{w_i}{
         \displaystyle \sum_{j = 1}^{n}w_j
-    }
+    }.
 \]
 Potom se određuje slabi klasifikator $h$ koji za trenutne težine daje najmanju pogrešku $\epsilon$, izračunatu na prethodno opisani način.
 Dobiveni slabi klasifikator ne može točno klasificirati određeni dio podataka, zbog čega je potrebno postići da sljedeći slabi klasifikator uspješno prepozna te podatke.
@@ -627,16 +630,16 @@ To se postiže mijenjanjem trenutnih težina korištenih u izračunu greške tak
     w_i \leftarrow 
     \begin{cases}
         w_i\beta, & \quad \text{ako je uzorak $i$ točno klasificiran}\\
-        w_i, & \quad \text{inače}\\
+        w_i, & \quad \text{inače.}\\
     \end{cases}
 \]
 Pritom je koeficijent $\beta$ definiran kao: 
 \[
-    \beta = \frac{\epsilon}{1 - \epsilon}
+    \beta = \frac{\epsilon}{1 - \epsilon}.
 \]
 Za ovako određen slabi klasifikator računa se još i vrijednost $\alpha$ kao: 
 \[
-    \alpha = log(\frac{1}{\beta})
+    \alpha = log(\frac{1}{\beta}),
 \]
 što se koristi prilikom izrade konačnog jakog klasifikatora tako da izlazi klasifikatora s većom vrijednošću $\alpha$ više doprinose konačnoj odluci klasifikacije od onih s manjom vrijednošću.
 Jaki klasifikator određen je kao:
@@ -648,7 +651,7 @@ Jaki klasifikator određen je kao:
             \alpha_th_t(x)
             \geq
             \frac{1}{2} \displaystyle \sum_{t = 1}^{T}\alpha_t\\
-        0, & \quad \text{inače}\\
+        0, & \quad \text{inače.}\\
     \end{cases}
 \]
 
@@ -669,17 +672,19 @@ Za potrebe toga moguće je koristiti neuronsku mrežu koja radi s većim brojem 
 \section{Rekonstrukcija tablice}
 Korištenjem prethodno opisanih klasifikatora dobiven je popis vrhova ćelija tablice s prepoznatom vrstom vrha i koordinatom na kojoj se nalazi.
 Potrebno je na temelju tog znanja odrediti točan izgled tablice. 
-Poznavanjem pozicija vrhova označenih sa $1, 2, 3$ i $4$ na slici \ref{fig:corners} određena je točna lokacija tablice. 
+Poznavanjem pozicija vrhova označenih s $1, 2, 3$ i $4$ na slici \ref{fig:corners} određena je točna lokacija tablice. 
 Ovisno o broju vrhova ovog tipa moguće je odrediti i točan izgled tablice u slučaju da ona nije pravilnog kvadratnog oblika.
-Vrhovi označeni sa $5, 6, 7$ i $8$ određuju vanjski obrub tablice, dok je unutrašnjost iste određena vrhovima tipa $9$ sa slike \ref{fig:corners}.
+Vrhovi označeni s $5, 6, 7$ i $8$ određuju vanjski obrub tablice, dok je unutrašnjost iste određena vrhovima tipa $9$ sa slike \ref{fig:corners}.
 Kako bi se ćelije točno poredale u prostoru potrebno je sortirati popis vrhova istih po jednoj, pa zatim po drugoj koordinati.
-Tako je moguće vrhove rasporediti u dvodimenzionalno polje na način da se svi vrhovi s jednakom vrijednošću $Y$ koordinate pohrane u isti red polja, te tako definiraju isti redak tablice.
+Tako je moguće vrhove rasporediti u dvodimenzionalno polje na način da se svi vrhovi s približno jednakom vrijednošću $Y$-koordinate, uz pretpostavku da je slika izravnata postupkom opisanom u poglavlju \ref{ch:skewDetection}, pohrane u isti red polja, te tako definiraju isti redak tablice.
 Ponavljanjem postupka za sve različite vrijednosti $Y$ koordinata određuju se svi redci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
 
 \section{Korištenje prethodno stečenog znanja}
 Prilikom prvog prepoznavanja tablice nije moguće pretpostaviti ništa o njezinom izgledu te je do sada opisana metoda jedina točna i efikasna mogućnost.
 Kada se prepoznaje veći broj tablica koje su strukturno jednake te se nalaze na istim pozicijama na papiru, moguće je ubrzati pretragu tablica korištenjem znanja stečenog prilikom detekcije prve tablice. 
-Zbog mogućnosti pomaka papira u procesu digitalizacije nije moguće očekivati jednake pozicije na slici dokumenta, zbog čega je potrebno izvršiti, no nije potrebno ponovno pretražiti sve slikovne elemente, već se pretražuju samo elementi unutar zadanog radiusa od pozicija s prethodno prepoznate tablice.\\
+Zbog mogućnosti pomaka papira u postupku digitalizacije nije moguće očekivati da se vrhovi ćelija nalaze na točno jednakim pozicijama na slici dokumenta.
+Zbog toga je potrebno izvršiti ponovnu pretragu slike kako bi se odredile nove pozicije.
+Primjećuje se kako nije potrebno ponovno pretražiti područje cijele slike, već se pretražuju samo područje unutar zadanog radijusa oko pozicija vrhova s prethodno prepoznate tablice.\\
 
 Opisani postupak moguće je dodatno ubrzati tako da se ne pretražuju ponovno svi vrhovi tablice, već samo jedan, poput na primjer gornjeg lijevog vrha.
 Nakon što se pronađe točna pozicija tog vrha na novoj slici zaključuje se kako je cijela tablica, odnosno svi vrhovi njezinih ćelija, pomaknuta za isti iznos u odnosu na prvotno detektiranu kao i pronađeni vrh.
