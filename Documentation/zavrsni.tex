@@ -700,12 +700,12 @@ Izvorni kodovi su javno dostupni su na adresi \href{https://github.com/vkristija
 
 \section{Umjetna neuronska mreža}
 Kao što je prethodno opisano, prilikom klasifikacije se koristi unaprijedna umjetna neuronska mreža. 
-Mreža koristi arhitekturu sa $3$ sloja.
+Mreža koristi arhitekturu s $3$ sloja.
 Prvi, odnosno ulazni sloj sadrži $24$ neurona, koji kao ulaz primaju vrijednosti $24$ različite značajke.
 Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
 
-Kao značajke koje se koriste kao ulaz koriste se ručno odabrane značajke. 
-Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u stvarnosti koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.\\
+Kao ulaz neuronske mreže koriste se vrijednosti ručno odabranih značajki.
+Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u implementaciji koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.\\
 
 Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebno prepoznati linije nalaze na sredini slike.
 Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ako i je prikazan, tada točka vrha nije približno u središtu slike.
@@ -730,10 +730,10 @@ Prvi pokušaj treniranja neuronske mreže bio je korištenjem genetskog algoritm
 Genetski algoritmi jedan su od često korištenih metaheurističkih algoritama.
 Nastali su po uzoru na Darwinovu teoriju evolucije, koja se temelji na sljedećih pet pretpostavki: 
 \begin{enumerate}
-\item uvijek postoji više potomaka nego što je potrebno
-\item veličina populacije je približno stalna
-\item količina hrane je ograničena
-\item razmnožavanjem jedinki nastaju nove, različite jedinke
+\item uvijek postoji više potomaka nego što je potrebno,
+\item veličina populacije je približno stalna,
+\item količina hrane je ograničena,
+\item razmnožavanjem jedinki nastaju nove, različite jedinke te
 \item većina varijacija prenosi se nasljeđivanjem.
 \end{enumerate}
 Iz navedenih pretpostavki slijedi da ne mogu preživjeti sve jedinke zbog limitiranih resursa.
@@ -758,9 +758,9 @@ Primjer rada takvog algoritma prikazan je slikom \ref{fig:gen}.
 Kromosom korišten u genetskom algoritmu modelira jednu jedinku, odnosno služi kao reprezentacija jednog rješenja.
 Kako se algoritam koristi u svrhu treniranja neuronske mreže, kromosom je predstavljen nizom realnih brojeva koji odgovaraju težinama ulaza neurona neuronske mreže.
 
-\subsubsection{Evaluacija}
-Prilikom evaluacije je potrebno odrediti koliko je određena jedinka uspješna, što se u ovom slučaju mjeri kao postotak uspješno klasificiranih podataka iz skupa podataka za treniranje.
-Skup za treniranje sastoji se od $15910$ slika veličine $75x75$ slikovnih elemenata.
+\subsubsection{Vrednovanje}
+Prilikom vrednovanja je potrebno odrediti koliko je određena jedinka uspješna, što se u ovom slučaju mjeri kao postotak uspješno klasificiranih podataka iz skupa podataka za treniranje.
+Skup za treniranje sastoji se od $15910$ slika veličine $75\times 75$ slikovnih elemenata.
 Slike su unutar skupa podijeljene na $10$ kategorija gdje svaka od njih predstavlja po jednu moguću vrijednost vrha ćelije kako je prikazano na slici \ref{fig:corners}, te kategorije u kojoj se nalaze sve one slike koje na sebi ne sadrže element tablice.
 Dobrota jedinke prvotno je bila definirana samo kao postotak uspješno klasificiranih slika.
 Takav pristup je imao problema uzrokovanih neproporcionalnim količinama podataka svake od kategorije (primjerice postoji $13950$ slika koje nisu elementi tablice), zbog čega je jedinka mogla imati velik postotak uspješnosti tako da sve klasificira kao nešto što nije element tablice.
@@ -777,7 +777,7 @@ Prvi roditelj se bira nasumično, gdje svaka jedinka ima jednaku vjerojatnost bi
 Drugi roditelj se bira korištenjem turnirske selekcije, koja odabire određen broj potencijalnih roditelja (u ovom slučaju je korištena veličina turnira $3$) te od tako nasumično odabranih roditelja odabire onoga s najvećom funkcijom dobrote.
 
 \subsubsection{Križanje}
-Nakon što su odabrani roditelji provodi se križanje. 
+Nakon što su odabrani roditelji, provodi se križanje. 
 U ovom je koraku potrebno stvoriti novu jedinku kombinacijom genetskog materijala roditelja. 
 Kao i u prethodnom koraku i ovdje se javlja problem mogućnosti konvergiranja rješenja u lokalni optimum te postoje različiti pristupi kojima je moguće efikasno izvesti ovu operaciju.
 U ovom radu korišteno je križanje BLX-$\alpha$ koje radi na način da svaku vrijednost određuje kao slučajnu vrijednost uniformne distribucije u intervalu vrijednosti roditelja kako je prikazano na slici \ref{fig:blx}, a što je detaljno opisano u knjizi \cite{GeneticAlgorithms}. 
@@ -793,7 +793,7 @@ Kako bi se smanjilo sažimanje populacije, interval iz kojega se bira vrijednost
 
 \subsubsection{Mutacija}
 Prilikom mutacije je potrebno promijeniti vrijednosti kromosoma koje su dobivene križanjem roditelja kako bi se uvela nova genetska raznolikost u populaciju.
-Korištena je mutacija koja uz vjerojatnost od $0.05\%$ određeni element kromosoma tako da mu doda nasumičnu vrijednost iz normalne distribucije, pomnoženu sa $0.5$. 
+Korištena je mutacija koja uz vjerojatnost od $0.05$ određeni element kromosoma promijeni tako da mu doda nasumičnu vrijednost iz normalne distribucije, pomnoženu s $0.5$. 
 
 \subsubsection{Rezultati}
 \begin{figure}[ht!]
@@ -806,7 +806,8 @@ Korištena je mutacija koja uz vjerojatnost od $0.05\%$ određeni element kromos
 
 Opisana neuronska mreža ima $500$ težina koje je potrebno postaviti, što znači da genetski algoritam radi s kromosomima duljine $500$. 
 Na slici \ref{fig:ga} prikazana je vrijednost najbolje jedinke pronađene genetskim algoritmom u odnosu na iteraciju algoritma.
-Vidljivo je kako populacija na početnu brzo napreduje, no pretraga se s vremenom usporava te algoritam ne uspijeva postići zadovoljavajuće razine točnosti.
+Vidljivo je kako populacija u početnih $1000$ iteracija brzo napreduje, no pretraga se nakon toga usporava te algoritam ne uspijeva postići zadovoljavajuće razine točnosti.
+U prikazanom primjeru, genetski algoritam postiže vrijednosti funkcije dobrote od $0.98$, nakon čega konvergira u lokalnom optimumu.
 
 \subsection{Treniranje korištenjem algoritma propagacije pogreške unatrag}
 Drugi pristup treniranju neuronske mreže je korištenje algoritma propagacije pogreške unatrag koji je detaljno opisan u knjizi \cite{neuroracunarstvo}.
@@ -815,17 +816,17 @@ U ovom radu korištena je stohastička verzija navedenog algoritma koja težine 
 
 
 \subsubsection{Izračun pogreške}
-Označimo li sa $t_o$ očekivani izlaz neuronske mreže za neuron $o$ za trenutni podatak te sa $y_o^{(k + 1)}$ stvarni izlaz neurona, greška neuronske mreže $E$ definirana je kao suma kvadratnih odstupanja, odnosno kao:
+Označimo li s $t_o$ očekivani izlaz neuronske mreže za neuron $o$ za trenutni ulaz mreže te s $y_o^{(k + 1)}$ stvarni izlaz neurona, greška neuronske mreže $E$ definirana je kao suma kvadratnih odstupanja, odnosno kao:
 \[
-    E = \frac{1}{2}\sum(t_o-y_o^{(k + 1)})^2
+    E = \frac{1}{2}\sum(t_o-y_o^{(k + 1)})^2.
 \]
-Kako bi se ostvario gradijentni spust, potrebno je izračunati gradijent pogreške za svaku težinu $w_{ij}^{(k)}$, što označava težinu koja spaja $i$-ti neuron u sloju $k$ sa $j$-tim neuronom u sloju $k+1$:
+Kako bi se ostvario gradijentni spust, potrebno je izračunati parcijalnu derivaciju pogreške za svaku težinu $w_{ij}^{(k)}$, što označava težinu koja spaja $i$-ti neuron u sloju $k$ s $j$-tim neuronom u sloju $k+1$:
 \[
-    \frac{\partial E}{\partial w_{ij}^{(k)}}
+    \frac{\partial E}{\partial w_{ij}^{(k)}}.
 \]
 Tada se težina ažurira kao:
 \[
-    w_{ij}^{(k)} \leftarrow w_{ij}^{(k)} - \alpha \frac{\partial E}{\partial w_{ij}^{(k)}}
+    w_{ij}^{(k)} \leftarrow w_{ij}^{(k)} - \alpha \frac{\partial E}{\partial w_{ij}^{(k)}},
 \]
 gdje je $\alpha$ mala pozitivna konstanta poznata kao stopa učenja.
 
@@ -837,7 +838,7 @@ Potrebno je izračunati $\frac{\partial E}{\partial w_{ij}^{(k)}}$, što se mož
         & = \frac{\partial}{\partial w_{ij}^{(k)}} 
         \left[\frac{1}{2}\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})^2\right]\\
         & = \frac{1}{2} \displaystyle\sum_{o = 1}^m2(t_o - y_o^{(k + 1)})(-1) \frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k)}} \\
-        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k)}}
+        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k)}}.
 \end{split}
 \end{equation*}
 
@@ -845,18 +846,18 @@ Pritom težina $w_{ij}^{(k)}$ spaja $i$-ti neuron sloja $k$ sa $j$-tim neuronom 
 
 \[
     \frac{\partial E}{\partial w_{ij}^{(k)}}
-    = -(t_j - y_j^{(k + 1)})\frac{\partial y_j^{(k + 1)}}{\partial w_{ij}^{(k)}}
+    = -(t_j - y_j^{(k + 1)})\frac{\partial y_j^{(k + 1)}}{\partial w_{ij}^{(k)}}.
 \]
-Korištenjem lančanog pravila, parcijalna derivacija iz izraza se može zapisati kao:
+Korištenjem pravila ulančavanja, parcijalna derivacija iz izraza se može zapisati kao:
 \[
     \frac{\partial y_j^{(k + 1)}}{\partial w_{ij}^{(k)}}
     = \frac{\partial y_j^{(k + 1)}}{\partial net_{j}^{(k+1)}}
-    \frac{\partial net_{j}^{(k+1)}}{\partial w_{ij}^{(k)}}
+    \frac{\partial net_{j}^{(k+1)}}{\partial w_{ij}^{(k)}},
 \]
-gdje je sa $net_{j}^{(k+1)}$ označena težinska suma za neuron $j$ sloja $k+1$. Kako se koriste sigmoidalna aktivacijska funkcija, vrijedi da je:
+gdje je s $net_{j}^{(k+1)}$ označena težinska suma za neuron $j$ sloja $k+1$. Kako se koriste sigmoidalna aktivacijska funkcija, vrijedi da je:
 \[
     \frac{\partial y_j^{(k + 1)}}{\partial net_{j}^{(k+1)}}
-    = y_j^{(k + 1)} (1 - y_j^{(k + 1)})
+    = y_j^{(k + 1)} (1 - y_j^{(k + 1)}).
 \]
 Kako vrijedi da je
 \[
@@ -864,22 +865,22 @@ Kako vrijedi da je
 \]
 jedini član izraza koji ovisi o težini $w_{ij}^{(k)}$ je $w_{i,j}^{(k)}y_i^{(k)}$ zbog čega je parcijalna derivacija:
 \[
-    \frac{\partial net_{j}^{(k+1)}}{\partial w_{ij}^{(k)}} = y_i^{(k)}
+    \frac{\partial net_{j}^{(k+1)}}{\partial w_{ij}^{(k)}} = y_i^{(k)}.
 \]
-Uvrštavanjem dobivenog izraza u početnu jednadžbu dobiva se:
+Uvrštavanjem dobivenog izraza u početni izraz dobiva se:
 \[
     \frac{\partial E}{\partial w_{ij}^{(k)}}
     = -(t_j - y_j^{(k + 1)})
     y_j^{(k + 1)} (1 - y_j^{(k + 1)})
-    y_i^{(k)}
+    y_i^{(k)}.
 \]
-Radi jednostavnosti se greška $j$-tog neorona za dani primjer za učenje označava sa $\delta_j^{(k+1)}$ te vrijedi:
+Radi jednostavnosti se greška $j$-tog neurona za dani primjer za učenje označava s $\delta_j^{(k+1)}$ te vrijedi:
 \[
-    \delta_j^{(k+1)} = y_j^{(k + 1)}(1 - y_j^{(k + 1)})(t_j - y_j^{(k + 1)})
+    \delta_j^{(k+1)} = y_j^{(k + 1)}(1 - y_j^{(k + 1)})(t_j - y_j^{(k + 1)}).
 \]
-Te se sada parcijalna derivacija ukupne greške može prikazati kao:
+Tada je parcijalna derivacija ukupne greške:
 \[
-    \frac{\partial E}{\partial w_{ij}^{(k)}} = -\delta_j^{(k+1)}y_i^{(k)}
+    \frac{\partial E}{\partial w_{ij}^{(k)}} = -\delta_j^{(k+1)}y_i^{(k)}.
 \]
 
 \subsubsection{Gradijent skrivenog sloja}
@@ -891,61 +892,61 @@ Potrebno je izračunati $\frac{\partial E}{\partial w_{ij}^{(k-1)}}$, što se mo
         \left[\frac{1}{2}\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})^2\right]\\
         & = \frac{1}{2} \displaystyle\sum_{o = 1}^m2(t_o - y_o^{(k + 1)})(-1) \frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}} \\
         & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}\\
-        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial net_{o}^{(k+1)}}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
+        & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})\frac{\partial y_o^{(k + 1)}}{\partial net_{o}^{(k+1)}}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}.
 \end{split}
 \end{equation*}
 Prva parcijalna derivacija je derivacija sigmoidalne funkcije što je:
 \[
     \frac{\partial y_o^{(k + 1)}}{\partial net_{o}^{(k+1)}}
-    = y_o^{(k + 1)} (1 - y_o^{(k + 1)})
+    = y_o^{(k + 1)} (1 - y_o^{(k + 1)}).
 \]
 Uvrštavanjem izračunatog u početni izraz dobiva se:
 \begin{equation*}
 \begin{split}
     \frac{\partial E}{\partial w_{ij}^{(k-1)}}
         & = -\displaystyle\sum_{o = 1}^m(t_o - y_o^{(k + 1)})y_o^{(k + 1)} (1 - y_o^{(k + 1)})\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}\\
-        & = -\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
+        & = -\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}\frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}.
 \end{split}
 \end{equation*}
 Druga parcijalna derivacija računa se pomoću $net_o^{(k + 1)}$ koji se može zapisati kao:
 \[
-    net_o^{(k + 1)} = \displaystyle\sum_l w_{l,o}^{(k)}y_l^{(k)}
+    net_o^{(k + 1)} = \displaystyle\sum_l w_{l,o}^{(k)}y_l^{(k)}.
 \]
-Kako je potrebno izračunati parcijalnu derivaciju za težinu $w_{ij}^{(k-1)}$ valja uočiti da ta težina utječe samo na vrijednost neurona $j$ u sloju $k$ odnosno na vrijednost $y_j^{(k)}$, zbog čega vrijedi:
+Kako je potrebno izračunati parcijalnu derivaciju za težinu $w_{ij}^{(k-1)}$, valja uočiti da ta težina utječe samo na vrijednost neurona $j$ u sloju $k$ odnosno na vrijednost $y_j^{(k)}$, zbog čega vrijedi:
 \[
     \frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
-    = w_{j,o}^{(k)}\frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}
+    = w_{j,o}^{(k)}\frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}.
 \]
-Parcijalna derivacija $\frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}$ rješava se na jednak način kao i u izlaznom sloju te vrijedi:
+Parcijalna derivacija $\frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}$ računa se na jednak način kao i u izlaznom sloju te vrijedi:
 \begin{equation*}
 \begin{split}
     \frac{\partial y_j^{(k)}}{\partial w_{ij}^{(k-1)}}
         & = \frac{\partial y_j^{(k)}}{\partial net_{j}^{(k)}}
             \frac{\partial net_{j}^{(k)}}{\partial w_{ij}^{(k-1)}}\\
-        & = y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}
+        & = y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}.
 \end{split}
 \end{equation*}
-Uvrštavanjem u prethodnu jednakost slijedi:
+Uvrštavanjem u prethodni izraz slijedi:
 \[
     \frac{\partial net_o^{(k + 1)}}{\partial w_{ij}^{(k-1)}}
-        = w_{j,o}^{(k)}y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}
+        = w_{j,o}^{(k)}y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}.
 \]
-Što vraćanjem u početnu jednakost daje:
+Što vraćanjem u početni izraz daje:
 \begin{equation*}
 \begin{split}
     \frac{\partial E}{\partial w_{ij}^{(k-1)}}
         & = -\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)}y_j^{(k)} (1 - y_j^{(k)}) y_i^{(k - 1)}\\
-        & = -y_i^{(k - 1)} y_j^{(k)} (1 - y_j^{(k)})\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)}
+        & = -y_i^{(k - 1)} y_j^{(k)} (1 - y_j^{(k)})\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)}.
 \end{split}
 \end{equation*}
 Ponovno se uvodi oznaka $\delta_j^{k}$ za grešku neurona, koja je definirana kao:
 \[
-    \delta_j^{k} = y_j^{(k)} (1 - y_j^{(k)})\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)} 
+    \delta_j^{k} = y_j^{(k)} (1 - y_j^{(k)})\displaystyle\sum_{o = 1}^m\delta_o^{(k+1)}w_{j,o}^{(k)}.
 \]
 Te se sada konačni rezultat može zapisati kao:
 \[
     \frac{\partial E}{\partial w_{ij}^{(k-1)}} =
-    -y_i^{(k - 1)}\delta_j^{k}
+    -y_i^{(k - 1)}\delta_j^{k}.
 \]
 
 \subsubsection{Rezultati}
@@ -959,7 +960,7 @@ Te se sada konačni rezultat može zapisati kao:
 
 Primjena ovako opisanog algoritma stvara probleme zbog činjenice da se broj podataka za pojedine kategorije skupa za učenje drastično razlikuju.
 To je riješeno tako da se prilikom ažuriranja vrijednosti težine, osim sa stopom učenja podatak množi i s konstantom koja je obrnuto proporcionalna broju uzoraka za trenutnu kategoriju podatka.
-Vidljivo je kako u početnim iteracijama algoritma postotak točne klasifikacije korištenjem algoritma backpropagation raste približno slično rastu funkcije dobrote genetskog algoritma.
+Vidljivo je kako u početnim iteracijama algoritma postotak točne klasifikacije korištenjem algoritma propagacije pogreške unatrag raste približno slično rastu funkcije dobrote genetskog algoritma.
 Najveća razlika je uočiva kod vrijednosti koje prepoznaju više od $0.9$ podataka točno.
 Kod ovog algoritma takve se neuronske mreže i dalje unaprjeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
 Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od preko $0.99$ na testu za učenje.
@@ -1004,7 +1005,7 @@ Većina krivo prepoznatih točaka nalazi se u tablici s tekstom pisanom na raču
 Na pogrešku također utječe i činjenica da je jaki klasifikator izgrađen od samo $20$ slabih, premda se na grafu na slici \ref{fig:ada} primjećuje kako trend pada $\alpha$ vrijednosti sugerira kako postoji još slabih klasifikatora koji bi doprinosili konačnom rezultatu.
 Unatoč broju grešaka, klasifikator je moguće koristiti jer se njegov izlaz prosljeđuje drugom klasifikatoru čime se ostvaruje veća točnost, zbog čega je u konačnici korišteno rješenje s manjim brojem klasifikatora kako bi se postigla veća brzina.\\
 
-Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $107.595$, $117.843$, $99.004$, $107.530$, $115.456$, $103.617$, $118.659$, $122.063$, $117.730$, $115.719$, izraženo u milisekundama. 
+Algoritam je pokrenut na $10$ primjera veličine $3507\times2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $107.595$, $117.843$, $99.004$, $107.530$, $115.456$, $103.617$, $118.659$, $122.063$, $117.730$, $115.719$, izraženo u milisekundama. 
 Prosječno vrijeme izvođenja iznosi $112.5$ms.
 
 \begin{figure}[!ht]
@@ -1020,7 +1021,7 @@ Također se uočava kako su sve stvarne vrijednosti uspješno prepoznate, ali po
 Problem je moguće riješiti promjenom arhitekture neuronske mreže dodavanjem dodatnih neurona ili čak dodavanjem novog skrivenog sloja, ili jednostavno drugačijom definicijom značajki ili dodavanjem novih značajki.
 Kako se neuronska mreža koristi nad rezultatima koje daje prethodni klasifikacijski algoritam, dobiveni rezultati pokazuju se zadovoljavajućima.\\
 
-Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $811.518$, $669.809$, $701.195$, $727.840$, $657.510$, $669.887$, $672.872$, $642.865$, $656.021$, $675.564$, izraženo u milisekundama. 
+Algoritam je pokrenut na $10$ primjera veličine $3507\times2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $811.518$, $669.809$, $701.195$, $727.840$, $657.510$, $669.887$, $672.872$, $642.865$, $656.021$, $675.564$, izraženo u milisekundama. 
 Prosječno vrijeme izvođenja iznosi $688.5$ms.\\
 
 Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$ uz nivo značajnosti od $\alpha = 0.05$ dobivena je $P$ vrijednost $9.421\cdot10^{-12}$ na temelju čega se hipoteza $H_0$ odbacuje u korist hipoteze $H_1$ čime se zaključuje kako je prosječno vrijeme izvođenja klasifikacije algoritmom AdaBoost statistički značajno manje od prosječnog vremena izvođenja klasificiranja korištenjem umjetne neuronske mreže.
@@ -1037,7 +1038,7 @@ Slika \ref{fig:combinedResult} prikazuje rezultat dobiven korištenjem oba preth
 Primjećuje se kako su sve točke od interesa i dalje prepoznate, no svejedno postoji manji broj točaka koje nisu trebale biti prepoznate.
 Valja uočiti kako su sve stvarne točke od interesa prepoznate nekoliko puta, što je kasnije iskorišteno kako bi se maknule lažno prepoznate točke.\\
 
-Algoritam je pokrenut na $10$ primjera veličine $3507x2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $423.615$, $415.388$, $397.672$, $417.765$, $446.087$, $396.153$, $403.633$, $414.420$, $416.799$, $407.353$, izraženo u milisekundama. 
+Algoritam je pokrenut na $10$ primjera veličine $3507\times2480$ slikovnih elemenata te su zabilježena sljedeća vremena izvođenja: $423.615$, $415.388$, $397.672$, $417.765$, $446.087$, $396.153$, $403.633$, $414.420$, $416.799$, $407.353$, izraženo u milisekundama. 
 Prosječno vrijeme izvođenja iznosi $413.9$ms.\\
 
 Primjenom T-testa uz hipoteze $H_0: \mu_1 = \mu_2$ i $H_1: \mu_1 < \mu_2$, gdje je sa $\mu_1$ označeno prosječno vrijeme izvođenja klasifikatora dobivenim korištenjem algoritma AdaBoost i neuronske mreže, a sa $\mu_2$ klasifikator koji koristi isključivo neuronsku mrežu.
@@ -1068,10 +1069,11 @@ Tablica se prepoznaje tako da se naprave liste $x$ i $y$ koordinata prepoznatih 
 U sortiranim listama se traže grupe vrijednosti te se računa aritmetička sredina svake grupe kako bi se odredila $x$ odnosno $y$ koordinata svakog stupca odnosno retka tablice. 
 Prilikom pronalaženja grupa vrijednosti provjerava se i broj pojavljivanja vrijednosti kako bi se izbacile točke koje se pojavljuju malo puta, odnosno koje su nastale greškom u klasifikaciji.\\
 
-Rekonstrukcija tablice radi se tako da se na svaki mogući par $x$
-i $y$ koordinata iz lista koordinata postavlja odgovarajući vrh ćelije.
-Pri tome više ne postoji mogućnost da točke na istoj liniji imaju različite koordinate, što predstavlja problem u slučaju rotacije slike.
-Dodatna limitacija ovog pristupa je korištenje pretpostavke da sve tablice imaju jednak broj ćelija u svakom retku, čime se gubi mogućnost spajanja ćelija ili tablica čiji vanjski obrub nije kvadratnog oblika.
+Rekonstrukcija tablice vrši se uz pretpostavku da su sve $Y$-koordinate jednog retka vrhova ćelija jednake, što vrijedi u slučaju slike koja nije rotirana, odnosno čija je rotacija ispravljena postupkom opisanim u poglavlju \ref{ch:skewDetection}.
+Analogno tome vrijedi da su sve $X$-koordinate jednog stupca vrhova ćelija međusobno jednake.
+Korištenjem tih dviju pretpostavki i vrijednosti $x$ i $y$ koordinata koje su prethodno određene određuje se gdje se nalazi pojedini redak, odnosno stupac tablice.
+Svaka pojedina ćelija određena je presjecištem ovako definiranih redaka i stupaca.
+Limitacija ovog pristupa je korištenje pretpostavke da sve tablice imaju jednak broj ćelija u svakom retku, čime se gubi mogućnost spajanja ćelija ili tablica čiji vanjski obrub nije kvadratnog oblika.
 Unatoč tome, u radu je korišten ovaj način rekonstrukcije tablice jer se pokazao robusnijim u odnosu na prepoznavanje grupa točaka za svaki vrh, a tablice nad kojima se algoritam koristi zadovoljavaju dodatne restrikcije ovog pristupa.\\
 
 \begin{figure}[ht!]
@@ -1089,8 +1091,8 @@ U trećem skupu uspješno je prepoznato $685/685$ tablica za što je bilo potreb
 U četvrtom skupu uspješno je prepoznato $580/580$ tablica za što je bilo potrebno $21010.13$ms, odnosno prosječno $36.22$ms po tablici.
 Valja napomenuti kako ovi rezultati ne znače da je svaka ćelija točno određena, već su moguća manja odstupanja.\\
 
-Korištenjem postupka detekcije koji koristi prethodno stečeno znanje kao što je prethodno bilo opisano dobiveni su sljedeći rezultati.
-U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $7779.37$ms, odnosno prosječno $12.25$ms po tablici..
+Korištenjem postupka detekcije koji koristi prethodno stečeno znanje, na način da se vrhovi ćelija ne pretražuju na cijeloj slici, već samo u okolini prethodno pronađenih vrhova, kao što je prethodno bilo opisano u poglavlju \ref{ch:tableDetection}, dobiveni su sljedeći rezultati.
+U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $7779.37$ms, odnosno prosječno $12.25$ms po tablici.
 U drugom skupu uspješno je prepoznato $362/362$ tablica za što je bilo potrebno $6157.72$ms, odnosno prosječno $17.01$ms po tablici.
 U trećem skupu uspješno je prepoznato $650/685$ tablica za što je bilo potrebno $13174.98$ms, odnosno prosječno $19.23$ms po tablici.
 U četvrtom skupu uspješno je prepoznato $578/580$ tablica za što je bilo potrebno $10059.67$ms, odnosno prosječno $17.34$ms po tablici.
