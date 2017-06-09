@@ -49,8 +49,8 @@ Na taj se način određuju vrhovi ćelija iz čega se rekonstruira tablica, te j
 
 Predstavljeno rješenje počinje od slike u sivim tonovima (engl. \textit{gray-scale}), koja se binarizira kako bi se dobila slika koja se sastoji od isključivo crne i bijele boje.
 Dobivena crno-bijela slika koristi se u daljnjoj obradi te se provjerava je li slika rotirana, odnosno kut rotacije iste, nakon čega se slika po potrebi rotira kako bi tablica stajala okomito.
-Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju kuteva ćelija korištenjem klasifikatora temeljenog na algoritmu AdaBoost i klasifikatora primjenom umjetne neuronske mreže.
-Prepoznati uglovi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljno opisano u nastavku rada.
+Ovako obrađena slika koristi se dalje za detekciju tablica, postupkom koji se temelji na prepoznavanju uglova ćelija korištenjem klasifikatora temeljenog na algoritmu AdaBoost i klasifikatora primjenom umjetne neuronske mreže.
+Prepoznati uglovi ćelija kasnije se rekonstruiraju u tablicu, a što je detaljno opisano u nastavku rada.\\
 
 Ostatak ovog rada organiziran je kako slijedi.
 U poglavlju \ref{ch:binarization} objašnjen je postupak binarizacije slike.
@@ -105,7 +105,7 @@ Za potrebe opisanoga koristi se Wienerov niskopropusni filter \cite{book:Two-Dim
 Označimo s $I_s(x, y)$ vrijednost slikovnog elementa početne slike, a s $I(x, y)$ vrijednost slikovnog elementa filtrirane slike.
 Tada se filtrirana slika $I$ može izračunati pomoću izraza opisanog u knjizi \cite{book:Two-Dimensional-Signal-Image-Processing}:
 \[I(x, y) = \mu(x, y) + \frac{\sigma(x, y)^2}{(\sigma(x, y)^2 - v^2)}(I_s(x, y) - \mu(x, y)).\]
-$\mu(x, y)$ označava je aritmetičku sredinu vrijednosti intenziteta slikovnih elemenata u okruženju veličine $N\times M$, prema izrazu:
+$\mu(x, y)$ označava aritmetičku sredinu vrijednosti intenziteta slikovnih elemenata u okruženju veličine $N\times M$, prema izrazu:
 \[\mu(x, y) = \frac{1}{NM} 
     \displaystyle \sum_{i = x-\frac{N}{2}}^{x+\frac{N}{2}}
     \displaystyle \sum_{j = y-\frac{M}{2}}^{y+\frac{M}{2}}
@@ -155,7 +155,7 @@ Konačna slika $N$, dobivena je od početne slike $I$ na sljedeći način:
         0,  & \quad \text{inače}.\\
     \end{cases}
 \]
-Rezultati ovog postupka, korištenjem kliznog prozora dimenzija $20$x$20$, uz $k=-0.2$, prikazan je na slici \ref{fig:niblack}.
+Rezultati ovog postupka, korištenjem kliznog prozora dimenzija $20\times20$, uz $k=-0.2$, prikazan je na slici \ref{fig:niblack}.
 Na slici se primjećuje kako je sav tekst prepoznat i prikazan crnom bojom, ali je također prisutan i jako izražen šum.
 
 \subsection{Procjena pozadine}
@@ -263,7 +263,7 @@ Prisutnost šuma se nastoji ukloniti tako što se pregledava cijela slika te se 
 Za potrebe toga koristi se klizni prozor dimenzija $n\times n$.
 U slučaju kada je središnji element kliznog prozora crne boje, prebrojavaju se svi pozadinski (bijeli) slikovni elementi unutar kliznog prozora, što je označeno s $P_{sh}$.
 Ako je $P_{sh} > k_{sh}$, gdje je $k_{sh}$ proizvoljno zadana konstanta, središnji slikovni element se postavlja u bijelu boju.
-Na slici \ref{fig:shrink} prikazan je rezultat obrade binarizirane slike navedenim postupkom uz $n = 5$ i $k_{sh} = 0.8$.
+Na slici \ref{fig:shrink} prikazan je rezultat obrade binarizirane slike navedenim postupkom uz $n = 5$ i $k_{sh} = 0.8n^2$.
 Primjećuje se kako i dalje postoje smetnje na slici.
 Uočene smetnje mogu se ublažiti smanjenjem vrijednosti parametra $k_{sh}$, čime se osigurava bolje uklanjanje šuma.
 Problem kod toga je što se smanjenjem tog parametra istovremeno i povećava vjerojatnost da se uklone elementi teksta, što nije poželjno.\\
@@ -271,7 +271,7 @@ Problem kod toga je što se smanjenjem tog parametra istovremeno i povećava vje
 Drugi korak spomenut u ovom postupku provodi se slično kao i prethodni.
 Potrebno je prebrojati broj crnih slikovnih elemenata, $P_{sw}$, koji se nalaze unutar kliznog prozora dimenzija $n\times n$.
 Ako je srednji element bijel i vrijedi $P_{sw} > k_{sw}$, središnji se element pretvara u crni.
-Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6$.
+Postupak je demonstriran na slici \ref{fig:swell}, uz $n = 5$ i $k_{sw} = 0.6n^2$.
 
 
 \chapter{Prepoznavanje zakrivljenosti slike}
@@ -295,7 +295,7 @@ Ova pretpostavka vrijedi isključivo iz razloga da se rad fokusira na prepoznava
 
 Temeljna ideja koja se koristi prilikom izračuna kuta rotacije je ta da se dokument presiječe određenim brojem vertikalnih linija, što je predloženo u radu \cite{article:Skew-detection}.
 Za svaku vertikalnu liniju određuju se točke u kojima ona sječe vodoravne linije početnog dokumenta, kao što je prikazano na slici \ref{fig:skew_points}.
-Dobivene točke presjecišta označene su kao $T_{n, m}(x_{n, m}, y_{n, m})$, gdje $n$ označava broj vertikalne linije gledano od lijeva na desno, a broj $m$ označava točku presjeka za danu vertikalnu liniju, gledano od gore prema dole.
+Dobivene točke presjecišta označene su kao $T_{n, m}(x_{n, m}, y_{n, m})$, gdje $n$ označava broj vertikalne linije gledano s lijeva na desno, a broj $m$ označava točku presjeka za danu vertikalnu liniju, gledano od gore prema dole.
 
 \begin{figure}[ht!] 
     \centering
@@ -341,12 +341,12 @@ U slučaju da je dokument rotiran, ovako određen kut $\alpha$ bit će jednak st
 Jedan od problema koji preostaje je početna pretpostavka da se točke $T_{1, a}$ i $T_{b, c}$ nalaze na istoj vodoravnoj liniji dokumenta, što neće biti istinito u većini slučajeva.
 To se rješava tako da se izračunaju kutevi koje zatvaraju svi pravci koji počinju u točki $T_{1, a}$ i prolaze kroz točku $T_{b, c}$ za svaku moguću točku $T_{b, c}$.
 Pritom se bilježi koliko je puta izračunat pojedini kut.
-Uz ovaj pristup rotaciju dokumenta više ne određuje kut $\alpha$ koji je dobiven za jedan pravac, već onaj kut koji je najviše puta zabilježen.
+Uz ovaj pristup, rotaciju dokumenta više ne određuje kut $\alpha$ koji je dobiven za jedan pravac, već onaj kut koji je najviše puta zabilježen.
 Ovaj pristup prikazan je na slici \ref{fig:skew_verticalLines}, gdje je za određenu podjelu vertikalnim linijama i odabranu početnu točku (označeno plavom bojom na slici) prikazan izračun kuteva triju pravaca: \textbf{A}, \textbf{B}, \textbf{C}.
 Slika \ref{fig:skew_equidistant} također prikazuje i važnost načina odabira vertikalnih linija kojima se dokument presjeca.
-Na navedenoj slici linije su postavljene ekvidistantno, zbog čega dolazi do toga da se sva tri pravca prolaze kroz jednak broj presjecišta horizontalnih i vertikalnih linija.
-Posljedica toga je da se svaki od triju prikazanih kuteva javlja $4$ puta što je prikazano crvenim točkama presjecišta, zbog čega nije moguće odrediti koji se kut javlja najveći broj puta.
-Za razliku od toga, na slici \ref{fig:skwe_random} koriste se vertikalne linije s nasumičnim međusobnim udaljenostima te se primjećuje kako se na njoj pravac označen sa \textbf{B} prolazi kroz $4$ presjecišta, dok pravci \textbf{A} i \textbf{C} prolaze svaki kroz samo jedno.
+Na navedenoj slici linije su postavljene ekvidistantno, zbog čega dolazi do toga da se sva tri pravca prolaze kroz jednak broj presjecišta horizontalnih i vertikalnih linija, što je na slici prikazano crvenim točkama presjecišta.
+Posljedica toga je da se svaki od triju prikazanih kuteva javlja $4$ puta, zbog čega nije moguće odrediti koji se kut javlja najveći broj puta.
+Za razliku od toga, na slici \ref{fig:skwe_random} koriste se vertikalne linije s nasumičnim međusobnim udaljenostima te se primjećuje kako na njoj pravac označen sa \textbf{B} prolazi kroz $4$ presjecišta, dok pravci \textbf{A} i \textbf{C} prolaze svaki kroz samo jedno.
 Na temelju toga se zaključuje da je kut kojeg pravac \textbf{B} zatvara s $x$ osi jednak rotaciji dokumenta, a da se ostali izračunati kutevi javljaju kao rezultat točaka odabranih na različitim horizontalnim pravcima.
 
 \section{Rezultati}
@@ -415,7 +415,7 @@ Ovaj pristup nije detaljnije razrađen u ovom radu te nije korišten u implement
 \section{Detekcija vrhova ćelija}
 Detekcija vrhova ćelija obavlja se tako da se svaki dio slike provjerava te se za njega utvrđuje prikazuje li on vrh ćelije ili ne. 
 Kako bi se to izvelo, potrebno je odrediti točno koji dio slike se provjerava u nekom određenom trenutku, a što se čini korištenjem kliznog prozora. 
-Definiran je prozor određenih dimenzija $X$x$Y$ te se promatra samo dio slike unutar njega. 
+Definiran je prozor određenih dimenzija $X\times Y$ te se promatra samo dio slike unutar njega. 
 Tako dobiven isječak slike potom se analizira i ispituje sadrži li on vrh ćelije ili ne.
 Jednom kad je detekcija završena za trenutni prozor, prozor se pomiče po $x$ osi za udaljenost $dx$, te se detekcija vrši na tako dobivenom novom isječku slike.
 Jedno od mogućih poboljšanja ove metode predloženo je u radu \cite{ViolaJones}, gdje se ne koristi fiksna veličina pomičnog prozora, već se pretraga započinje s jednom veličinom prozora te se ona iterativno smanjuje tijekom pretrage.
@@ -678,7 +678,7 @@ Ovisno o broju vrhova ovog tipa moguće je odrediti i točan izgled tablice u sl
 Vrhovi označeni s $5, 6, 7$ i $8$ određuju vanjski obrub tablice, dok je unutrašnjost iste određena vrhovima tipa $9$ sa slike \ref{fig:corners}.
 Kako bi se ćelije točno poredale u prostoru potrebno je sortirati popis vrhova istih po jednoj, pa zatim po drugoj koordinati.
 Tako je moguće vrhove rasporediti u dvodimenzionalno polje na način da se svi vrhovi s približno jednakom vrijednošću $Y$-koordinate, uz pretpostavku da je slika izravnata postupkom opisanom u poglavlju \ref{ch:skewDetection}, pohrane u isti red polja, te tako definiraju isti redak tablice.
-Ponavljanjem postupka za sve različite vrijednosti $Y$ koordinata određuju se svi redci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
+Ponavljanjem postupka za sve različite vrijednosti $Y$-koordinata određuju se svi redci, a kako su točke prethodno bile sortirane vrijedi da $n$-ta točka svakog retka opisuje $n$-ti stupac tablice.
 
 \section{Korištenje prethodno stečenog znanja}
 Prilikom prvog prepoznavanja tablice nije moguće pretpostaviti ništa o njezinom izgledu te je do sada opisana metoda jedina točna i efikasna mogućnost.
@@ -717,6 +717,7 @@ Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.45\linewidth]{Images/Feature_false_0.png}
+        \captionsetup{justification=centering}
         \caption{Slika koja ne sadrži vrh ćelije}
         \label{fig:featureDemo0b}
     \end{subfigure}
@@ -744,6 +745,7 @@ Na slici \ref{fig:featureDemo0a} prikazan je vrh ćelije te je ovu sliku potrebn
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.45\linewidth]{Images/Feature_false_1.png}
+        \captionsetup{justification=centering}
         \caption{Prikaz značajke na slici koja se ne smije prepoznati}
         \label{fig:featureDemo1b}
     \end{subfigure}
@@ -771,6 +773,7 @@ Također se primjećuje kako lijeve dvije značajke pronalaze udaljenosti do raz
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.45\linewidth]{Images/Feature_false_2.png}
+        \captionsetup{justification=centering}
         \caption{Prikaz značajke na slici koja se ne smije prepoznati}
         \label{fig:featureDemo2b}
     \end{subfigure}
@@ -782,7 +785,7 @@ Ove značajke vraćaju kvalitetnu informaciju o tome gdje se na slici nalazi lin
 Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta s okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba, što je prikazano na slici \ref{fig:featureDemo2}.
 Tako dobivene $4$ značajke su u stanju kvalitetno prikazati postoji li linija na tom mjestu ili ne, ali ne provjeravaju položaj linije, što je napravljeno prethodnim značajkama.
 Slika \ref{fig:featureDemo2a} prikazuje slučaj u kojemu svaka okomita zraka ima točno jedno sjecište, koje je označeno crvenim križićem.
-Na slici \ref{fig:featureDemo2b} postoji veći broj sjecišta kod većien značajki što je uzrokovano sadržajem ćelije koji se nalazi na slici.\\
+Na slici \ref{fig:featureDemo2b} postoji veći broj sjecišta kod većine značajki što je uzrokovano sadržajem ćelije koji se nalazi na slici.\\
 
 \begin{figure}[th!]
     \centering
@@ -796,6 +799,7 @@ Na slici \ref{fig:featureDemo2b} postoji veći broj sjecišta kod većien znača
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.45\linewidth]{Images/Feature_false_3.png}
+        \captionsetup{justification=centering}
         \caption{Prikaz značajke na slici koja se ne smije prepoznati}
         \label{fig:featureDemo3b}
     \end{subfigure}
@@ -820,6 +824,7 @@ Ovisno o odmaku od središnje dijagonale ovisi i tolerancije prema odmaku sredi�
     \begin{subfigure}{.5\textwidth}
         \centering
         \includegraphics[width=.45\linewidth]{Images/Feature_false_4.png}
+        \captionsetup{justification=centering}
         \caption{Prikaz značajke na slici koja se ne smije prepoznati}
         \label{fig:featureDemo4b}
     \end{subfigure}
@@ -828,7 +833,7 @@ Ovisno o odmaku od središnje dijagonale ovisi i tolerancije prema odmaku sredi�
 \end{figure}
 
 Uz navedene, koriste se značajke koje se temelje na razlici broja crnih slikovnih elemenata u određenim kvadratnim područjima.
-Za potrebe toga definirana su $2$ značajke koje prikupljaju informacije o postojanju vodoravne linije. 
+Za potrebe toga definirane su $2$ značajke koje prikupljaju informacije o postojanju vodoravne linije. 
 Obje značajke koriste pravokutnik za uzorkovanje kakav je prikazan na slici \ref{fig:haar3}, a pravokutnici se po širini protežu od $0.1$ do $0.9$ širine slike uzorka, što prikazuje slika \ref{fig:featureDemo4}.
 Visine pravokutnika se razlikuju te jedan prekriva većinu visine slike, dok je crno područje definirano kao uži dio oko centra slike.
 Tako ova značajka pruža uvid u odnos cjelokupne slike, ali zbog toga na nju jače utječu ostali crni elementi prisutni na slici.
@@ -885,6 +890,7 @@ U koraku selekcije potrebno je odabrati dvije jedinke koje će biti korištene u
 Postoje različiti postupci selekcija, a cilj istih je mogućnost utjecanja na to koje će jedinke stvarati potomstvo. 
 Ako se uvijek biraju samo najbolje jedinke, populacija kroz samo nekoliko generacija u potpunosti gubi genetsku raznolikost zbog čega lako zapinje u lokalnim optimumima.
 S druge strane, ako se sve jedinke biraju nasumično s jednakom vjerojatnošću, populacija neće napredovati te algoritam neće konvergirati ka boljim rješenjima.\\
+
 Kako bi se ostvario balans između navedena dva načina odabira, u implementaciji su korištena $2$ načina selekcije roditelja.
 Prvi roditelj se bira nasumično, gdje svaka jedinka ima jednaku vjerojatnost biti odabrana.
 Drugi roditelj se bira korištenjem turnirske selekcije, koja odabire određen broj potencijalnih roditelja (u ovom slučaju je korištena veličina turnira $3$) te od tako nasumično odabranih roditelja odabire onoga s najvećom funkcijom dobrote.
@@ -1079,10 +1085,11 @@ Primjena ovako opisanog algoritma stvara probleme zbog činjenice da se broj pod
 To je riješeno tako da se prilikom ažuriranja vrijednosti težine, osim sa stopom učenja podatak množi i s konstantom koja je obrnuto proporcionalna broju uzoraka za trenutnu kategoriju podatka.
 Vidljivo je kako u početnim iteracijama algoritma postotak točne klasifikacije korištenjem algoritma propagacije pogreške unatrag raste približno slično rastu funkcije dobrote genetskog algoritma.
 Najveća razlika je uočiva kod vrijednosti koje prepoznaju više od $0.9$ podataka točno.
-Kod ovog algoritma takve se neuronske mreže i dalje unaprjeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
+Kod ovog algoritma takve se neuronske mreže i dalje unaprjeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.\\
+
 Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od $0.99503$ na skupu za učenje.
 Promjenom aritekture neuronske mreže na način da se doda novi skriveni sloj postiže se uspješnost od $0.99562$.
-Ovakva neuronska mreža ima bolji rezultat od arhitekture koja se koristi u ostatku rada, ali zbog toga ima i veće vrijeme izvođenja, zbog čega je odlučeno da se ne koristi.
+Ovakva neuronska mreža ima bolji rezultat od arhitekture koja se koristi u ostatku rada, ali ujedno ima i veće vrijeme izvođenja, zbog čega je odlučeno da se ne koristi.
 Testiranje mreže arhitekture $24\times10\times10$ pokazalo je kako takva mreža ostvaruje točnost od $0.985$ što predstavlja značajnu razliku od arhitekture $24\times14\times10$ koja je korištena u ostatku rada.
 
 \section{Algoritam AdaBoost}
@@ -1091,7 +1098,7 @@ Svaki slabi klasifikator sastoji se od značajke, praga, konstante $p$ koja odre
 Vrijednost $\alpha$ računa se na temelju ostalih argumenata klasifikatora na skupu podataka za treniranje koji je jednak skupu podataka korištenom prilikom treniranja umjetne neuronske mreže.
 Ostale parametre je potrebno odabrati tako da se minimizira pogreška klasifikatora, što je učinjeno tako da se nasumično odabere značajka koja će se koristiti te se ona inicijalizira s nasumično odabranim vrijednostima.
 Ostali parametri također su nasumično odabrani te se za tako dobiven klasifikator računa težinska pogreška na skupu podataka za učenje.
-Postupak se ponavlja velik broj puta kako bi se dobio klasifikator s čim manjom pogreškom, koji se koristi prilikom izrade jakog klasifikatora.
+Postupak se ponavlja velik broj puta kako bi se dobio klasifikator s čim manjom pogreškom, koji se koristi prilikom izrade jakog klasifikatora.\\
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.85\textwidth]{Images/Ada.pdf}
@@ -1109,8 +1116,7 @@ Zbog trenda pada doprinosa svakog sljedećeg klasifikatora moguće je jaki klasi
 
 \subsection{Detekcija vrhova ćelija}
 Implementirani algoritmi testirani su na skupu podataka koji se sastoji od $216$ ručno ispunjenih tablica, koje su korištene za stvaranje skupa slika vrhova ćelija koji je korišten kao skup za učenje.
-Konačni algoritmi su također testirani na skupu od $2266$ slika dobivenih digitalizacijom obrazaca za odgovore ispita, što su podatci za koje je algoritam izrađen.
-
+Konačni algoritmi su također testirani na skupu od $2266$ slika dobivenih digitalizacijom obrazaca za odgovore ispita, što su podatci za koje je algoritam izrađen.\\
 \begin{figure}[!ht]
     \centering
     \frame{\includegraphics[width=.75\linewidth]{Images/ada.png}}
@@ -1174,8 +1180,7 @@ Drugi način odbacivanja točke radi se kada se unutar dozvoljenog radijusa oko 
 Problem može nastupiti kada se krivo prepoznata točka nalazi u blizini stvarnog vrha, zbog čega se pozicija konačne točke pomiče u odnosu na stvarno poziciju.\\
 
 Konačna rekonstrukcija tablice radi se sortiranjem preostalih točaka po jednoj, zatim po drugoj koordinati.
-Pritom treba paziti da točke koje leže na istoj vodoravnoj liniji tablice ne moraju nužno imati jednake vrijednosti $y$ koordinata, zbog čega prilikom sortiranja treba zanemariti razlike manje od određene konstante.
-
+Pritom treba paziti da točke koje leže na istoj vodoravnoj liniji tablice ne moraju nužno imati jednake vrijednosti $y$ koordinata, zbog čega prilikom sortiranja treba zanemariti razlike manje od određene konstante.\\
 \begin{figure}[!ht]
     \centering
     \frame{\includegraphics[width=.75\linewidth]{Images/tableV1.png}}
@@ -1211,6 +1216,15 @@ U trećem skupu uspješno je prepoznato $685/685$ tablica za što je bilo potreb
 U četvrtom skupu uspješno je prepoznato $580/580$ tablica za što je bilo potrebno $21010.13$ms, odnosno prosječno $36.22$ms po tablici.
 Valja napomenuti kako ovi rezultati ne znače da je svaka ćelija točno određena, već su moguća manja odstupanja.\\
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/TimeComparison}
+    \captionsetup{justification=centering}
+    \caption{Primjer vremena izvođenja pojedinih algoritama}
+    \label{fig:compareTime}
+\end{figure}
+
+
 Korištenjem postupka detekcije koji koristi prethodno stečeno znanje, na način da se vrhovi ćelija ne pretražuju na cijeloj slici, već samo u okolini prethodno pronađenih vrhova, kao što je prethodno bilo opisano u poglavlju \ref{ch:tableDetection}, dobiveni su sljedeći rezultati.
 U prvom skupu uspješno je prepoznato $635/635$ tablica za što je bilo potrebno $7779.37$ms, odnosno prosječno $12.25$ms po tablici.
 U drugom skupu uspješno je prepoznato $362/362$ tablica za što je bilo potrebno $6157.72$ms, odnosno prosječno $17.01$ms po tablici.
@@ -1224,27 +1238,19 @@ Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađeni
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=.75\linewidth]{Images/TimeComparison}
+    \includegraphics[width=0.8\textwidth]{Images/SuccessComparison}
     \captionsetup{justification=centering}
-    \caption{Primjer vremena izvođenja pojedinih algoritama}
-    \label{fig:compareTime}
+    \caption{Prikaz uspješnosti klasifikacije pojedinih algoritama}
+    \label{fig:compareSuccess}
 \end{figure}
 
 Konačni rezultati opisanih algoritama prikazani su grafički priloženim dijagramima.
 Na dijagramu na slici \ref{fig:compareTime} prikazana su prosječna vremena izvođenja algoritama za slike veličine $3507\times2480$ slikovnih elemenata.
 Dijagram sa slike \ref{fig:compareSuccess} prikazuje točnost prepoznavanja vrhova ćelija za svaki algoritam.
-Usporedbo ta dva dijagrama primjećuje se kako neuronska mreža radi sporije od klasifikatora temeljenog na algoritmu AdaBoost, ali zbog toga ima veću točnost, kao što je prethodno već bilo objašnjeno.
+Usporedbom ta dva dijagrama primjećuje se kako neuronska mreža radi sporije od klasifikatora temeljenog na algoritmu AdaBoost, ali zbog toga ima veću točnost, kao što je prethodno već bilo objašnjeno.
 Također se primjećuje kako kombinacijom ta dva algoritma nastaje klasifikator koji je u mogućnosti puno točnije određivati vrhove ćelija, a za što mu je u konačnici potrebno manje vremena nego neuronskoj mreži koja pokušava prepoznati sve elemente sa slike kliznim prozorom.
 Zadnji prikazani algoritam koristi neuronske mreže i algoritam AdaBoost, ali uz to koristi i prethodno stečeno znanje na način da vrhove ćelija pretražuje samo u određenom radijusu od prethodno pronađenih vrhova.
 Na taj je način postignuto da taj algoritam postiže veliku točnost uz malo vrijeme izvođenja.
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=.75\linewidth]{Images/SuccessComparison}
-    \captionsetup{justification=centering}
-    \caption{Prikaz uspješnosti klasifikacije pojedinih algoritama}
-    \label{fig:compareSuccess}
-\end{figure}
 
 \chapter{Zaključak}
 \label{ch:conclusion}
