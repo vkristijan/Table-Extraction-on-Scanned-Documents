@@ -921,6 +921,10 @@ Opisana neuronska mreža ima $500$ težina koje je potrebno postaviti, što zna�
 Na slici \ref{fig:ga} prikazana je vrijednost najbolje jedinke pronađene genetskim algoritmom u odnosu na iteraciju algoritma.
 Vidljivo je kako populacija u početnih $1000$ iteracija brzo napreduje, no pretraga se nakon toga usporava te algoritam ne uspijeva postići zadovoljavajuće razine točnosti.
 U prikazanom primjeru, genetski algoritam postiže vrijednosti funkcije dobrote od $0.98$, nakon čega konvergira u lokalnom optimumu.
+Korištenjem genetskog algoritma na drugačijim arhitekturama neuronske mreže rezultira sličnim rezultatima.
+Dodavanjem dodatnih neurona u skrivenom sloju ne postiže se značajna razlika u konačnom postotku ispravne klasifikacije.
+Pokušajem dodavanja novih slojeva u neuronsku mrežu postupak treniranja postaje znatno sporiji te algoritam sporije konvergira.
+Unatoč tome, algoritam ne postiže rezultate koji bi klasificirali barem $0.99$ primjera točno.
 
 \subsection{Treniranje korištenjem algoritma propagacije pogreške unatrag}
 Drugi pristup treniranju neuronske mreže je korištenje algoritma propagacije pogreške unatrag koji je detaljno opisan u knjizi \cite{neuroracunarstvo}.
@@ -1076,7 +1080,10 @@ To je riješeno tako da se prilikom ažuriranja vrijednosti težine, osim sa sto
 Vidljivo je kako u početnim iteracijama algoritma postotak točne klasifikacije korištenjem algoritma propagacije pogreške unatrag raste približno slično rastu funkcije dobrote genetskog algoritma.
 Najveća razlika je uočiva kod vrijednosti koje prepoznaju više od $0.9$ podataka točno.
 Kod ovog algoritma takve se neuronske mreže i dalje unaprjeđuju što je vidljivo blagim nagibom krivulje na slici \ref{fig:backprop}.
-Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od preko $0.99$ na testu za učenje.
+Za razliku od genetskog algoritma, ovaj algoritam uspijeva doći do vrijednosti od $0.99503$ na skupu za učenje.
+Promjenom aritekture neuronske mreže na način da se doda novi skriveni sloj postiže se uspješnost od $0.99562$.
+Ovakva neuronska mreža ima bolji rezultat od arhitekture koja se koristi u ostatku rada, ali zbog toga ima i veće vrijeme izvođenja, zbog čega je odlučeno da se ne koristi.
+Testiranje mreže arhitekture $24\times10\times10$ pokazalo je kako takva mreža ostvaruje točnost od $0.985$ što predstavlja značajnu razliku od arhitekture $24\times14\times10$ koja je korištena u ostatku rada.
 
 \section{Algoritam AdaBoost}
 Za potrebe ovog klasifikacijskog algoritma potrebno je odrediti način na koji se uče slabi klasifikatori.
