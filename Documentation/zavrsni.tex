@@ -1215,6 +1215,29 @@ Podatci iz trećeg skupa ponovno su detektirani korištenjem drugačije odabrane
 Navedeni problem moguće je riješiti ponovnom detekcijom tablice, bez korištenja prethodno stečenog znanja za slučajeve u kojima se tablica krivo prepoznala.
 Takve slučajeve lako je programski prepoznati jer sadrže manji broj pronađenih vrhova ćelija od onoga koji je očekivan.\\
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/TimeComparison}
+    \captionsetup{justification=centering}
+    \caption{Primjer vremena izvođenja pojedinih algoritama}
+    \label{fig:compareTime}
+\end{figure}
+
+Konačni rezultati opisanih algoritama prikazani su grafički priloženim dijagramima.
+Na dijagramu na slici \ref{fig:compareTime} prikazana su prosječna vremena izvođenja algoritama za slike veličine $3507\times2480$ slikovnih elemenata.
+Dijagram sa slike \ref{fig:compareSuccess} prikazuje točnost prepoznavanja vrhova ćelija za svaki algoritam.
+Usporedbo ta dva dijagrama primjećuje se kako neuronska mreža radi sporije od klasifikatora temeljenog na algoritmu AdaBoost, ali zbog toga ima veću točnost, kao što je prethodno već bilo objašnjeno.
+Također se primjećuje kako kombinacijom ta dva algoritma nastaje klasifikator koji je u mogućnosti puno točnije određivati vrhove ćelija, a za što mu je u konačnici potrebno manje vremena nego neuronskoj mreži koja pokušava prepoznati sve elemente sa slike kliznim prozorom.
+Zadnji prikazani algoritam koristi neuronske mreže i algoritam AdaBoost, ali uz to koristi i prethodno stečeno znanje na način da vrhove ćelija pretražuje samo u određenom radijusu od prethodno pronađenih vrhova.
+Na taj je način postignuto da taj algoritam postiže veliku točnost uz malo vrijeme izvođenja.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=.75\linewidth]{Images/SuccessComparison}
+    \captionsetup{justification=centering}
+    \caption{Prikaz uspješnosti klasifikacije pojedinih algoritama}
+    \label{fig:compareSuccess}
+\end{figure}
 
 \chapter{Zaključak}
 \label{ch:conclusion}
