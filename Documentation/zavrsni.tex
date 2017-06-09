@@ -705,29 +705,138 @@ Mreža koristi arhitekturu s $3$ sloja.
 Prvi, odnosno ulazni sloj sadrži $24$ neurona, koji kao ulaz primaju vrijednosti $24$ različite značajke.
 Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
 
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_true_0.png}
+        \captionsetup{justification=centering}
+        \caption{Slika vrha ćelija}
+        \label{fig:featureDemo0a}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_false_0.png}
+        \caption{Slika koja ne sadrži vrh ćelije}
+        \label{fig:featureDemo0b}
+    \end{subfigure}
+    \caption{Primjer slika za određivanje značajki}
+    \label{fig:featureDemo0}
+\end{figure}
+
 Kao ulaz neuronske mreže koriste se vrijednosti ručno odabranih značajki.
 Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u implementaciji koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.
 Važno je napomenuti kako se prilikom treniranja koriste slike veličine $75\times 75$ slikovnih elemenata koje predstavljaju isječke originalnih slika, na kojima se nalazi određeni vrh ćelije.
 Prilikom detekcije vrhova na slici koristi se klizni prozor pomoću kojega se određuje trenutno područje pretrage.
-Tako je određeno područje slike na kojemu se vrši trenutna pretraga te se u daljnjem tekstu pod pojmom slika smatra dio slike određen kliznim prozorom.\\
+Tako je određeno područje slike na kojemu se vrši trenutna pretraga te se u daljnjem tekstu pod pojmom slika smatra dio slike određen kliznim prozorom.
+U daljnjem tekstu objašnjeno je koje su značajke korištene, te su iste prikazane na primjeru kakav je prikazan slikom \ref{fig:featureDemo0}.
+Na slici \ref{fig:featureDemo0a} prikazan je vrh ćelije te je ovu sliku potrebno prepoznati, dok se na slici \ref{fig:featureDemo0b} nalaze linije tablice i dio sadržaja ćelije te ovu sliku ne treba prepoznati kao vrh ćelije.\
+
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_true_1.png}
+        \captionsetup{justification=centering}
+        \caption{Prikaz značajke na slici koju je potrebno prepoznati}
+        \label{fig:featureDemo1a}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_false_1.png}
+        \caption{Prikaz značajke na slici koja se ne smije prepoznati}
+        \label{fig:featureDemo1b}
+    \end{subfigure}
+    \caption{Prikaz značajki temeljenih na udaljenosti}
+    \label{fig:featureDemo1}
+\end{figure}
 
 Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebno prepoznati linije nalaze na sredini slike.
 Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ako i je prikazan, tada točka vrha nije približno u središtu slike.
-Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$.
+Kako bi se to provjerilo, dodane su dvije značajke koje određuju udaljenost do najbližeg crnog slikovnog elementa, jedna od njih gleda udaljenosti po okomitoj zraci koja se nalazi na udaljenosti $0.1$ od ukupne širine slike, a druga na udaljenosti $0.9$, kao što je prikazano slikom \ref{fig:featureDemo1}.
 Svaka od tih značajki generira dvije vrijednosti, udaljenost od gornjeg ruba slike do prvog crnog elementa te udaljenost od donje linije do prvog crnog elementa.
+Na slici \ref{fig:featureDemo1a} primjećuje se kako sve $4$ udaljenosti odgovaraju $0.5$, čime se zaključuje kako postoji linija koja prolazi sredinom slike.
+S druge strane, slika \ref{fig:featureDemo1b} prikazuje kako iste te značajke poprimaju različite vrijednosti, čime se zaključuje da postoji linija na rubu slike.
+Također se primjećuje kako lijeve dvije značajke pronalaze udaljenosti do različitih elemenata, čime se zaključuje kako na slici postoji neki oblik šuma ili smetnje.\\
+
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_true_2.png}
+        \captionsetup{justification=centering}
+        \caption{Prikaz značajke na slici koju je potrebno prepoznati}
+        \label{fig:featureDemo2a}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_false_2.png}
+        \caption{Prikaz značajke na slici koja se ne smije prepoznati}
+        \label{fig:featureDemo2b}
+    \end{subfigure}
+    \caption{Prikaz značajki temeljenih na broju presjeka}
+    \label{fig:featureDemo2}
+\end{figure}
+
 Ove značajke vraćaju kvalitetnu informaciju o tome gdje se na slici nalazi linija, ali nisu otporne na potencijalne smetnje na slici.
-Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta s okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba.
+Kao rješenje tog problema koriste se značajke dobivene kao broj sjecišta s okomitim zrakama, na udaljenosti $0.25$, odnosno $0.35$ širine slike od lijevog, odnosno desnog ruba, što je prikazano na slici \ref{fig:featureDemo2}.
 Tako dobivene $4$ značajke su u stanju kvalitetno prikazati postoji li linija na tom mjestu ili ne, ali ne provjeravaju položaj linije, što je napravljeno prethodnim značajkama.
-Kako bi se omogućila dodatna robusnost algoritma, primijenjene su značajke koje su prikupljene kao broj presjecišta korištenjem dijagonalnih zraka.
+Slika \ref{fig:featureDemo2a} prikazuje slučaj u kojemu svaka okomita zraka ima točno jedno sjecište, koje je označeno crvenim križićem.
+Na slici \ref{fig:featureDemo2b} postoji veći broj sjecišta kod većien značajki što je uzrokovano sadržajem ćelije koji se nalazi na slici.\\
+
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_true_3.png}
+        \captionsetup{justification=centering}
+        \caption{Prikaz značajke na slici koju je potrebno prepoznati}
+        \label{fig:featureDemo3a}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_false_3.png}
+        \caption{Prikaz značajke na slici koja se ne smije prepoznati}
+        \label{fig:featureDemo3b}
+    \end{subfigure}
+    \caption{Prikaz značajki temeljenih na broju presjeka dijagonalnim linijama}
+    \label{fig:featureDemo3}
+\end{figure}
+
+Kako bi se omogućila dodatna robusnost algoritma, primijenjene su značajke koje su prikupljene kao broj presjecišta korištenjem dijagonalnih zraka, kao što je prikazano slikom \ref{fig:featureDemo3}.
 Kako vrh ćelije nije uvijek nužno u središtu slike moguće je da zraka koja prolazi dijagonalom ne prolazi vrhom te zbog toga ima $2$ sjecišta umjesto jednoga.
 Taj je problem riješen odmicanjem dijagonalnih zraka od glavne dijagonalne za određenu konstantnu vrijednost, čime se može provjeriti postoje li dvije okomite linije u određenom kvadrantu slike, ako postoje $2$ sjecišta.
-Ovisno o odmaku od središnje dijagonale ovisi i tolerancije prema odmaku središta vrha ćelije u odnosu na središte linije.
+Ovisno o odmaku od središnje dijagonale ovisi i tolerancije prema odmaku središta vrha ćelije u odnosu na središte linije.\\
+
+\begin{figure}[th!]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_true_4.png}
+        \captionsetup{justification=centering}
+        \caption{Prikaz značajke na slici koju je potrebno prepoznati}
+        \label{fig:featureDemo4a}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=.45\linewidth]{Images/Feature_false_4.png}
+        \caption{Prikaz značajke na slici koja se ne smije prepoznati}
+        \label{fig:featureDemo4b}
+    \end{subfigure}
+    \caption{Prikaz značajke temeljene na razlici broja crnih slikovnih elemenata}
+    \label{fig:featureDemo4}
+\end{figure}
+
 Uz navedene, koriste se značajke koje se temelje na razlici broja crnih slikovnih elemenata u određenim kvadratnim područjima.
 Za potrebe toga definirana su $2$ značajke koje prikupljaju informacije o postojanju vodoravne linije. 
-Obje značajke koriste pravokutnik za uzorkovanje kakav je prikazan na slici \ref{fig:haar3}, a pravokutnici se po širini protežu od $0.1$ do $0.9$ širine slike uzorka.
+Obje značajke koriste pravokutnik za uzorkovanje kakav je prikazan na slici \ref{fig:haar3}, a pravokutnici se po širini protežu od $0.1$ do $0.9$ širine slike uzorka, što prikazuje slika \ref{fig:featureDemo4}.
 Visine pravokutnika se razlikuju te jedan prekriva većinu visine slike, dok je crno područje definirano kao uži dio oko centra slike.
 Tako ova značajka pruža uvid u odnos cjelokupne slike, ali zbog toga na nju jače utječu ostali crni elementi prisutni na slici.
 Kao rješenje tog problema koristi se drugi pravokutnik koji ima manju visinu zbog čega manje ovisi o ostatku slike, a više o prisutnosti linije.
+Slika \ref{fig:featureDemo4a} prikazuje slučaj u kojemu crno područje značajke sadrži gotovo isključivo crne slikovne elemente, dok ih bijelo područje gotovo uopće ne sadrži.
+Time se zaključuje kako se u crnom području nalazi linija.
+Nasuprot tome, slika \ref{fig:featureDemo4b} prikazuje slučaj u kojemu ista ta značajka sadrži podjednak broj crnih slikovnih elemenata i u crnom i u bijelom području značajke.
+Na temelju toga zaključuj se kako slika nema vodoravnu liniju na sredini, zbog čega na slici sigurno nije prikazan vrh ćelije.
 
 \subsection{Treniranje genetskim algoritmom}
 Prvi pokušaj treniranja neuronske mreže bio je korištenjem genetskog algoritma, koji su opisani u knjigama \cite{optjava} i \cite{GeneticAlgorithms}.
