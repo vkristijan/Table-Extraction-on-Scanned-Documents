@@ -706,7 +706,10 @@ Prvi, odnosno ulazni sloj sadrži $24$ neurona, koji kao ulaz primaju vrijednost
 Skriveni sloj sadrži $14$ neurona, a izlazni $10$.\\
 
 Kao ulaz neuronske mreže koriste se vrijednosti ručno odabranih značajki.
-Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u implementaciji koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.\\
+Imajući na umu izgled slika koje je potrebno klasificirati, uočava se kako su slike pravilne i međusobno simetrične, zbog toga će u daljnjem tekstu biti navedene samo značajke koje koriste okomite zrake, odnosno okomite kvadrate prebrojavanja slikovnih elemenata, premda se u implementaciji koriste jednake takve značajke i za vodoravne zrake odnosno kvadrate prebrojavanja slikovnih elemenata.
+Važno je napomenuti kako se prilikom treniranja koriste slike veličine $75\times 75$ slikovnih elemenata koje predstavljaju isječke originalnih slika, na kojima se nalazi određeni vrh ćelije.
+Prilikom detekcije vrhova na slici koristi se klizni prozor pomoću kojega se određuje trenutno područje pretrage.
+Tako je određeno područje slike na kojemu se vrši trenutna pretraga te se u daljnjem tekstu pod pojmom slika smatra dio slike određen kliznim prozorom.\\
 
 Prvo što je potrebno uočiti je da se kod svih objekata koje je potrebno prepoznati linije nalaze na sredini slike.
 Ako slika koja se klasificira sadrži liniju koja se nalazi na nekoj drugoj poziciji, primjerice vodoravna linija na samom vrhu slike, tada na slici nije prikazan vrh ćelije, odnosno ako i je prikazan, tada točka vrha nije približno u središtu slike.
