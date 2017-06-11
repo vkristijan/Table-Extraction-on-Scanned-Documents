@@ -59,7 +59,7 @@ public class SkewDetection {
             List<List<Integer>> points = calculatePointsHorizontal(lines, img);
             //visualize(img, lines);
             removeRedundant(points, lines);
-            visualize1(img, lines);
+            //visualize1(img, lines);
 
             return getAngle(points, lines, true);
         }
