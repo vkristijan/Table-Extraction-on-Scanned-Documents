@@ -45,7 +45,7 @@ public class AdaDetection {
         IntegralImage integralImage = IntegralImage.fromGrayscaleImage(img);
 
         long start_time = System.nanoTime();
-        List<Corner> corners = detectCorners(integralImage);
+        List<Corner> corners = detectCorners(integralImage, adaBoost);
         long end_time = System.nanoTime();
         double difference = (end_time - start_time)/1e6;
         System.out.println("Detection time: " + difference + "ms");
@@ -67,7 +67,7 @@ public class AdaDetection {
         integralImage.save(output.toFile());
     }
 
-    private static List<Corner> detectCorners(IntegralImage img) {
+    public static List<Corner> detectCorners(IntegralImage img, AdaBoost adaBoost) {
         List<Corner> corners = new ArrayList<>();
 
         int width = img.getWidth();

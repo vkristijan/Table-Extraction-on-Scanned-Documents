@@ -1,8 +1,18 @@
 package hr.fer.zemris.zavrad.gui;
 
+import hr.fer.zemris.zavrad.detection.AdaDetection;
+import hr.fer.zemris.zavrad.detection.CombinedDetector;
+import hr.fer.zemris.zavrad.detection.CornerDetection;
+import hr.fer.zemris.zavrad.detection.SlidingWindow;
+import hr.fer.zemris.zavrad.detection.adaboost.AdaBoost;
+import hr.fer.zemris.zavrad.detection.features.DistanceFeatureExtractor;
+import hr.fer.zemris.zavrad.detection.features.IFeatureExtractor;
 import hr.fer.zemris.zavrad.skew.SkewDetection;
+import hr.fer.zemris.zavrad.table.Corner;
+import hr.fer.zemris.zavrad.table.Table;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 import hr.fer.zemris.zavrad.util.img.IntegralImage;
+import hr.fer.zemris.zavrad.util.img.draw.Geometry;
 import hr.fer.zemris.zavrad.util.img.filters.ImageFilter;
 import hr.fer.zemris.zavrad.util.img.filters.Rotation;
 import hr.fer.zemris.zavrad.util.img.filters.threshold.ThresholdBinarization;
@@ -12,6 +22,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.*;
+import java.util.List;
 
 /**
  * @author Kristijan Vulinović
@@ -25,6 +37,9 @@ public class TableDetector extends JFrame {
     private JPictureBox picture;
     private SkewDetection skewDetection;
     private IntegralImage img;
+    private List<Corner> corners;
+    private Table table;
+
     ImageFilter binarization;
 
     public TableDetector(){
@@ -87,26 +102,35 @@ public class TableDetector extends JFrame {
         buttons.add(skew);
 
         JButton neural = new JButton("Neural network");
+        CornerDetection detection = new CornerDetection();
+        detection.readWeightsFromFile(Paths.get("weights.txt"));
+        IFeatureExtractor extractor = new DistanceFeatureExtractor();
+        SlidingWindow slider = new SlidingWindow(75, 10, detection, extractor);
         neural.addActionListener(e -> {
-
+            corners = slider.detectCorners(img);
+            drawCorners(corners);
         });
         buttons.add(neural);
 
         JButton ada = new JButton("AdaBoost");
+        AdaBoost adaBoost = AdaBoost.readFromFile(Paths.get("ada.txt"));
         ada.addActionListener(e -> {
-
+            corners = AdaDetection.detectCorners(img, adaBoost);
+            drawCorners(corners);
         });
         buttons.add(ada);
 
         JButton combined = new JButton("Neural network + AdaBoost");
+        CombinedDetector combinedDetector = new CombinedDetector(adaBoost, extractor, detection);
         combined.addActionListener(e -> {
-
+            corners = combinedDetector.detect(img);
+            drawCorners(corners);
         });
         buttons.add(combined);
 
         JButton detect = new JButton("Detect table");
         detect.addActionListener(e -> {
-
+            table = new Table(corners, img);
         });
         buttons.add(detect);
         methods.add(buttons, BorderLayout.NORTH);
@@ -115,11 +139,13 @@ public class TableDetector extends JFrame {
         cellPanel.setLayout(new BorderLayout());
 
         JPanel cellIDNumbers = new JPanel();
-        cellIDNumbers.setLayout(new GridLayout(1,2 ));
+        cellIDNumbers.setLayout(new GridLayout(1,3 ));
         JTextField rowNumber = new JTextField();
         cellIDNumbers.add(rowNumber);
         JTextField colNumber = new JTextField();
         cellIDNumbers.add(colNumber);
+        JButton getCell = new JButton("Get cell");
+        cellIDNumbers.add(getCell);
 
         cellPanel.add(cellIDNumbers, BorderLayout.NORTH);
         JPictureBox cell = new JPictureBox();
@@ -128,5 +154,21 @@ public class TableDetector extends JFrame {
         cellPanel.add(cell, BorderLayout.CENTER);
 
         methods.add(cellPanel);
+    }
+
+    private void drawCorners(List<Corner> corners) {
+        for (Corner corner : corners){
+            int x = corner.getPosition().getX();
+            int y = corner.getPosition().getY();
+
+            for (int ii = 0; ii < 8; ++ii){
+                try {
+                    Geometry.drawSquare(img, x - ii, y - ii, 2 * ii);
+                } catch (Exception ignored){
+                }
+            }
+        }
+
+        picture.setPicture(img);
     }
 }
