@@ -1,6 +1,7 @@
 package hr.fer.zemris.zavrad.gui;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import hr.fer.zemris.zavrad.table.Corner;
 import hr.fer.zemris.zavrad.util.img.GrayScaleImage;
 
 import javax.imageio.ImageIO;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * @author Kristijan Vulinović
@@ -40,12 +42,28 @@ public class JPictureBox extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (image == null) return;
 
         if (isSquare){
             int size = Math.min(getWidth(), getHeight());
             g.drawImage(image, 0, 0, size, size, Color.BLACK, this);
         } else {
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), Color.BLACK, this);
+            int w = getWidth();
+            int h = getHeight();
+            double ratio = (double) w / h;
+
+            int imgW = image.getWidth();
+            int imgH = image.getHeight();
+            double imgRatio = (double) imgW / imgH;
+
+            int width = w;
+            int height = h;
+            if (ratio > imgRatio){
+                width = (int) (imgRatio * h);
+            }
+
+            int x = (getWidth() - width) / 2;
+            g.drawImage(image, x, 0, width, height, Color.BLACK, this);
         }
     }
 }

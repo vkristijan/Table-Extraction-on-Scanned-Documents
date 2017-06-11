@@ -42,7 +42,7 @@ public class TableDetector extends JFrame {
 
     ImageFilter binarization;
 
-    public TableDetector(){
+    public TableDetector() {
         skewDetection = new SkewDetection();
         binarization = new ThresholdBinarization(127);
 
@@ -51,6 +51,12 @@ public class TableDetector extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException |
+                UnsupportedLookAndFeelException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         initGui();
 
         setVisible(true);
@@ -61,9 +67,6 @@ public class TableDetector extends JFrame {
         cp.setLayout(new BorderLayout());
 
         picture = new JPictureBox();
-        Path imgPath = Paths.get("C:\\GitHub\\Table-Extraction-on-Scanned-Documents\\src\\main\\resources\\img.png");
-        picture.setPicture(imgPath);
-
         cp.add(picture, BorderLayout.CENTER);
 
         JPanel methods = new JPanel();
@@ -150,7 +153,6 @@ public class TableDetector extends JFrame {
         cellPanel.add(cellIDNumbers, BorderLayout.NORTH);
         JPictureBox cell = new JPictureBox();
         cell.setSquare(true);
-        cell.setPicture(imgPath);
         cellPanel.add(cell, BorderLayout.CENTER);
 
         methods.add(cellPanel);
@@ -158,7 +160,7 @@ public class TableDetector extends JFrame {
         getCell.addActionListener(e -> {
             int row = Integer.parseInt(rowNumber.getText());
             int column = Integer.parseInt(colNumber.getText());
-            
+
             GrayScaleImage cellContent = table.getCellContent(row, column);
             cell.setPicture(cellContent);
         });
