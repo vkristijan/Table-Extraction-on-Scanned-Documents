@@ -154,6 +154,14 @@ public class TableDetector extends JFrame {
         cellPanel.add(cell, BorderLayout.CENTER);
 
         methods.add(cellPanel);
+
+        getCell.addActionListener(e -> {
+            int row = Integer.parseInt(rowNumber.getText());
+            int column = Integer.parseInt(colNumber.getText());
+            
+            GrayScaleImage cellContent = table.getCellContent(row, column);
+            cell.setPicture(cellContent);
+        });
     }
 
     private void drawCorners(List<Corner> corners) {
