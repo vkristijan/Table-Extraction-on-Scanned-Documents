@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Table-Extraction-on-Scanned-Documents:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Table_Extraction_on_Scanned_Documents_jar</output-path>
+    <root id="archive" name="Table-Extraction-on-Scanned-Documents.jar">
+      <element id="module-output" name="Table-Extraction-on-Scanned-Documents" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
